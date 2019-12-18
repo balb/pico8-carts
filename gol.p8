@@ -3,19 +3,16 @@ version 18
 __lua__
 loop = 0
 buf_current = {}
+font_color=0
 
 function _init()
-	set_buf(buf_current, 4, 2)
-	set_buf(buf_current, 5, 3)
-	set_buf(buf_current, 3, 4)
-	set_buf(buf_current, 4, 4)
-	set_buf(buf_current, 5, 4)
+	-- draw_glider()
 end
 
 function _update()
 	if loop == 7 then
-		buf_current = 
-			build_next_buf(buf_current)
+		--buf_current = 
+			--build_next_buf(buf_current)
 		loop = 0
 	end
 	loop+=1
@@ -23,16 +20,26 @@ end
 
 function _draw()
 	cls()
-	-- print("hello, world!")
+	
+	draw_title()
 	
 	for x=0,15 do
 		for y=0,15 do
-			-- spr(0,x*8,y*8)
 			render_tile(buf_current,x,y)
 		end
 	end
 	
 	print(stat(1),10,100,0)
+	
+	
+	
+	--print("conway's",0,0)
+	--print("glider",10,10,font_color)
+ --print("lwss",10,20,font_color)
+	font_color+=1
+	if font_color == 15 then
+		font_color=0
+	end
 	
 end
 -->8
@@ -95,6 +102,56 @@ function render_tile(buf,x,y)
 	
 	spr(s, x*8, y*8)
 end
+-->8
+function draw_title()
+ --conway's
+ local y = 1
+ draw_char({3,4,4,4,3},1,y)
+ draw_char({3,5,5,5,6},5,y)
+ draw_char({6,5,5,5,5},9,y)
+ draw_char({5,5,5,7,7},13,y)
+	draw_char({7,5,7,5,5},17,y)
+ draw_char({5,5,7,1,7},21,y)
+ draw_char({2,4,0,0,0},25,y)
+ draw_char({3,4,7,1,6},28,y)
+end
+
+function draw_char(char,x,y)
+	-- 'c' looks like this
+ -- 011 -> 3
+ -- 100 -> 4
+ -- 100 -> 4
+ -- 100 -> 4
+ -- 011 -> 3
+ 
+ -- {3,4,4,4,3}
+	
+	local char_exp = {}
+	for k,v in pairs(char) do
+	  if band(v,4) == 4 then
+	    add(char_exp, {0,k-1})
+	  end
+	  if band(v,2) == 2 then
+	    add(char_exp, {1,k-1})
+	  end
+	  if band(v,1) == 1 then
+	    add(char_exp, {2,k-1})
+	  end
+	end
+	
+ for k,v in pairs(char_exp) do
+		set_buf(buf_current, v[1]+x, v[2]+y)
+ end
+end
+
+function draw_glider()
+	set_buf(buf_current, 4, 2)
+	set_buf(buf_current, 5, 3)
+	set_buf(buf_current, 3, 4)
+	set_buf(buf_current, 4, 4)
+	set_buf(buf_current, 5, 4)
+end
+
 __gfx__
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006

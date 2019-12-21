@@ -4,15 +4,37 @@ __lua__
 loop = 0
 buf_current = {}
 font_color=0
+cur_scr = "title"
 
 function _init()
-	-- draw_glider()
+	cls()
+	draw_title()
 end
 
 function _update()
+	if cur_scr=="title" then
+		update_title()
+	elseif cur_scr=="main" then
+		update_main()
+	end
+end
+
+function update_title()
+	if btnp(2) and cur_opt > 1 then 
+		cur_opt-=1 
+	elseif btnp(3) and cur_opt < opt_count then 
+		cur_opt+=1 
+	elseif btnp(4) or btnp(5) then
+	 cur_scr="main"
+	 buf_current={}
+	 draw_glider()
+	end
+end
+
+function update_main()
 	if loop == 7 then
-		--buf_current = 
-			--build_next_buf(buf_current)
+		buf_current = 
+			build_next_buf(buf_current)
 		loop = 0
 	end
 	loop+=1
@@ -21,7 +43,9 @@ end
 function _draw()
 	cls()
 	
-	draw_title()
+	if cur_scr=="title" then
+		draw_title()
+	end
 	
 	for x=0,15 do
 		for y=0,15 do
@@ -29,16 +53,8 @@ function _draw()
 		end
 	end
 	
-	print(stat(1),10,100,0)
-	
-	
-	
-	--print("conway's",0,0)
-	--print("glider",10,10,font_color)
- --print("lwss",10,20,font_color)
-	font_color+=1
-	if font_color == 15 then
-		font_color=0
+	if cur_scr=="title" then
+		draw_title_opts()
 	end
 	
 end
@@ -114,6 +130,42 @@ function draw_title()
  draw_char({5,5,7,1,7},21,y)
  draw_char({2,4,0,0,0},25,y)
  draw_char({3,4,7,1,6},28,y)
+
+ --game of
+ y+=6
+ draw_char({3,4,4,5,7},1,y)
+ draw_char({7,5,7,5,5},5,y)
+ draw_char({7,7,5,5,5},9,y)
+	draw_char({7,4,6,4,7},13,y)
+	draw_char({3,5,5,5,6},21,y)
+ draw_char({7,4,6,4,4},25,y)
+ 
+ --life
+ y+=6
+ draw_char({4,4,4,4,7},1,y)
+ draw_char({7,2,2,2,7},5,y)
+ draw_char({7,4,6,4,4},9,y)
+	draw_char({7,4,6,4,7},13,y)
+ draw_title_opts()
+end
+
+function draw_title_opts()
+	rectfill(4,76,122,122,0)
+	
+	for k,v in pairs(opts) do
+		local clr = 7
+		local prfx = "  "
+		if cur_opt == k then 
+			clr = font_color
+			prfx = "->" 
+		end
+		print(prfx .. v[1],42,72 + k*6, clr)	
+	end
+		
+	font_color+=1
+	if font_color == 15 then
+		font_color=0
+	end
 end
 
 function draw_char(char,x,y)
@@ -152,6 +204,18 @@ function draw_glider()
 	set_buf(buf_current, 5, 4)
 end
 
+-->8
+opt_count = 6
+cur_opt = 1
+opts = {
+	{ "glider",1 },
+	{ "thing 2",1 },
+	{ "thing 3",1 },
+	{ "thing 4",1 },
+	{ "thing 5",1 },
+	{ "thing 6",1 },
+	{ "thing 7",1 }
+}
 __gfx__
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006

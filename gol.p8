@@ -27,12 +27,12 @@ function update_title()
 	elseif btnp(4) or btnp(5) then
 	 cur_scr="main"
 	 buf_current={}
-	 draw_glider()
+	 draw_cur_opt()
 	end
 end
 
 function update_main()
-	if loop == 7 then
+	if loop == 8 then
 		buf_current = 
 			build_next_buf(buf_current)
 		loop = 0
@@ -159,7 +159,7 @@ function draw_title_opts()
 			clr = font_color
 			prfx = "->" 
 		end
-		print(prfx .. v[1],42,72 + k*6, clr)	
+		print(prfx .. v[1],16,72 + k*6, clr)	
 	end
 		
 	font_color+=1
@@ -196,6 +196,10 @@ function draw_char(char,x,y)
  end
 end
 
+function draw_cur_opt()
+ opts[cur_opt][2]()
+end
+
 function draw_glider()
 	set_buf(buf_current, 4, 2)
 	set_buf(buf_current, 5, 3)
@@ -204,18 +208,34 @@ function draw_glider()
 	set_buf(buf_current, 5, 4)
 end
 
+function draw_lwss()
+	draw_char({1,3,3},0,10)
+ draw_char({4,6,3,6},3,10)
+end
+
+function draw_rpent()
+	draw_char({3,6,2},15,15)
+end
+
+function draw_diehard()
+	draw_char({0,3,1},11,15)
+	draw_char({2,0,7},17,15)
+end
+
 -->8
-opt_count = 6
+opt_count = 7
 cur_opt = 1
 opts = {
-	{ "glider",1 },
-	{ "thing 2",1 },
-	{ "thing 3",1 },
-	{ "thing 4",1 },
+	{ "glider",draw_glider },
+	{ "light-weight spaceship",draw_lwss },
+	{ "the r pentomino",draw_rpent },
+	{ "diehard",draw_diehard },
 	{ "thing 5",1 },
 	{ "thing 6",1 },
-	{ "thing 7",1 }
+	{ "game of life!",draw_title }
 }
+
+
 __gfx__
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006
 77767776000677767776000600060006777677760006777677760006000600067776777600067776777600060006000677767776000677767776000600060006

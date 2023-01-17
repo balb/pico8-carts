@@ -53,7 +53,6 @@ monty_mov=false
 function draw_monty()
  --head
  draw_monty_row(1, 0)
-
  --feet 
  if monty_mov then
   if monty_dir<2 then
@@ -61,24 +60,8 @@ function draw_monty()
    local s2=5+monty_dir+(16*abs(cntr_m2-1))
    spr(s1,monty_x,monty_y+8)
    spr(s2,monty_x+8,monty_y+8,1,1,true)
-  elseif monty_dir==2 then
-   --todo
-   if cntr_m2==0 then
-    spr(6,monty_x,monty_y+8,1,1,true)
-    spr(5,monty_x+8,monty_y+8,1,1,true)
-   else
-    spr(22,monty_x,monty_y+8,1,1,true)
-    spr(21,monty_x+8,monty_y+8,1,1,true)
-   end   
   else
-   --todo
-   if cntr_m2==0 then
-    spr(5,monty_x,monty_y+8)
-    spr(6,monty_x+8,monty_y+8)
-   else
-    spr(21,monty_x,monty_y+8)
-    spr(22,monty_x+8,monty_y+8)
-   end   
+   spr(7+(16*cntr_m2),monty_x,monty_y+8,2,1,monty_dir==2)
   end
  else
   --not moving
@@ -94,7 +77,6 @@ function draw_monty_row(s, y_offset)
   spr(s+2,monty_x,monty_y+y_offset,2,1,monty_dir==2)
  end    
 end
-
 
 __gfx__
 0000000000000003000000030000000330000000007770aa0077755a00007777a55aa00000000000000000000000333300003333000033330000044444400000

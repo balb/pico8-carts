@@ -8,6 +8,9 @@ cntr=0
 cntr_m2=0
 cntr_m3=0
 
+map_x=0
+map_y=0
+
 function _update()
  --counters
  _cntr+=1
@@ -44,14 +47,18 @@ function _update()
  --screen wrap
  if next_x==-5 then 
   next_x=116
+  map_x-=1
  elseif next_x==117 then
   next_x=-4
+  map_x+=1
  end
  
  if next_y==5 then 
   next_y=116
+  map_y-=1
  elseif next_y==117 then
   next_y=6
+  map_y+=1  
  end
  
  monty_x=next_x
@@ -61,17 +68,19 @@ end
 
 function _draw()
  cls()
- print(monty_x)
- print(monty_y,16,0)
- map(0,0,0,0)
  
- -- blue to black
+ print("monty:"..monty_x..","..monty_y.." map:"..map_x..","..map_y)
+ 
+ map(map_x*16,map_y*16,0,0)
+ 
+ -- blue to black for the eyes
  pal(12, 0)
- 
  draw_monty()
- 
  -- reset palette
  pal()
+ 
+ rect(monty_x+3,monty_y,monty_x+12,monty_y+15)
+ 
 end
 
 -->8

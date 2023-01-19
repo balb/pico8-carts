@@ -44,24 +44,31 @@ function _update()
  if (map_collide(next_x, next_y)) return
  
  --screen wrap
+ local init_screen=false
  if next_x==-5 then 
   next_x=116
   map_x-=1
+  init_screen=true
  elseif next_x==117 then
   next_x=-4
   map_x+=1
+  init_screen=true  
  end
  
  if next_y==5 then 
   next_y=116
   map_y-=1
+  init_screen=true  
  elseif next_y==117 then
   next_y=6
   map_y+=1  
+  init_screen=true  
  end
  
  monty_x=next_x
  monty_y=next_y
+ 
+ if (init_screen) init_screens[map_x..map_y]()
  
 end
 
@@ -75,9 +82,14 @@ function _draw()
  -- reset palette
  pal() 
  
- print(map_x..","..map_y)
+ print(monty_x..","..monty_y.." "..map_x..","..map_y)
+ 
+ foreach(current_screen.ents,draw_sprite)
 end
 
+function draw_sprite(s)
+ spr(s.s,s.x,s.y)
+end
 -->8
 --monty
 
@@ -158,6 +170,26 @@ end
 -- rect(start_x,start_y,start_x+7,start_y+7)
 --end
 
+-->8
+--screens
+
+current_screen={}
+current_screen.ents={}
+
+init_screens={}
+init_screens["21"]=function()
+ --spr(38,20,20)
+ add(current_screen.ents,{
+  s=38,x=40,y=40
+ })
+ add(current_screen.ents,{
+  s=39,x=60,y=60
+ }) 
+end
+
+--town square
+init_screens["31"]=function()
+end
 __gfx__
 0000000000000003000000030000000330000000007770aa0077755a00007777a55aa00000000000000000000000333300003333000033330000044444400000
 00000000000000330000003b0000003b33000000000777aa0007777a0000077777aaa00000000000000000000000300300003003000030030000447777440000

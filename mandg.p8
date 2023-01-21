@@ -7,6 +7,7 @@ _cntr=0
 cntr=0
 cntr_m2=0
 cntr_m4=0
+cntr_m18=0
 
 function _update()
  --counters
@@ -77,6 +78,7 @@ function _update()
 
  --todo: probably want to move this
  foreach(current_screen.ents,update_entity)
+ 
 end
 
 function _draw()
@@ -90,6 +92,7 @@ function _draw()
  pal()
 
  --print(monty_x..","..monty_y.." "..map_x..","..map_y.." "..cntr_m4)
+ print(count(current_screen.ents).." "..cntr_m18)
  foreach(current_screen.ents,draw_entity)
 end
 
@@ -182,23 +185,23 @@ end
 -->8
 --screens
 
+--todo: just use current_ents
 current_screen={ ents={} }
 
 init_screens={}
 
 -- desert top firestones
 init_screens["10"]=function()
- build_firestone(x,y,3,4)
  add(current_screen.ents,
-  build_firestone(8,40,3,8))
+  build_firestone(8,40,3,8,32))
  add(current_screen.ents,
-  build_firestone(8,72,3,12))
+  build_firestone(8,72,3,12,40))
  add(current_screen.ents,
-  build_firestone(8,96,3,16))
+  build_firestone(8,96,3,16,24))
  add(current_screen.ents,
-  build_firestone(48,16,1,2))
+  build_firestone(48,16,1,2,64))
  add(current_screen.ents,
-  build_firestone(72,16,1,14))
+  build_firestone(72,16,1,14,64))
 end
 
 init_screens["20"]=function()
@@ -326,13 +329,22 @@ function build_fuzzy(
  }
 end
 
-function build_firestone(x,y,dir,t)
+function build_firestone(x,y,dir,t,dist)
  local s=32
  local flip_x=false
  local flip_y=false
  if (dir<2) s=48
+
  return {
   update=function(ent)
+   if cntr_m18==t+1 and _cntr==0 then
+    local x_offset=0
+    local y_offset=0    
+    if (dir==3) x_offset=8
+    if (dir==1) y_offset=8    
+    add(current_screen.ents,
+      build_arrow(x+x_offset,y+y_offset,dir,dist))
+   end  
   end,
   draw=function(ent)
    local s2=s
@@ -345,6 +357,34 @@ function build_firestone(x,y,dir,t)
   end
  }
 end
+
+function build_arrow(
+ start_x,start_y,dir,dist)
+ local speed=2.5
+ return {
+  x=start_x, y=start_y,
+  dist=dist,
+  update=function(ent)
+   if dir==0 then
+    ent.y-=speed
+   elseif dir==1 then
+    ent.y+=speed   
+   elseif dir==2 then
+    ent.x-=speed   
+   else
+    ent.x+=speed      
+   end
+   ent.dist-=speed
+   if (ent.dist<=-2) del(current_screen.ents,ent)
+  end,
+  draw=function(ent)
+   local s=35
+   if (dir<2) s=51
+   spr(s,ent.x,ent.y)
+  end
+ }
+end
+
 __gfx__
 0000000000000003000000030000000330000000007770aa0077755a00007777a55aa00000000000000000000000333300003333000033330000044444400000
 00000000000000330000003b0000003b33000000000777aa0007777a0000077777aaa00000000000000000000000300300003003000030030000447777440000

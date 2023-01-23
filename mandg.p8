@@ -3,6 +3,9 @@ version 39
 __lua__
 --main
 
+--mode 0=title,1=game
+mode=0
+
 _cntr=0
 cntr=0
 cntr_m2=0
@@ -10,6 +13,12 @@ cntr_m4=0
 cntr_m18=0
 
 function _update()
+
+ if mode==0 then
+  if (btnp(❎) or btnp(🅾️)) mode=1
+  return
+ end
+
  --counters
  _cntr+=1
  if _cntr==4 then
@@ -83,6 +92,15 @@ end
 
 function _draw()
  cls()
+ 
+ --title
+ if mode==0 then
+  draw_title()
+  return
+ end
+
+ 
+ 
  map(map_x*16,map_y*16,0,0)
 
  -- blue to black for the eyes
@@ -501,6 +519,34 @@ function draw_four(a,b,c,d,x,y)
  spr(b,x+8,y)
  spr(c,x,y+8)
  spr(d,x+8,y+8)
+end
+-->8
+--title screen
+
+title_txt=[[
+8""8""8
+8  8  8 eeeee eeeee eeeee e    e
+8e 8  8 8  88 8   8   8   8    8
+88 8  8 8   8 8e  8   8e  8eeee8
+88 8  8 8   8 88  8   88    88
+88 8  8 8eee8 88  8   88    88
+
+eeeee eeeee eeeee
+8   8 8   8 8   8
+8eee8 8e  8 8e  8
+88  8 88  8 88  8
+88  8 88  8 88ee8
+
+8""""8
+8    " eeee eeeee eeeee eeeee
+8e     8    8   8   8   8   "
+88  ee 8eee 8eee8e  8e  8eeee
+88   8 88   88   8  88     88
+88eee8 88ee 88   8  88  8ee88
+]]
+
+function draw_title()
+ print(title_txt,0,4)
 end
 __gfx__
 0000000000000003000000030000000330000000007770aa0077755a00007777a55aa0000000000000000000000cc00000000003070000600066660000000000

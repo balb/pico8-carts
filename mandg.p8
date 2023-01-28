@@ -706,32 +706,30 @@ title_txt=[[
 ]]
 
 function draw_title()
- print(title_txt,0,4)
+ local col=11
+ print(title_txt,0,4,col)
+ for x=0,127 do
+  for y=0,127 do
+   p=pget(x,y)
+   if p==0 then
+    if pget(x-1,y)==col
+     and pget(x+1,y)==col then
+     pset(x,y,col)
+    elseif pget(x,y-1)==col
+     and pget(x,y+1)==col then
+     pset(x,y,col)
+    end
+   end
+  end 
+ end
+
  spr(2,2,50)
  spr(2,10,50,1,1,true) 
  spr(18,2,58)
  spr(18,10,58,1,1,true)  
- local c=11
- local c2=3
 
- if cntr_m18<9 then
-  --m
-  title_rect(0,4,26,38,c)
-  rectfill(3,6,11,15,0)
-  rectfill(7,6,11,38,0)  
-  rectfill(15,6,23,38,0)
-  
-  title_rect(32,10,50,38,c)
-  title_rect(56,10,74,38,c)
-  title_rect(80,10,98,38,c)
-  title_rect(104,10,126,38,c)  
- end
 end
 
-function title_rect(x,y,x1,y1)
- rectfill(x+1,y-1,x1+1,y1-1,3)
- rectfill(x,y,x1,y1,11)  
-end
 
 __gfx__
 0000000000000003000000030000000330000000007770aa0077755a00007777a55aa0000000000000000000000cc00000000003070000600066660000000777

@@ -3,7 +3,11 @@ version 39
 __lua__
 --main
 
---mode 0=title,1=game
+--directions up=0,down=1,
+--left=2,right=3
+
+--mode 0=title,1=game,
+--2=game over
 mode=0
 
 _cntr=0
@@ -11,8 +15,10 @@ cntr=0
 cntr_m2=0
 cntr_m4=0
 cntr_m18=0
+cntr_game_over=0
 
 collision=false
+
 
 function _update()
  --counters
@@ -29,11 +35,46 @@ function _update()
  end
 
  if mode==0 then
+  --title screen
   if (btnp(❎) or btnp(🅾️)) mode=1
   return
  end
-
- --monty
+ 
+ if mode==2 then
+  cntr_game_over+=1
+  if cntr_game_over==40 then
+   cntr_game_over=0
+   mode=0
+   --reset
+   monty_x=18
+   monty_y=40
+   monty_dir=1
+   monty_dying=0
+   monty_lives=0
+   map_x=3
+   map_y=1
+   current_ents={}  
+  end
+  return
+ end
+ 
+ --update monty
+ if monty_dying>0 then
+  monty_dying+=1
+  if monty_dying==20 then
+    --dead - reset
+   monty_dying=0
+   monty_lives-=1
+   monty_x=init_x
+   monty_y=init_y
+   if monty_lives==-1 then
+     --game over
+     mode=2
+   end
+  end
+  return
+ end
+ 
  local next_x=monty_x
  local next_y=monty_y
  monty_mov=true
@@ -55,6 +96,10 @@ function _update()
 
  collision=false
  foreach(current_ents,check_collision)
+
+ if collision then
+  monty_dying=1
+ end
 
  if (map_collide(next_x, next_y)) return
 
@@ -87,6 +132,8 @@ function _update()
   --clear all ents
   current_ents={}
   init_screens[map_x..map_y]()
+  init_x=monty_x
+  init_y=monty_y
  end
 
  --todo: probably want to move this
@@ -97,9 +144,14 @@ end
 function _draw()
  cls()
  
- --title
  if mode==0 then
   draw_title()
+  return
+ end
+ 
+ if mode==2 then
+  rect(0,0,127,127,3)
+  print("game over",46,60,11)
   return
  end
  
@@ -112,7 +164,7 @@ function _draw()
  pal()
 
  --print(monty_x..","..monty_y.." "..map_x..","..map_y.." "..cntr_m4)
- print(map_x..","..map_y.." "..(collision and "yes" or "no"))
+ print(map_x..","..map_y.." "..(collision and "yes" or "no").." lives "..monty_lives)
  foreach(current_ents,draw_entity)
 end
 
@@ -137,33 +189,42 @@ function check_collision(ent)
 end
 
 function update_entity(ent)
- ent.update(ent)
+ if(ent.update!=nil)ent.update(ent)
 end
 
 function draw_entity(ent)
  ent.draw(ent)
- if ent.box!=nil then
-  rect(
-   ent.x+ent.box[1],
-   ent.y+ent.box[2],
-   ent.x+ent.box[3],
-   ent.y+ent.box[4],14)
- end
- rect(monty_x+monty_box[1],
-  monty_y+monty_box[2],
-  monty_x+monty_box[3],
-  monty_y+monty_box[4],10)
+-- if ent.box!=nil then
+--  rect(
+--   ent.x+ent.box[1],
+--   ent.y+ent.box[2],
+--   ent.x+ent.box[3],
+--   ent.y+ent.box[4],14)
+-- end
+-- rect(monty_x+monty_box[1],
+--  monty_y+monty_box[2],
+--  monty_x+monty_box[3],
+--  monty_y+monty_box[4],10)
 end
 -->8
 --monty
+
+init_x=0
+init_y=0
 
 monty_x=18
 monty_y=40
 monty_dir=1
 monty_mov=false
 monty_box={4,0,11,15}
+monty_dying=0
+monty_lives=0
 
 function draw_monty()
+ if monty_dying>0 then
+  pal(3, flr(rnd(16)))
+  pal(11, flr(rnd(16)))
+ end
  --head
  draw_monty_row(1, 0)
  --feet
@@ -180,6 +241,7 @@ function draw_monty()
   --not moving
   draw_monty_row(17, 8)
  end
+ pal()
 end
 
 function draw_monty_row(s, y_offset)
@@ -440,6 +502,7 @@ end
 
 --enter jungle
 init_screens["41"]=function()
+ add_ent(build_bra(32,32))
 end
 
 init_screens["42"]=function()
@@ -761,6 +824,17 @@ function build_web()
     line(74,32,86,32,7)    
     
   end
+ }
+end
+
+function build_bra(x,y)
+ return {
+  x=x,y=y,
+  draw=function()
+   spr(63,x,y)
+   spr(63,x+8,y,1,1,true)
+  end,
+  box={0,0,15,7}
  }
 end
 -->8

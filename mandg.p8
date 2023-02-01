@@ -19,7 +19,6 @@ cntr_game_over=0
 
 collision=false
 
-
 function _update()
  --counters
  _cntr+=1
@@ -181,9 +180,14 @@ function check_collision(ent)
  local mw=monty_box[3]
  local mh=monty_box[4] 
  
- if ex0<=mx0+mw and ex0+ew>=mx0
-  and ey0<=my0+mh and eh+ey0>=my0 then
-  collision=true
+ if ex0<mx0+mw and ex0+ew>mx0
+  and ey0<my0+mh and eh+ey0>my0 then
+  if ent.on_collide!=nil then
+   ent.on_collide(ent)
+  else
+   --normal enemy
+   collision=true
+  end
  end
  
 end
@@ -194,17 +198,17 @@ end
 
 function draw_entity(ent)
  ent.draw(ent)
--- if ent.box!=nil then
---  rect(
---   ent.x+ent.box[1],
---   ent.y+ent.box[2],
---   ent.x+ent.box[3],
---   ent.y+ent.box[4],14)
--- end
--- rect(monty_x+monty_box[1],
---  monty_y+monty_box[2],
---  monty_x+monty_box[3],
---  monty_y+monty_box[4],10)
+ if ent.box!=nil then
+  rect(
+   ent.x+ent.box[1],
+   ent.y+ent.box[2],
+   ent.x+ent.box[3],
+   ent.y+ent.box[4],14)
+ end
+ rect(monty_x+monty_box[1],
+  monty_y+monty_box[2],
+  monty_x+monty_box[3],
+  monty_y+monty_box[4],10)
 end
 -->8
 --monty
@@ -218,7 +222,7 @@ monty_dir=1
 monty_mov=false
 monty_box={4,0,11,15}
 monty_dying=0
-monty_lives=0
+monty_lives=10
 
 function draw_monty()
  if monty_dying>0 then
@@ -256,8 +260,8 @@ end
 -->8
 --map
 
-map_x=3
-map_y=1
+map_x=1
+map_y=0
 
 function map_collide(next_x, next_y)
  local x=flr((next_x+3)/8)
@@ -308,37 +312,7 @@ function add_ent(ent)
 end
 
 init_screens["00"]=function()
- add_ent( {
-  update=function(ent)
-  end,
-  draw=function(ent)
-   local offset=0
-   if (cntr_m4<2) offset=1
-   pal(12, 0)
-   --draw feet first
-   spr(56,24,64)
-   spr(56,32,64,1,1,true)
-   spr(40,24,56+offset)
-   spr(40,32,56+offset,1,1,true)
-
-   --fingers
-   --0
-   draw_four(9,10,25,26,48,48)
-   --1
-   draw_four(9,10,41,42,72,48)
-   --2
-   draw_four(57,10,41,42,96,48)
-   --3
-   draw_four(11,10,27,42,48,72)
-   --4
-   draw_four(11,10,27,58,72,72)
-   --5
-   draw_four(11,43,27,58,96,72)
-   --6
-   draw_four(11,59,27,58,96,96)
-   pal()
-  end
- })
+ add_ent(build_old_woman())
 end
 
 -- desert top firestones
@@ -551,7 +525,7 @@ function build_idiot(
    if(cntr_m2==0)s=39
    spr(s,ent.x,ent.y)
   end,
-  box={0,0,7,7}
+  box={1,1,6,6}
  }
 end
 
@@ -572,7 +546,8 @@ function build_jazzer(
    local s=36
    if(cntr_m2==0)s=37
    spr(s,ent.x,ent.y)
-  end
+  end,
+  box={1,1,6,6}
  }
 end
 
@@ -617,7 +592,8 @@ function build_fuzzy(
     cntr_m4>1,
     cntr_m4==1 or cntr_m4==2)
    pal()
-  end
+  end,
+  box={1,1,6,6}
  }
 end
 
@@ -628,6 +604,7 @@ function build_firestone(x,y,dir,t,dist)
  if (dir<2) s=48
 
  return {
+  x=x,y=y,
   update=function(ent)
    if cntr_m18==t+1 and _cntr==0 then
     local x_offset=0
@@ -646,7 +623,8 @@ function build_firestone(x,y,dir,t,dist)
     s2+=2
    end
    spr(s2,x,y,1,1,flip_x,flip_y)
-  end
+  end,
+  box={1,1,6,6}
  }
 end
 
@@ -673,7 +651,8 @@ function build_arrow(
    local s=35
    if (dir<2) s=51
    spr(s,ent.x,ent.y)
-  end
+  end,
+  box={1,1,6,6}
  }
 end
 
@@ -835,6 +814,52 @@ function build_bra(x,y)
    spr(63,x+8,y,1,1,true)
   end,
   box={0,0,15,7}
+ }
+end
+
+function build_old_woman()
+ return {
+  --x and y offset for big box
+  x=32,y=48,
+  chat=false,
+  update=function(ent)
+  end,
+  draw=function(ent)
+  
+   if ent.chat then
+    print("this is a chat",16,16,0)
+   end
+  
+   local offset=0
+   if (cntr_m4<2) offset=1
+   pal(12, 0)
+   --draw feet first
+   spr(56,32,64)
+   spr(56,40,64,1,1,true)
+   spr(40,32,56+offset)
+   spr(40,40,56+offset,1,1,true)
+
+   --fingers
+   --0
+   draw_four(9,10,25,26,48,48)
+   --1
+   draw_four(9,10,41,42,72,48)
+   --2
+   draw_four(57,10,41,42,96,48)
+   --3
+   draw_four(11,10,27,42,48,72)
+   --4
+   draw_four(11,10,27,58,72,72)
+   --5
+   draw_four(11,43,27,58,96,72)
+   --6
+   draw_four(11,59,27,58,96,96)
+   pal()
+  end,
+  box={0,0,23,31},
+  on_collide=function(ent)
+   ent.chat=true
+  end
  }
 end
 -->8

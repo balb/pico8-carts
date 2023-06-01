@@ -309,16 +309,44 @@ function build_bra(x,y)
 end
 
 function build_old_woman()
+ local chats = {
+  "oooh! hello young man.\nhee hee hee...",
+  "with those spectacles you\nmust have poor eyesight!",
+  "let me test your vision.\nif you pass the test i will\nhelp you on your journey.",
+  "ok then, how many fingers am\ni holding up?\n    >2    3"
+ }
  return {
   --x and y offset for big box
   x=32,y=48,
-  chat=false,
+  chat=1,
+  answer=0,
   update=function(ent)
+   if (btnp(❎) or btnp(🅾️)) then
+    ent.chat+=1
+	ent.answer=0
+   end
+   
+   if ent.chat >= 4 then
+	if btnp(⬅️) and ent.answer > 0 then
+      ent.answer-=1
+    elseif btnp(➡️) and ent.answer < 1 then
+     ent.answer+=1
+    end
+   end
+   
   end,
   draw=function(ent)  
-   if ent.chat then
-    print("this is a chat xxx",4,100,7)
-   end
+   --if ent.chat then
+    print(chats[ent.chat],4,100,7)
+   --end
+   
+   if ent.chat >= 4 then
+    if ent.answer==0 then 
+		print(">",4,116,flr(rnd(16)))
+	elseif ent.answer==1 then 
+		print(">",34,116,flr(rnd(16)))
+	end
+  end
   
    local offset=0
    if (cntr_m4<2) offset=1
@@ -346,9 +374,9 @@ function build_old_woman()
    draw_four(11,59,27,58,96,96)
    pal()
   end,
-  box={0,0,23,31},
-  on_collide=function(ent)
-   ent.chat=true
-  end
+  box={0,0,23,31}
+  --on_collide=function(ent)
+  -- ent.chat=true
+  --end
  }
 end

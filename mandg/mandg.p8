@@ -521,15 +521,6 @@ init_screens["70"]=function()
 end
 
 -->8
---utils
-
-function draw_four(a,b,c,d,x,y)
- spr(a,x,y)
- spr(b,x+8,y)
- spr(c,x,y+8)
- spr(d,x+8,y+8)
-end
--->8
 --title screen
 
 title_txt=[[

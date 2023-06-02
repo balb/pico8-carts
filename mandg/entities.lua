@@ -310,23 +310,52 @@ end
 
 function build_old_woman()
  local chats = {
-  "oooh! hello young man.\nhee hee hee...",
-  "with those spectacles you\nmust have poor eyesight!",
-  "let me test your vision.\nif you pass the test i will\nhelp you on your journey.",
-  "ok then, how many fingers am\ni holding up?\n    >2    3"
+  { text= "oooh! hello young man.\nhee hee hee..." },
+  { text= "with those spectacles you\nmust have poor eyesight!" },
+  { text= "let me test your vision.\nif you pass the test i will\nhelp you on your journey." },
+  { text= "ok then, how many fingers am\ni holding up?\n\n     2     3", 
+    answers = true,
+	draw = function()
+	  --3
+	  draw_fingers(11,10,27,42)
+	end
+  },
+  { text= "wrong!\ni am holding up 3 fingers",
+	draw = function()
+	  --3
+	  draw_fingers(11,10,27,42)
+	end
+  },
+  { text= "wrong!\ni am holding up 2 fingers",
+	draw = function()
+	  --2
+	  draw_fingers(57,10,41,42)
+	end,
+	skip=true
+  },
+  { text= "the end" },
  }
+ 
  return {
-  --x and y offset for big box
-  x=32,y=48,
+  x=32,y=40,
   chat=1,
   answer=0,
   update=function(ent)
    if (btnp(❎) or btnp(🅾️)) then
-    ent.chat+=1
+     
+	 if chats[ent.chat].answers then
+	  ent.chat+=1+ent.answer
+     else
+	  ent.chat+=1
+	  if chats[ent.chat].skip then
+	   ent.chat+=1
+	  end
+	 end
+    
 	ent.answer=0
    end
    
-   if ent.chat >= 4 then
+   if chats[ent.chat].answers then
 	if btnp(⬅️) and ent.answer > 0 then
       ent.answer-=1
     elseif btnp(➡️) and ent.answer < 1 then
@@ -336,21 +365,20 @@ function build_old_woman()
    
   end,
   draw=function(ent)  
-   --if ent.chat then
-    print(chats[ent.chat],4,100,7)
-   --end
+    print(chats[ent.chat].text,4,100,7)
    
-   if ent.chat >= 4 then
+   if chats[ent.chat].answers then
     if ent.answer==0 then 
-		print(">",4,116,flr(rnd(16)))
+		print(">",20,118,flr(rnd(16)))
 	elseif ent.answer==1 then 
-		print(">",34,116,flr(rnd(16)))
+		print(">",44,118,flr(rnd(16)))
 	end
-  end
+   end
   
    local offset=0
    if (cntr_m4<2) offset=1
    pal(12, 0)
+   
    --draw feet first
    spr(56,32,64)
    spr(56,40,64,1,1,true)
@@ -358,25 +386,35 @@ function build_old_woman()
    spr(40,40,56+offset,1,1,true)
 
    --fingers
+   if chats[ent.chat].draw then
+    chats[ent.chat].draw()
+   end
+   
    --0
-   draw_four(9,10,25,26,48,48)
+   --draw_fingers(9,10,25,26,48,48)
    --1
-   draw_four(9,10,41,42,72,48)
+   --draw_fingers(9,10,41,42,72,48)
    --2
-   draw_four(57,10,41,42,96,48)
+   --draw_fingers(57,10,41,42,96,48)
    --3
-   draw_four(11,10,27,42,48,72)
+   --draw_fingers(11,10,27,42,48,72)
    --4
-   draw_four(11,10,27,58,72,72)
+   --draw_fingers(11,10,27,58,72,72)
    --5
-   draw_four(11,43,27,58,96,72)
+   --draw_fingers(11,43,27,58,96,72)
    --6
-   draw_four(11,59,27,58,96,96)
+   --draw_fingers(11,59,27,58,96,96)
    pal()
-  end,
-  box={0,0,23,31}
-  --on_collide=function(ent)
-  -- ent.chat=true
-  --end
+  end
  }
+end
+
+-- old woman hands
+function draw_fingers(a,b,c,d)
+ local x=18
+ local y=58
+ spr(a,x,y)
+ spr(b,x+8,y)
+ spr(c,x,y+8)
+ spr(d,x+8,y+8)
 end

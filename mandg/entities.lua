@@ -309,57 +309,82 @@ function build_bra(x,y)
 end
 
 function build_old_woman()
+
  local chats = {
   { text= "oooh! hello young man.\nhee hee hee..." },
   { text= "with those spectacles you\nmust have poor eyesight!" },
   { text= "let me test your vision.\nif you pass the test i will\nhelp you on your journey." },
   { text= "ok then, how many fingers am\ni holding up?\n\n     2     3", 
-    answers = true,
-	draw = function()
-	  --3
-	  draw_fingers(11,10,27,42)
-	end
+    answers = {1,2},
+  fingers=3
   },
-  { text= "wrong!\ni am holding up 3 fingers",
-	draw = function()
-	  --3
-	  draw_fingers(11,10,27,42)
-	end
+  { text= "wrong! the answer is 3.\nlet's try again...",
+  fingers=3,
+  jump=2
   },
-  { text= "wrong!\ni am holding up 2 fingers",
-	draw = function()
-	  --2
-	  draw_fingers(57,10,41,42)
-	end,
-	skip=true
+  { text= "wrong! the answer is 2.\nlet's try again...",
+    fingers=2
   },
-  { text= "the end" },
+  { text= "how many fingers am i\nholding up this time?\n\n     1     2", 
+    answers = {1,1},
+  fingers=1
+  },
+  { text= "wrong! i am not holding\nup any fingers.\none more try...",
+    fingers=0
+  },    
+  { text= "i'll make it easy this time..." },
+  { text= "how many fingers am i\nholding up?\n\n     5     5", 
+    answers = {1,1},
+  fingers=5
+  },
+  { text="wrong, 6 fingers!\nyou are as blind as a bat.\nhee hee hee...",
+    fingers=6
+  },
+  { text="not to worry, i'll help you\nanyway. beware! to the south of\nhere lives a terrible monster..."}
  }
+
+  local function draw_finger_spr(a,b,c,d)
+   local x=18
+   local y=58
+   spr(a,x,y)
+   spr(b,x+8,y)
+   spr(c,x,y+8)
+   spr(d,x+8,y+8)
+  end
+ 
+  local function draw_fingers(count)
+   if (count==0) draw_finger_spr(9,10,25,26)
+   if (count==1) draw_finger_spr(9,10,41,42)
+   if (count==2) draw_finger_spr(57,10,41,42)
+   if (count==3) draw_finger_spr(11,10,27,42)
+   if (count==4) draw_finger_spr(11,10,27,58)
+   if (count==5) draw_finger_spr(11,43,27,58)
+   if (count==6) draw_finger_spr(11,59,27,58)
+  end
  
  return {
   x=32,y=40,
   chat=1,
-  answer=0,
+  answer=1,
   update=function(ent)
    if (btnp(❎) or btnp(🅾️)) then
      
-	 if chats[ent.chat].answers then
-	  ent.chat+=1+ent.answer
-     else
-	  ent.chat+=1
-	  if chats[ent.chat].skip then
-	   ent.chat+=1
-	  end
-	 end
+   if chats[ent.chat].answers then
+    ent.chat+=chats[ent.chat].answers[ent.answer]
+     elseif chats[ent.chat].jump then
+    ent.chat+=chats[ent.chat].jump
+   else 
+    ent.chat+=1
+   end
     
-	ent.answer=0
+  ent.answer=1
    end
    
    if chats[ent.chat].answers then
-	if btnp(⬅️) and ent.answer > 0 then
-      ent.answer-=1
-    elseif btnp(➡️) and ent.answer < 1 then
-     ent.answer+=1
+    if btnp(⬅️) then
+      ent.answer=1
+    elseif btnp(➡️) then
+     ent.answer=2
     end
    end
    
@@ -368,11 +393,11 @@ function build_old_woman()
     print(chats[ent.chat].text,4,100,7)
    
    if chats[ent.chat].answers then
-    if ent.answer==0 then 
-		print(">",20,118,flr(rnd(16)))
-	elseif ent.answer==1 then 
-		print(">",44,118,flr(rnd(16)))
-	end
+    if ent.answer==1 then 
+      print(">",20,118,flr(rnd(16)))
+    elseif ent.answer==2 then 
+      print(">",44,118,flr(rnd(16)))
+    end
    end
   
    local offset=0
@@ -385,36 +410,14 @@ function build_old_woman()
    spr(40,32,56+offset)
    spr(40,40,56+offset,1,1,true)
 
-   --fingers
-   if chats[ent.chat].draw then
-    chats[ent.chat].draw()
+   if chats[ent.chat].fingers then
+    draw_fingers(chats[ent.chat].fingers)
    end
    
-   --0
-   --draw_fingers(9,10,25,26,48,48)
-   --1
-   --draw_fingers(9,10,41,42,72,48)
-   --2
-   --draw_fingers(57,10,41,42,96,48)
-   --3
-   --draw_fingers(11,10,27,42,48,72)
-   --4
-   --draw_fingers(11,10,27,58,72,72)
-   --5
-   --draw_fingers(11,43,27,58,96,72)
-   --6
-   --draw_fingers(11,59,27,58,96,96)
    pal()
   end
  }
 end
 
--- old woman hands
-function draw_fingers(a,b,c,d)
- local x=18
- local y=58
- spr(a,x,y)
- spr(b,x+8,y)
- spr(c,x,y+8)
- spr(d,x+8,y+8)
-end
+
+

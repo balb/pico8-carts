@@ -340,7 +340,8 @@ function build_old_woman()
   { text="wrong, 6 fingers!\nyou are as blind as a bat.\nhee hee hee...",
     fingers=6
   },
-  { text="not to worry, i'll help you\nanyway. beware! to the south of\nhere lives a terrible monster..."}
+  { text="not to worry, i'll help you\nanyway. i will open up the way\nsouth using my magical powers.\ncontinue your journay that way."},
+  { done = true }
  }
 
   local function draw_finger_spr(a,b,c,d)
@@ -367,6 +368,12 @@ function build_old_woman()
   chat=1,
   answer=1,
   update=function(ent)
+   if(state.old_woman_done) return
+   if chats[ent.chat].done then
+    state.old_woman_done = true
+    return
+   end
+  
    if (btnp(❎) or btnp(🅾️)) then
      
    if chats[ent.chat].answers then
@@ -389,7 +396,9 @@ function build_old_woman()
    end
    
   end,
-  draw=function(ent)  
+  draw=function(ent)
+    if(state.old_woman_done or chats[ent.chat].done) return
+  
     print(chats[ent.chat].text,4,100,7)
    
    if chats[ent.chat].answers then

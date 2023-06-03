@@ -21,6 +21,8 @@ cntr_game_over=0
 
 collision=false
 
+state={}
+
 function _update()
  --counters
  _cntr+=1
@@ -55,6 +57,7 @@ function _update()
    map_x=3
    map_y=1
    current_ents={}  
+   state={}
   end
   return
  end
@@ -80,7 +83,7 @@ function _update()
  local next_y=monty_y
  monty_mov=true
  
- if map_x==0 and map_y==0 then
+ if map_x==0 and map_y==0 and not state.old_woman_done then
   -- old woman screen
   if next_x > 80 then
    -- Walk Monty towards old woman...

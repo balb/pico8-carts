@@ -80,8 +80,14 @@ init_screens["03"]=function()
 end
 
 init_screens["23"]=function()
+ local path={
+  {x=24,y=24},
+  {x=88,y=24},
+  {x=88,y=96},
+  {x=24,y=96}
+ }
  add_ent(
-  build_cactus(32,32))
+  build_cactus(88,24,path,2))
 end
 
 --desert fuzzies

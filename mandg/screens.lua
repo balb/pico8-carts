@@ -26,14 +26,53 @@ end
 
 --desert after open
 init_screens["11"]=function()
+ add_ent(build_idiot(16,72,8,48))
+ add_ent(build_idiot(40,88,8,48))
+
+ add_ent(build_idiot(72,64,72,112))
+ add_ent(build_idiot(88,80,72,112))
+ add_ent(build_idiot(104,96,72,112))
 end
 
 --
 init_screens["12"]=function()
+  local path={
+    {x=80,y=40},
+    {x=104,y=40},
+    {x=104,y=64},
+    {x=80,y=64},
+   }
+
+  add_ent(build_fuzzy(80,40,path,1))
+  add_ent(build_fuzzy(104,64,path,3))
+  
+  add_ent(build_firestone(56,64,1,8,24))
+  add_ent(build_firestone(64,64,1,8,24))
 end
 
 --
 init_screens["13"]=function()
+  add_ent(build_idiot(112,48,72,112))
+  add_ent(build_idiot(72,80,72,112))
+  
+    local path1={
+    {x=24,y=24},
+    {x=40,y=24},
+    {x=40,y=48},
+    {x=24,y=48},
+   }
+
+  add_ent(build_fuzzy(24,24,path1,1))
+  
+  local path2={
+    {x=24,y=80},
+    {x=40,y=80},
+    {x=40,y=104},
+    {x=24,y=104},
+   }
+
+  add_ent(build_fuzzy(40,104,path2,3))
+
 end
 
 init_screens["03"]=function()

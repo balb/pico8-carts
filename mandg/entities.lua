@@ -159,6 +159,7 @@ function build_cactus(
   path_index=path_index,
   cntr=0,
   update=function(ent)
+   if(state.freeze)return
    -- same a fuzzy
    local next_x=ent.path[ent.path_index].x
    local next_y=ent.path[ent.path_index].y
@@ -214,6 +215,7 @@ function build_fireball(
   x=start_x, y=start_y,
   dist=dist,
   update=function(ent)
+   if(state.freeze)return
    if dir==0 then
     ent.y-=speed
    elseif dir==1 then
@@ -500,4 +502,47 @@ function build_old_woman()
    pal()
   end
  }
+end
+
+function build_spade(x,y)
+ return {
+  x=x,y=y,
+  update=function()
+  end,
+  draw=function(ent)
+   if not state.spade_collected then
+     pal(7, flr(rnd(16)))
+     spr(54,x,y)
+     pal()
+   end
+  end,
+  box={0,1,7,6},
+  on_collide=function(ent)
+    if not state.spade_collected then
+     state.spade_collected=true
+     del(current_ents,ent)
+	 add_ent(build_textbox("this spiffing spade\nwill come in handy..."))
+    end
+  end
+ }
+end
+
+function build_textbox(text)
+  return {
+    cntr=0,
+    update=function(ent)
+	  state.freeze=true
+	  if ent.cntr<40 then
+	    -- wait for a bit
+	    ent.cntr+=1
+	  elseif (btnp(❎) or btnp(🅾️)) then
+	    del(current_ents,ent)
+		state.freeze=false
+	  end
+	end,
+	draw=function()
+	  rectfill(0,104,127,127,0)
+	  print(text,4,112,7)
+	end,
+  }
 end

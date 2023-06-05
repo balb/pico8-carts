@@ -88,6 +88,7 @@ init_screens["23"]=function()
  }
  add_ent(
   build_cactus(88,24,path,2))
+ add_ent(build_spade(96,24))
 end
 
 --desert fuzzies

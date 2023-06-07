@@ -3,13 +3,16 @@ init_screens={}
 map_x=1
 map_y=3
 
+collide_sandwall=false
+
 -- map stuff
 function map_collide(next_x, next_y)
  local x=flr((next_x+3)/8)
  local y=flr((next_y)/8)
  local check_6=next_y%8!=0
-
- return tile_collide(x,y)
+ collide_sandwall=false
+ 
+ local result=tile_collide(x,y)
   or tile_collide(x+1,y)
   or tile_collide(x,y+1)
   or tile_collide(x+1,y+1)
@@ -18,9 +21,14 @@ function map_collide(next_x, next_y)
    or tile_collide(x+1,y+2)
   ))
 
+  if(collide_sandwall)add_ent(build_sandwall())
+  return result
 end
 
 function tile_collide(x,y)
+ if fget(mget((map_x*16)+x,(map_y*16)+y),1) then
+   collide_sandwall=true
+ end
  return fget(mget((map_x*16)+x,(map_y*16)+y),0)
 end
 

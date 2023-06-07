@@ -5,6 +5,7 @@ function build_idiot(
   min_x=min_x, max_x=max_x,
   speed=0.75,
   update=function(ent)
+   if(state.freeze)return
    ent.x+=ent.speed
    if ent.x<ent.min_x or ent.x>ent.max_x then
     ent.speed*=-1
@@ -53,6 +54,7 @@ function build_fuzzy(
   path=path,
   path_index=path_index,
   update=function(ent)
+   if(state.freeze)return
    local next_x=ent.path[ent.path_index].x
    local next_y=ent.path[ent.path_index].y
    if ent.x < next_x then
@@ -543,6 +545,34 @@ function build_textbox(text)
 	draw=function()
 	  rectfill(0,104,127,127,0)
 	  print(text,4,112,7)
+	end,
+  }
+end
+
+function build_sandwall(text)
+  -- sandwall event handler
+  return {
+    text="",
+	cntr=0,
+    update=function(ent)
+	  if state.spade_collected then
+	    ent.text="now to dig my way through!"
+	  else
+	    ent.text="if only i had a spade\nto dig my way through..."
+	  end
+	  -- copy from build_textbox
+	  state.freeze=true
+	  if ent.cntr<40 then
+	    -- wait for a bit
+	    ent.cntr+=1
+	  elseif (btnp(❎) or btnp(🅾️)) then
+	    del(current_ents,ent)
+		state.freeze=false
+	  end
+	end,
+	draw=function(ent)
+	  rectfill(0,104,127,127,0)
+	  print(ent.text,4,112,7)
 	end,
   }
 end

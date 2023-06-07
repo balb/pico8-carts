@@ -1,7 +1,30 @@
 current_ents={}
-
 init_screens={}
+map_x=1
+map_y=3
 
+-- map stuff
+function map_collide(next_x, next_y)
+ local x=flr((next_x+3)/8)
+ local y=flr((next_y)/8)
+ local check_6=next_y%8!=0
+
+ return tile_collide(x,y)
+  or tile_collide(x+1,y)
+  or tile_collide(x,y+1)
+  or tile_collide(x+1,y+1)
+  or (check_6 and (
+   tile_collide(x,y+2)
+   or tile_collide(x+1,y+2)
+  ))
+
+end
+
+function tile_collide(x,y)
+ return fget(mget((map_x*16)+x,(map_y*16)+y),0)
+end
+
+-- build screens
 function add_ent(ent)
  add(current_ents,ent)
 end

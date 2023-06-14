@@ -9,6 +9,9 @@ monty_box={4,0,11,15}
 monty_dying=0
 monty_lives=10
 
+monty_wall_countdown=120
+monty_wall_dir=1
+
 function draw_monty()
  if monty_dying>0 then
   pal(3, flr(rnd(16)))
@@ -31,6 +34,27 @@ function draw_monty()
   draw_monty_row(17, 8)
  end
  pal()
+ 
+ if state.dig_sandwall then
+  monty_wall_countdown-=1
+  state.freeze=true
+
+  -- walk up and down
+  if monty_y < 8 or monty_y > 100 then
+    monty_wall_dir*=-1
+  end
+  monty_y+=(monty_wall_dir*2)
+ 
+  -- clear the sand wall
+  mset(16,flr(monty_y / 8)+50,64)
+  
+  if monty_wall_countdown==0 then
+    state.dig_sandwall=false
+	state.freeze=false
+	monty_wall_countdown=120
+  end
+ end
+ 
 end
 
 function draw_monty_row(s, y_offset)
@@ -42,6 +66,6 @@ function draw_monty_row(s, y_offset)
  end
  
  if state.dig_sandwall then
-  spr(54+cntr_m2,monty_x-6,monty_y+6,1,1,false,cntr_m2)
+  spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
  end
 end

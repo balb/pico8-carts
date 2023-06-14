@@ -568,6 +568,7 @@ function build_sandwall(text)
 	  elseif (btnp(❎) or btnp(🅾️)) then
 	    del(current_ents,ent)
 		state.freeze=false
+		state.dig_sandwall=state.spade_collected
 	  end
 	end,
 	draw=function(ent)

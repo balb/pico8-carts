@@ -25,6 +25,9 @@ collision=false
 
 state={}
 
+--debug
+state.spade_collected=true
+
 function _update()
  --counters
  _cntr+=1
@@ -158,6 +161,8 @@ function _update()
   end
   
  end
+ 
+ update_monty()
 
  foreach(current_ents,update_entity)
 

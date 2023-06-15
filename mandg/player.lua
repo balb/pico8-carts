@@ -12,6 +12,37 @@ monty_lives=10
 monty_wall_countdown=120
 monty_wall_dir=1
 
+function update_monty()
+ if state.dig_sandwall then
+  monty_wall_countdown-=1
+  state.freeze=true
+
+  -- walk up and down
+  if monty_y < 8 or monty_y > 100 then
+    monty_wall_dir*=-1
+  end
+  monty_y+=(monty_wall_dir*2)
+ 
+  -- clear the sand wall
+  mset(16,flr(monty_y / 8)+50,64)
+  
+  -- draw spade
+  spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
+  
+  if monty_wall_countdown==0 then
+    state.dig_sandwall=false
+	state.freeze=false
+	monty_wall_countdown=100
+  end
+ elseif map_x==0 and map_y==3 then
+   -- fli room
+   monty_x=104
+   monty_dir=2
+ end
+
+ 
+end
+
 function draw_monty()
  if monty_dying>0 then
   pal(3, flr(rnd(16)))
@@ -36,25 +67,10 @@ function draw_monty()
  pal()
  
  if state.dig_sandwall then
-  monty_wall_countdown-=1
-  state.freeze=true
-
-  -- walk up and down
-  if monty_y < 8 or monty_y > 100 then
-    monty_wall_dir*=-1
-  end
-  monty_y+=(monty_wall_dir*2)
- 
-  -- clear the sand wall
-  mset(16,flr(monty_y / 8)+50,64)
-  
-  if monty_wall_countdown==0 then
-    state.dig_sandwall=false
-	state.freeze=false
-	monty_wall_countdown=120
-  end
+  -- draw spade
+  spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
  end
- 
+  
 end
 
 function draw_monty_row(s, y_offset)
@@ -65,7 +81,5 @@ function draw_monty_row(s, y_offset)
   spr(s+2,monty_x,monty_y+y_offset,2,1,monty_dir==2)
  end
  
- if state.dig_sandwall then
-  spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
- end
+ 
 end

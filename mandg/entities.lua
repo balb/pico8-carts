@@ -241,14 +241,16 @@ function build_fli()
  local speed_x=1.2
  local speed_y=1.2
  local path={
-  {x=24,y=24},
-  {x=88,y=24},
-  {x=88,y=96},
-  {x=24,y=96}
+  {x=16,y=20},
+  {x=80,y=84},
+  {x=80,y=100},
+  {x=16,y=100},
+  {x=80,y=36},
+  {x=80,y=20}
  }
 
  return {
-  x=32, y=32,
+  x=48, y=52,
   path_index=1,
   cntr=0,
   mode=0,
@@ -282,10 +284,9 @@ function build_fli()
 		 if (ent.path_index>count(path)) ent.path_index=1
 	   end
 
-	   if ent.cntr==30 then
-		 local dir=rnd({2,3})
+	   if ent.cntr==24 then
+		 local dir=3--rnd({2,3})
 		 local dist=112-ent.x
-		 if(dir==2) dist=ent.x-8
 		 add_ent(build_fireball(ent.x,ent.y+4,dir,dist))
 		 ent.cntr=0
 	   end
@@ -305,7 +306,7 @@ function build_fli()
    --spr(30,ent.x-6,ent.y+9,1,1,true)   
    --spr(30,ent.x-6,ent.y+16,1,1,true,true)   
    --body
-   spr(62,ent.x,ent.y+8)   
+   spr(62,ent.x,ent.y+8,1,1,cntr_m2==0)   
    --spr(29,ent.x,ent.y+13)    
    --spr(29,ent.x,ent.y+18)       
    

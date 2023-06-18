@@ -238,10 +238,61 @@ function build_fireball(
 end
 
 function build_fli()
+ local speed_x=1.2
+ local speed_y=1.2
+ local path={
+  {x=24,y=24},
+  {x=88,y=24},
+  {x=88,y=96},
+  {x=24,y=96}
+ }
+
  return {
   x=32, y=32,
+  path_index=1,
+  cntr=0,
+  mode=0,
   update=function(ent)
    --todo: path update
+   if ent.mode==0 then
+     add_ent(build_textbox("blah blah blah..."))
+	 ent.mode=1
+   elseif ent.mode==1 then
+       if(state.freeze)return
+	   local next_x=path[ent.path_index].x
+	   local next_y=path[ent.path_index].y
+	   if ent.x < next_x then
+		ent.x+=speed_x
+	   elseif ent.x > next_x then
+		ent.x-=speed_x
+	   end
+
+	   if ent.y < next_y then
+		ent.y+=speed_y
+	   elseif ent.y > next_y then
+		ent.y-=speed_y
+	   end
+
+	   if abs(ent.x-next_x)<1
+		and abs(ent.y-next_y)<1 then
+		 --clamp
+		 ent.x=next_x
+		 ent.y=next_y
+		 ent.path_index+=1
+		 if (ent.path_index>count(path)) ent.path_index=1
+	   end
+
+	   if ent.cntr==30 then
+		 local dir=rnd({2,3})
+		 local dist=112-ent.x
+		 if(dir==2) dist=ent.x-8
+		 add_ent(build_fireball(ent.x,ent.y+4,dir,dist))
+		 ent.cntr=0
+	   end
+	   ent.cntr+=1
+       -- end mode 1
+	end
+   
   end,
   draw=function(ent)
    local offset=abs(cntr_m2-1)

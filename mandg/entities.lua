@@ -237,6 +237,24 @@ function build_fireball(
  }
 end
 
+function build_sand_blob(
+ start_x,start_y)
+ -- based on fireball
+ local speed=3
+ return {
+  x=start_x, y=start_y,
+  update=function(ent)
+   if(state.freeze)return
+   ent.x-=speed
+   if (ent.x<=0) del(current_ents,ent)
+  end,
+  draw=function(ent)
+   spr(53,ent.x,ent.y,1,1,false,cntr_m2==0)
+  end,
+  box={1,1,6,6}
+ }
+end
+
 function build_fli()
  local speed_x=1.2
  local speed_y=1.2

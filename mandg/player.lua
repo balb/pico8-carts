@@ -12,6 +12,8 @@ monty_lives=10
 monty_wall_countdown=120
 monty_wall_dir=1
 
+monty_dig_shoot=0
+
 function update_monty()
  if state.dig_sandwall then
   monty_wall_countdown-=1
@@ -38,6 +40,19 @@ function update_monty()
    -- fli room
    monty_x=104
    monty_dir=2
+   
+   if monty_dig_shoot == 0 then
+	 if (btnp(❎) or btnp(🅾️)) and not state.freeze then
+		monty_dig_shoot=1
+		-- add sand blob 53
+		add_ent(build_sand_blob(monty_x,monty_y+6))
+	 end
+   elseif monty_dig_shoot < 8 then
+	monty_dig_shoot+=1
+   else
+	monty_dig_shoot=0
+   end
+   
  end
 
  
@@ -66,11 +81,11 @@ function draw_monty()
  end
  pal()
  
- if state.dig_sandwall then
+ if state.dig_sandwall or monty_dig_shoot>0 then
   -- draw spade
   spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
  end
-  
+   
 end
 
 function draw_monty_row(s, y_offset)

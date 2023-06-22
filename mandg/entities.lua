@@ -634,17 +634,17 @@ function build_textbox(text)
     cntr=0,
     update=function(ent)
 	  state.freeze=true
-	  if ent.cntr<40 then
-	    -- wait for a bit
-	    ent.cntr+=1
+	  if ent.cntr<#text then
+	    -- wait for full string to be printed
+	    ent.cntr+=cntr_m2
 	  elseif (btnp(❎) or btnp(🅾️)) then
 	    del(current_ents,ent)
 		state.freeze=false
 	  end
 	end,
-	draw=function()
+	draw=function(ent)
 	  rectfill(0,104,127,127,0)
-	  print(text,4,112,7)
+	  print(sub(text,1,ent.cntr),4,112,7)
 	end,
   }
 end

@@ -18,6 +18,7 @@ state={}
 
 --debug
 state.spade_collected=true
+init_screens["03"]()
 
 function _update()
  --counters
@@ -182,7 +183,11 @@ function _draw()
  pal()
 
  --print(monty_x..","..monty_y.." "..map_x..","..map_y.." "..cntr_m4)
- print(map_x..","..map_y.." "..(collision and "yes" or "no").." lives "..monty_lives)
+ local msg=map_x..","..map_y.." "..(collision and "yes" or "no").." lives "..monty_lives
+ if boss_ent then
+   msg=msg.." h:"..boss_ent.health
+ end
+ print(msg)
  foreach(current_ents,draw_entity)
 end
 

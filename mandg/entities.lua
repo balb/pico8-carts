@@ -1,3 +1,5 @@
+boss_ent=nil
+
 function build_idiot(
  start_x,start_y,min_x,max_x)
  return {
@@ -245,8 +247,31 @@ function build_sand_blob(
   x=start_x, y=start_y,
   update=function(ent)
    if(state.freeze)return
-   ent.x-=speed
-   if (ent.x<=0) del(current_ents,ent)
+
+   if boss_ent then
+     local ex0=ent.x+ent.box[1]
+	 local ey0=ent.y+ent.box[2]
+	 local ew=ent.box[3]
+	 local eh=ent.box[4]
+	 
+	 local mx0=boss_ent.x+boss_ent.box[1]
+	 local my0=boss_ent.y+boss_ent.box[2]
+	 local mw=boss_ent.box[3]
+	 local mh=boss_ent.box[4] 
+	 
+	 if ex0<mx0+mw and ex0+ew>mx0
+	  -- boss hit
+	  and ey0<my0+mh and eh+ey0>my0 then
+	  boss_ent.on_hit(boss_ent)
+	  del(current_ents,ent)
+     else
+	  --move
+      ent.x-=speed
+      if (ent.x<=0) del(current_ents,ent)	  
+	 end
+   
+   end
+   
   end,
   draw=function(ent)
    spr(53,ent.x,ent.y,1,1,false,cntr_m2==0)
@@ -272,6 +297,7 @@ function build_fli()
   path_index=1,
   cntr=0,
   mode=0,
+  hit_flash=0,
   update=function(ent)
    --todo: path update
    if ent.mode==0 then
@@ -309,25 +335,29 @@ function build_fli()
 		 ent.cntr=0
 	   end
 	   ent.cntr+=1
+	   
+	   if(ent.hit_flash > 0)ent.hit_flash-=1
+	   
        -- end mode 1
 	end
    
   end,
   draw=function(ent)
-   local offset=abs(cntr_m2-1)
-   
+   if(ent.hit_flash>0)pal(12, flr(rnd(16)))
    --head
    spr(46,ent.x,ent.y)
-   --wings
-   --spr(30,ent.x+6,ent.y+9)   
-   --spr(30,ent.x+6,ent.y+16,1,1,false,true)
-   --spr(30,ent.x-6,ent.y+9,1,1,true)   
-   --spr(30,ent.x-6,ent.y+16,1,1,true,true)   
+   -- wings
+   spr(60+cntr_m2,ent.x-6,ent.y+9)
+   spr(60+cntr_m2,ent.x+5,ent.y+9,1,1,true)
    --body
-   spr(62,ent.x,ent.y+8,1,1,cntr_m2==0)   
-   --spr(29,ent.x,ent.y+13)    
-   --spr(29,ent.x,ent.y+18)       
-   
+   spr(62,ent.x+cntr_m2-1,ent.y+8,1,1,cntr_m2==0)
+   if(ent.hit_flash)pal()
+  end,
+  box={0,0,7,15},
+  health=10,
+  on_hit=function(ent)
+    ent.hit_flash=10
+    ent.health-=1
   end
  }
 end

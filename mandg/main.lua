@@ -17,7 +17,7 @@ collision=false
 state={}
 
 --debug
---state.spade_collected=true
+state.spade_collected=true
 init_screens["03"]()
 
 function _update()
@@ -188,6 +188,14 @@ function _draw()
    msg=msg.." h:"..boss_ent.health
  end
  print(msg)
+ 
+ -- top right icon
+ if state.spade_collected then
+   spr(54,120,-1)
+ elseif state.has_north_key then
+   spr(13,120,0)
+ end
+ 
  foreach(current_ents,draw_entity)
 end
 

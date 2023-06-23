@@ -357,8 +357,14 @@ function build_fli()
 	  -- move fli up so he is not behind textbox
 	  if(ent.y>64)ent.y-=1
 	  if(monty_y>64)monty_y-=1
-	  --if not state.freeze then
-	  --end
+	  if not state.freeze then
+	    ent.mode=3
+		state.spade_collected=false
+		state.has_north_key=true
+		del(current_ents,ent)
+
+        -- todo: warp back to gerts
+	  end
 	end
    
   end,

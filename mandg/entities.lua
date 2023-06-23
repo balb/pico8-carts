@@ -299,9 +299,12 @@ function build_fli()
   mode=0,
   hit_flash=0,
   update=function(ent)
-   --todo: path update
    if ent.mode==0 then
-     add_ent(build_textbox("blah blah blah..."))
+     add_ent(build_textbox2(
+	   {"i am the mighty fli!...", 
+	   "how dare you enter my lair!...", 
+	   "you will now pay for this\nfoolhardy intrusion."
+	   }))
 	 ent.mode=1
    elseif ent.mode==1 then
        if(state.freeze)return
@@ -338,7 +341,24 @@ function build_fli()
 	   
 	   if(ent.hit_flash > 0)ent.hit_flash-=1
 	   
+	   if ent.health <= 0 then
+	     ent.mode=2
+		 state.freeze=true
+		 add_ent(build_textbox2(
+		   -- todo: better dialog
+    	   {"arrrrgh! you have defeated me...", 
+	       "i beg your mercy. please take this key", 
+    	   "blha blhaa as"
+	       }))
+	   end
+	   
        -- end mode 1
+    elseif ent.mode==2 then	   
+	  -- move fli up so he is not behind textbox
+	  if(ent.y>64)ent.y-=1
+	  if(monty_y>64)monty_y-=1
+	  --if not state.freeze then
+	  --end
 	end
    
   end,
@@ -354,7 +374,7 @@ function build_fli()
    if(ent.hit_flash)pal()
   end,
   box={0,0,7,15},
-  health=10,
+  health=2,
   on_hit=function(ent)
     ent.hit_flash=10
     ent.health-=1
@@ -629,21 +649,33 @@ function build_spade(x,y)
  }
 end
 
+-- don't really need this func
 function build_textbox(text)
+  return build_textbox2({text})
+end
+
+function build_textbox2(texts)
   return {
-    cntr=0,
+    cntr=1,
+	idx=1,
     update=function(ent)
 	  state.freeze=true
+	  local text=texts[ent.idx]
 	  if ent.cntr<#text then
 	    -- wait for full string to be printed
 	    ent.cntr+=cntr_m2
 	  elseif (btnp(❎) or btnp(🅾️)) then
-	    del(current_ents,ent)
-		state.freeze=false
+	    ent.cntr=1
+		ent.idx+=1
+		if ent.idx > count(texts) then
+	      del(current_ents,ent)
+		  state.freeze=false
+		end
 	  end
 	end,
 	draw=function(ent)
 	  rectfill(0,104,127,127,0)
+	  local text=texts[ent.idx]
 	  print(sub(text,1,ent.cntr),4,112,7)
 	end,
   }

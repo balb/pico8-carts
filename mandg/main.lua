@@ -17,7 +17,7 @@ collision=false
 state={}
 
 --debug
-state.spade_collected=true
+--state.spade_collected=true
 init_screens["03"]()
 
 function _update()

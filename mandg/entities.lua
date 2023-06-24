@@ -235,7 +235,8 @@ function build_fireball(
   draw=function(ent)
    spr(44,ent.x,ent.y,1,1,cntr_m2==0)
   end,
-  box={1,1,6,6}
+  box={1,1,6,6},
+  del_on_death=true
  }
 end
 
@@ -276,7 +277,8 @@ function build_sand_blob(
   draw=function(ent)
    spr(53,ent.x,ent.y,1,1,false,cntr_m2==0)
   end,
-  box={1,1,6,6}
+  box={1,1,6,6},
+  del_on_death=true
  }
 end
 
@@ -306,6 +308,8 @@ function build_fli()
 	   "you will now pay for this\nfoolhardy intrusion."
 	   }))
 	 ent.mode=1
+	 -- move up a bit for textbox
+	 if(monty_y > 88)monty_y=88
    elseif ent.mode==1 then
        if(state.freeze)return
 	   local next_x=path[ent.path_index].x
@@ -350,6 +354,9 @@ function build_fli()
 	       "i beg your mercy. please take this key", 
     	   "blha blhaa as"
 	       }))
+			foreach(current_ents,function(ent)
+				if(ent.del_on_death)del(current_ents,ent)
+			  end) 
 	   end
 	   
        -- end mode 1
@@ -380,7 +387,7 @@ function build_fli()
    if(ent.hit_flash)pal()
   end,
   box={0,0,7,15},
-  health=2,
+  health=10,
   on_hit=function(ent)
     ent.hit_flash=10
     ent.health-=1
@@ -669,7 +676,7 @@ function build_textbox2(texts)
 	  local text=texts[ent.idx]
 	  if ent.cntr<#text then
 	    -- wait for full string to be printed
-	    ent.cntr+=cntr_m2
+	    ent.cntr+=1--cntr_m2
 	  elseif (btnp(❎) or btnp(🅾️)) then
 	    ent.cntr=1
 		ent.idx+=1

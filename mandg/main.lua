@@ -18,7 +18,7 @@ state={}
 
 --debug
 state.spade_collected=true
-init_screens["03"]()
+--init_screens["03"]()
 
 function _update()
  --counters
@@ -115,6 +115,10 @@ function _update()
 
  if collision then
   monty_dying=1
+  foreach(current_ents,function(ent)
+    if(ent.del_on_death)del(current_ents,ent)
+  end) 
+  
  end
 
  if (not map_collide(next_x, next_y)) then

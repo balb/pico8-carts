@@ -9,7 +9,7 @@ monty_box={4,0,11,15}
 monty_dying=0
 monty_lives=10
 
-monty_wall_countdown=120
+monty_wall_countdown=100
 monty_wall_dir=1
 
 monty_dig_shoot=0

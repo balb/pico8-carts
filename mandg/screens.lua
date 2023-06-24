@@ -1,6 +1,6 @@
 current_ents={}
 init_screens={}
-map_x=0
+map_x=1
 map_y=3
 
 collide_sandwall=false

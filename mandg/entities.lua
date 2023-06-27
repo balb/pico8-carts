@@ -347,13 +347,24 @@ function build_fli()
 	   
 	   if ent.health <= 0 then
 	     ent.mode=2
-		 state.freeze=true
+		   state.freeze=true
 		 add_ent(build_textbox2(
 		   -- todo: better dialog
     	   {"arrrrgh! you have defeated me...", 
-	       "i beg your mercy. please take this key", 
+	       "i am not happy to say the least! beg your mercy.\n please take this key",
+         "if I give you this key to the north dungeon will you leave me in peace",
     	   "blha blhaa as"
-	       }))
+	       },function()
+          --warp back to town sq
+          map_x=3
+          map_y=1
+          init_x=24
+          monty_x=24
+          init_screens["31"]()
+          --rebuild wall
+          --mset(16,50,65)
+          --mset(16,51,65)
+         end))
 			foreach(current_ents,function(ent)
 				if(ent.del_on_death)del(current_ents,ent)
 			  end) 
@@ -667,7 +678,7 @@ function build_textbox(text)
   return build_textbox2({text})
 end
 
-function build_textbox2(texts)
+function build_textbox2(texts, on_done)
   return {
     cntr=1,
 	idx=1,
@@ -681,8 +692,9 @@ function build_textbox2(texts)
 	    ent.cntr=1
 		ent.idx+=1
 		if ent.idx > count(texts) then
-	      del(current_ents,ent)
+	    del(current_ents,ent)
 		  state.freeze=false
+      if(on_done)on_done()
 		end
 	  end
 	end,

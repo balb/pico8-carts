@@ -38,6 +38,7 @@ function update_monty()
   end
  elseif map_x==0 and map_y==3 then
    -- fli room
+   init_x=104
    monty_x=104
    monty_dir=2
    

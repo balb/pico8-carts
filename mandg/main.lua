@@ -191,7 +191,7 @@ function _draw()
  if boss_ent then
    msg=msg.." h:"..boss_ent.health
  end
- print(msg)
+ print(msg.." "..monty_y)
  
  -- top right icon
  if state.spade_collected then

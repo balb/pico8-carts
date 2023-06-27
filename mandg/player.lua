@@ -20,21 +20,21 @@ function update_monty()
   state.freeze=true
 
   -- walk up and down
-  if monty_y < 8 or monty_y > 100 then
+  if monty_y <= 8 or monty_y >= 104 then
     monty_wall_dir*=-1
   end
   monty_y+=(monty_wall_dir*2)
  
   -- clear the sand wall
-  mset(16,flr(monty_y / 8)+50,64)
+  mset(16,flr((monty_y+2) / 8)+49,64)
   
   -- draw spade
   spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
   
   if monty_wall_countdown==0 then
     state.dig_sandwall=false
-	state.freeze=false
-	monty_wall_countdown=100
+	  state.freeze=false
+	  monty_wall_countdown=100
   end
  elseif map_x==0 and map_y==3 then
    -- fli room

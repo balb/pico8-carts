@@ -305,7 +305,7 @@ function build_fli()
      add_ent(build_textbox2(
 	   {"i am the mighty fli!...", 
 	   "how dare you enter my lair!...", 
-	   "you will now pay for this\nfoolhardy intrusion."
+	   "you will now pay for this\nfoolhardy intrusion!"
 	   }))
 	 ent.mode=1
 	 -- move up a bit for textbox
@@ -348,42 +348,34 @@ function build_fli()
 	   if ent.health <= 0 then
 	     ent.mode=2
 		   state.freeze=true
-		 add_ent(build_textbox2(
-		   -- todo: better dialog
-    	   {"arrrrgh! you have defeated me...", 
-	       "i am not happy to say the least! beg your mercy.\n please take this key",
-         "if I give you this key to the north dungeon will you leave me in peace",
-    	   "blha blhaa as"
-	       },function()
-          --warp back to town sq
-          map_x=3
-          map_y=1
-          init_x=24
-          monty_x=24
-          init_screens["31"]()
-          --rebuild wall
-          --mset(16,50,65)
-          --mset(16,51,65)
-         end))
-			foreach(current_ents,function(ent)
+		   add_ent(build_textbox2(
+		     {"arrrrgh! defeated by a simple\nhuman. the shame!", 
+	       "oh well, can't complain.\nat least i had some company.",
+         "it does get lonely here.\nperhaps we could be friends?",
+         "as a kindly gesture please\naccept this key..."
+	       }))
+			 foreach(current_ents,function(ent)
 				if(ent.del_on_death)del(current_ents,ent)
-			  end) 
+			end) 
 	   end
 	   
        -- end mode 1
     elseif ent.mode==2 then	   
-	  -- move fli up so he is not behind textbox
-	  if(ent.y>64)ent.y-=1
-	  if(monty_y>64)monty_y-=1
-	  if not state.freeze then
-	    ent.mode=3
-		state.spade_collected=false
-		state.has_north_key=true
-		del(current_ents,ent)
-
-        -- todo: warp back to gerts
-	  end
-	end
+	    -- move fli up so he is not behind textbox
+  	  if(ent.y>64)ent.y-=1
+  	  if(monty_y>64)monty_y-=1
+  	  if not state.freeze then
+  	    ent.mode=3
+        add_ent(build_textbox2(
+        {"it will open the north\ndungeon...",
+        "there you will find something\nto aid you on your quest.",
+        "good luck...",
+        "don't forget to pop back\nand say hi some time!"
+        }))
+        add_ent(build_north_key())
+  	  end
+  	
+    end
    
   end,
   draw=function(ent)
@@ -404,6 +396,26 @@ function build_fli()
     ent.health-=1
   end
  }
+end
+
+function build_north_key()
+  return {
+    x=108,y=88,
+    update=function()
+    end,
+    draw=function(ent)
+      pal(7, flr(rnd(16)))
+      spr(13,ent.x,ent.y)
+      pal()
+    end,
+    on_collide=function(ent)
+      state.spade_collected=false
+    	state.has_north_key=true
+      warp()
+    	del(current_ents,ent)
+    end,
+    box={0,0,7,7}
+  }
 end
 
 function build_skel(

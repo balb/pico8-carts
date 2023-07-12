@@ -13,6 +13,32 @@ monty_wall_countdown=100
 monty_wall_dir=1
 
 monty_dig_shoot=0
+monty_warp=0
+
+function warp()
+  state.freeze=true
+  monty_warp=100
+end
+
+function unwarp()
+  --warp back to town sq
+  monty_dir=1
+  monty_mov=false
+  foreach(current_ents,function(ent)
+    del(current_ents,ent)
+  end)
+  map_x=3
+  map_y=1
+  init_x=24
+  monty_x=24
+  init_y=24
+  monty_y=24
+  state.freeze=false
+    --init_screens["31"]()
+    --rebuild wall
+    --mset(16,50,65)
+    --mset(16,51,65)
+end
 
 function update_monty()
  if state.dig_sandwall then
@@ -57,13 +83,22 @@ function update_monty()
  end
 
  
+ if monty_warp>0 then
+  monty_warp-=1
+  monty_dir=cntr_m4
+  if monty_warp==0 then
+    unwarp()
+  end
+ end
+
 end
 
 function draw_monty()
- if monty_dying>0 then
+ if monty_dying>0 or monty_warp>0 then
   pal(3, flr(rnd(16)))
   pal(11, flr(rnd(16)))
  end
+
  --head
  draw_monty_row(1, 0)
  --feet
@@ -86,7 +121,7 @@ function draw_monty()
   -- draw spade
   spr(54+cntr_m2,monty_x-5,monty_y+6,1,1,false,cntr_m2)
  end
-   
+
 end
 
 function draw_monty_row(s, y_offset)

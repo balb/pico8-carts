@@ -1,5 +1,28 @@
 boss_ent=nil
 
+function build_gerts()
+  return {
+    x=56,y=64,
+    init=true,
+    update=function(ent)
+      if ent.init then
+        add_ent(build_textbox2(
+          {"monty, i am trapped!\nyou must help me.", 
+          "a dastardly fiend\nimprisoned me here.",
+          "blah blah..."
+          }))
+        ent.init=false
+      end
+    end,
+    draw=function(ent)
+      spr(68,ent.x,ent.y+cntr_m2)
+      spr(69,ent.x+8,ent.y+cntr_m2)
+      spr(84,ent.x,ent.y+8+cntr_m2)
+      spr(85,ent.x+8,ent.y+8+cntr_m2)
+    end
+  }
+end
+
 function build_idiot(
  start_x,start_y,min_x,max_x)
  return {

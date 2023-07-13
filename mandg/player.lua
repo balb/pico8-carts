@@ -1,8 +1,8 @@
 init_x=0
 init_y=0
 
-monty_x=70
-monty_y=40
+monty_x=24
+monty_y=24
 monty_dir=1
 monty_mov=false
 monty_box={4,0,11,15}

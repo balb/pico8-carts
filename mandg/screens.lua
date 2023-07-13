@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=1
-map_y=3
+map_x=3
+map_y=1
 
 collide_sandwall=false
 
@@ -241,6 +241,7 @@ end
 --town square
 ---------------
 init_screens["31"]=function()
+  add_ent(build_gerts())
 end
 
 ----------

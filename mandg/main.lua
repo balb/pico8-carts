@@ -17,7 +17,7 @@ collision=false
 state={}
 
 --debug
-state.spade_collected=true
+--state.spade_collected=true
 --init_screens["03"]()
 
 function _update()
@@ -36,9 +36,13 @@ function _update()
 
  if mode==0 then
   --title screen
-  if (btnp(❎) or btnp(🅾️)) mode=1
+  if btnp(❎) or btnp(🅾️) then
+     mode=1
+     init_screens["31"]()
+  end
   return
  end
+ 
  
  if mode==2 then
   cntr_game_over+=1
@@ -234,7 +238,7 @@ end
 
 function draw_entity(ent)
  ent.draw(ent)
- if ent.box!=nil then
+ --[[ if ent.box!=nil then
   rect(
    ent.x+ent.box[1],
    ent.y+ent.box[2],
@@ -244,5 +248,5 @@ function draw_entity(ent)
  rect(monty_x+monty_box[1],
   monty_y+monty_box[2],
   monty_x+monty_box[3],
-  monty_y+monty_box[4],10)
+  monty_y+monty_box[4],10) ]]
 end

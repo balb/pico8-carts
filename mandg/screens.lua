@@ -231,7 +231,13 @@ init_screens["60"]=function()
 end
 
 init_screens["51"]=function()
- add_ent(build_skel(23,23))
+ local path={
+  {x=24,y=32},
+  {x=88,y=32},
+  {x=88,y=100},
+  {x=24,y=100}
+ }
+ add_ent(build_skel(88,32,path,2))
  add_ent(build_key(64,86))
 end
 

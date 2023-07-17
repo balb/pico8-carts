@@ -441,39 +441,94 @@ function build_north_key()
   }
 end
 
+-- based on build_cactus
 function build_skel(
- start_x,start_y)
- local speed=2.5
- return {
-  x=start_x, y=start_y,
-  update=function(ent)
-   --todo: path update
-  end,
-  draw=function(ent)
-   pal(12, 0)
-   local offset=abs(cntr_m2-1)
-   spr(15,ent.x,ent.y)
-   spr(15,ent.x+7,ent.y,1,1,true)   
-   spr(31,ent.x,ent.y+8+offset)
-   spr(31,ent.x+7,ent.y+8+cntr_m2,1,1,true)
-   -- mouth
-   pset(ent.x+5,ent.y+8,7)
-   pset(ent.x+9,ent.y+8,7)   
-   line(ent.x+6,ent.y+8+offset,
-     ent.x+8,ent.y+8+offset,7)
-   pal()
-  end
- }
-end
+  start_x,start_y,path,path_index)
+ 
+  local speed_x=1.2
+  local speed_y=1.2
+ 
+  return {
+   x=start_x, y=start_y,
+   path=path,
+   path_index=path_index,
+   cntr=0,
+   update=function(ent)
+    if(state.freeze)return
+    -- same a fuzzy
+    local next_x=ent.path[ent.path_index].x
+    local next_y=ent.path[ent.path_index].y
+    if ent.x < next_x then
+     ent.x+=speed_x
+    elseif ent.x > next_x then
+     ent.x-=speed_x
+    end
+ 
+    if ent.y < next_y then
+     ent.y+=speed_y
+    elseif ent.y > next_y then
+     ent.y-=speed_y
+    end
+ 
+    if abs(ent.x-next_x)<1
+     and abs(ent.y-next_y)<1 then
+      --clamp
+      ent.x=next_x
+      ent.y=next_y
+      ent.path_index+=1
+      if (ent.path_index>count(ent.path)) ent.path_index=1
+    end
+ 
+    if ent.cntr==30 then
+      local dir=rnd({2,3})
+    local dist=112-ent.x
+    if(dir==2) dist=ent.x-8
+      add_ent(build_fireball(ent.x,ent.y+4,dir,dist))
+    ent.cntr=0
+    end
+    ent.cntr+=1
+ 
+   end,
+   draw=function(ent)
+    pal(12, 0)
+    local offset=abs(cntr_m2-1)
+    spr(15,ent.x,ent.y)
+    spr(15,ent.x+7,ent.y,1,1,true)   
+    spr(31,ent.x,ent.y+8+offset)
+    spr(31,ent.x+7,ent.y+8+cntr_m2,1,1,true)
+    -- mouth
+    pset(ent.x+5,ent.y+8,7)
+    pset(ent.x+9,ent.y+8,7)   
+    line(ent.x+6,ent.y+8+offset,
+      ent.x+8,ent.y+8+offset,7)
+    pal()
+   end,
+   box={2,2,13,13}
+  }
+ end
+ 
 
 function build_key(x,y)
  return {
+  x=x,y=y,
   update=function()
   end,
   draw=function()
    pal(10, flr(rnd(16)))
    spr(47,x,y)
    pal()
+  end,
+  box={1,1,6,6},
+  on_collide=function(ent)
+    if not state.has_simple_key then
+      del(current_ents,ent)
+      add_ent(build_textbox2({"huzzah! a key!"}))
+      state.has_simple_key=true
+      --remove hidden door blocks
+      mset(94,7,97)
+      mset(94,8,97)
+      mset(94,9,97)
+    end
   end
  }
 end
@@ -483,30 +538,36 @@ function build_door(x,y)
   x=x,y=y,
   update=function()
   end,
-  draw=function()
-   pal(12, 0)
-   --top
-   spr(70,x,y)
-   spr(70,x+7,y,1,1,true)   
-   --bottom
-   spr(86,x,y+16)
-   spr(86,x+7,y+16,1,1,true)      
-   --middle
-   spr(86,x,y+12)
-   spr(86,x+7,y+12,1,1,true)      
-   spr(86,x,y+8)
-   spr(86,x+7,y+8,1,1,true)         
-   pal()
+  draw=function(ent)
+    if(ent.open)return
+    pal(12, 0)
+    --top
+    spr(70,x,y)
+    spr(70,x+7,y,1,1,true)   
+    --bottom
+    spr(86,x,y+16)
+    spr(86,x+7,y+16,1,1,true)      
+    --middle
+    spr(86,x,y+12)
+    spr(86,x+7,y+12,1,1,true)      
+    spr(86,x,y+8)
+    spr(86,x+7,y+8,1,1,true)         
+    pal()
   end,
   box={0,0,7,23},
   on_collide=function(ent)
     if not ent.collided then
-      state.freeze=true
+      if state.has_simple_key then
+        ent.open=true
+      else
+        state.freeze=true
+        add_ent(build_textbox2({"hmm, it appears this door\nis locked."}))
+      end
       ent.collided=true
-      add_ent(build_textbox2({"hmm, it appears this door\nis locked..."}))
     end
   end,
-  collided=false
+  collided=false,
+  open=false
  }
 end
 
@@ -629,15 +690,15 @@ function build_old_woman()
    if(state.old_woman_done) return
    if chats[ent.chat].done then
     state.old_woman_done = true
-	-- clear the wall
-	mset(20,15,64)
-	mset(21,15,64)
-	mset(22,15,64)
-	mset(23,15,64)
-	mset(24,15,64)
-	mset(25,15,64)
-	mset(26,15,64)
-	mset(27,15,64)
+    -- clear the wall
+    mset(20,15,64)
+    mset(21,15,64)
+    mset(22,15,64)
+    mset(23,15,64)
+    mset(24,15,64)
+    mset(25,15,64)
+    mset(26,15,64)
+    mset(27,15,64)
     return
    end
   

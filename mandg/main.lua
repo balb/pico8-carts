@@ -244,8 +244,8 @@ function draw_entity(ent)
    ent.y+ent.box[2],
    ent.x+ent.box[3],
    ent.y+ent.box[4],14)
- end
- rect(monty_x+monty_box[1],
+ end ]]
+ --[[ rect(monty_x+monty_box[1],
   monty_y+monty_box[2],
   monty_x+monty_box[3],
   monty_y+monty_box[4],10) ]]

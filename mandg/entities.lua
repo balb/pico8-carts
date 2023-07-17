@@ -480,6 +480,7 @@ end
 
 function build_door(x,y)
  return {
+  x=x,y=y,
   update=function()
   end,
   draw=function()
@@ -496,7 +497,16 @@ function build_door(x,y)
    spr(86,x,y+8)
    spr(86,x+7,y+8,1,1,true)         
    pal()
-  end
+  end,
+  box={0,0,7,23},
+  on_collide=function(ent)
+    if not ent.collided then
+      state.freeze=true
+      ent.collided=true
+      add_ent(build_textbox2({"hmm, it appears this door\nis locked..."}))
+    end
+  end,
+  collided=false
  }
 end
 

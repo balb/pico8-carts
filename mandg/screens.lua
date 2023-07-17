@@ -184,7 +184,7 @@ end
 
 init_screens["40"]=function()
 
- path={
+ local path={
   {x=88,y=72},
   {x=32,y=72},
   {x=32,y=104},
@@ -195,6 +195,18 @@ init_screens["40"]=function()
   build_fuzzy(32,72,path,3))
  add_ent(
   build_fuzzy(88,104,path,1))  
+
+path={
+    {x=88,y=24},
+    {x=32,y=24},
+    {x=32,y=56},
+    {x=88,y=56},
+   }
+  
+   add_ent(
+    build_fuzzy(32,24,path,3))
+   add_ent(
+    build_fuzzy(88,56,path,1))  
 
 end
 

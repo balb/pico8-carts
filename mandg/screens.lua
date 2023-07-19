@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=3
-map_y=1
+map_x=6
+map_y=0
 
 collide_sandwall=false
 
@@ -221,13 +221,34 @@ init_screens["50"]=function()
 end
 
 init_screens["60"]=function()
- add_ent(build_target(79,55))
- add_ent(build_target(95,55)) 
- add_ent(build_target(79,71))
- 
- add_ent(build_crate(56,64))
- add_ent(build_crate(88,32))
- add_ent(build_crate(40,80)) 
+  local next=1
+  local targets={}
+  local on_collide=function(ent)
+    if ent.ord==next then
+      ent.on=true
+      next+=1
+      if next==5 then
+        --remove wall
+        mset(101,15,97)
+        mset(102,15,97)
+        mset(103,15,97)
+        mset(104,15,97)
+        mset(105,15,97)
+        mset(106,15,97)
+      end
+    elseif ent.ord>next then
+      next=1
+      for t in all(targets) do
+        t.on=false
+      end
+    end
+  end
+
+  add(targets,build_target(44,36,2,on_collide))
+  add(targets,build_target(104,64,4,on_collide))
+  add(targets,build_target(24,100,3,on_collide))
+  add(targets,build_target(70,104,1,on_collide))
+  foreach(targets,add_ent) 
 end
 
 init_screens["51"]=function()
@@ -244,9 +265,6 @@ end
 init_screens["61"]=function()
  add_ent(build_key(64,64))
 end
-
-
-
 
 init_screens["21"]=function()
  add_ent(

@@ -19,6 +19,7 @@ state={}
 --debug
 --state.spade_collected=true
 --init_screens["03"]()
+init_screens["60"]()
 
 function _update()
  --counters
@@ -38,7 +39,7 @@ function _update()
   --title screen
   if btnp(❎) or btnp(🅾️) then
      mode=1
-     init_screens["31"]()
+     --init_screens["31"]()
   end
   return
  end
@@ -184,12 +185,6 @@ function _draw()
  
  map(map_x*16,map_y*16,0,0)
 
- -- blue to black for the eyes
- pal(12, 0)
- draw_monty()
- -- reset palette
- pal()
-
  --print(monty_x..","..monty_y.." "..map_x..","..map_y.." "..cntr_m4)
  local msg=map_x..","..map_y.." "..(collision and "yes" or "no").." lives "..monty_lives
  if boss_ent then
@@ -207,6 +202,12 @@ function _draw()
  end
  
  foreach(current_ents,draw_entity)
+
+  -- blue to black for the eyes
+  pal(12, 0)
+  draw_monty()
+  -- reset palette
+  pal()
 end
 
 function check_collision(ent)

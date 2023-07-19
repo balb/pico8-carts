@@ -571,28 +571,24 @@ function build_door(x,y)
  }
 end
 
-function build_target(x,y)
+function build_target(x,y,ord,on_collide)
  return {
+  x=x,y=y,ord=ord,
   update=function()
   end,
-  draw=function()
-    circfill(x,y,4,10)
-    circfill(x,y,2,12)    
-    --circfill(x,y,1,8)        
-  end
- }
-end
-
-function build_crate(x,y)
- return {
-  update=function()
+  draw=function(ent)
+    if ent.on then
+      circfill(x,y,4,10)
+      circfill(x,y,2,12)    
+    else
+      circfill(x,y,4,13)
+      circfill(x,y,2,5)
+    end
+    print(ent.ord,ent.x-2,ent.y-2,8)
   end,
-  draw=function()
-    spr(116,x,y,1,1,false,true)
-    spr(116,x+8,y,1,1,true,true)
-    spr(116,x,y+8)
-    spr(116,x+8,y+8,1,1,true)            
-  end
+  box={0,0,7,7},
+  on_collide=on_collide,
+  on=false
  }
 end
 

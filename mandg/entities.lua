@@ -105,7 +105,7 @@ function build_fuzzy(
 
   end,
   draw=function(ent)
-   if(map_x==4 and map_y==0) pal(1, 5)
+   if((map_x==4 or map_x==6) and map_y==0) pal(1, 5)
    spr(16,ent.x,ent.y,1,1,
     cntr_m4>1,
     cntr_m4==1 or cntr_m4==2)
@@ -584,7 +584,7 @@ function build_target(x,y,ord,on_collide)
       circfill(x,y,4,13)
       circfill(x,y,2,5)
     end
-    print(ent.ord,ent.x-2,ent.y-2,8)
+    --print(ent.ord,ent.x-2,ent.y-2,8)
   end,
   box={0,0,7,7},
   on_collide=on_collide,
@@ -834,5 +834,22 @@ function build_sandwall(text)
 	  rectfill(0,104,127,127,0)
 	  print(ent.text,4,112,7)
 	end,
+  }
+end
+
+function build_machete(x,y)
+  return {
+    x=x,y=y,
+    update=function(ent)
+    end,
+    draw=function(ent)
+      spr(14,ent.x,ent.y)
+    end,
+    box={0,0,7,7},
+    on_collide=function(ent)
+      state.has_machete=true
+      warp()
+    	del(current_ents,ent)
+    end
   }
 end

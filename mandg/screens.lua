@@ -196,7 +196,7 @@ init_screens["40"]=function()
  add_ent(
   build_fuzzy(88,104,path,1))  
 
-path={
+  path={
     {x=88,y=24},
     {x=32,y=24},
     {x=32,y=56},
@@ -249,6 +249,25 @@ init_screens["60"]=function()
   add(targets,build_target(24,100,3,on_collide))
   add(targets,build_target(70,104,1,on_collide))
   foreach(targets,add_ent) 
+
+  local path1={
+    {x=64,y=24},
+    {x=88,y=24},
+    {x=88,y=48},
+    {x=64,y=48},
+  }
+
+  add_ent(build_fuzzy(64,24,path1,2))
+
+  local path2={
+    {x=32,y=56},
+    {x=56,y=56},
+    {x=56,y=80},
+    {x=32,y=80},
+  }
+
+  add_ent(build_fuzzy(56,80,path2,4))
+
 end
 
 init_screens["51"]=function()
@@ -263,7 +282,7 @@ init_screens["51"]=function()
 end
 
 init_screens["61"]=function()
- add_ent(build_key(64,64))
+  add_ent(build_machete(60,64))
 end
 
 init_screens["21"]=function()

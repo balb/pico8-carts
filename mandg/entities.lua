@@ -856,19 +856,21 @@ end
 
 function build_snake(x,y)
   return {
-    x=x,y=y,
+    x=130,y=y,
+    target_x=x,
     snake_cntr=1,
     update=function(ent)
       if cntr_m2==0 then
         ent.snake_cntr+=1
         if(ent.snake_cntr>6)ent.snake_cntr=1
       end
+      if(ent.x>ent.target_x)ent.x-=1
     end,
     draw=function(ent)
       pal(12, 0)
       local xoset=0
       if(cntr_m4>2)xoset+=1
-      spr(87,x-1+xoset,y-8)
+      spr(87,ent.x-1+xoset,y-8)
       pal()
       snake_segment(ent.x,ent.y,5,5,ent.snake_cntr,1)
       snake_segment(ent.x,ent.y+5,5,5,ent.snake_cntr,2)
@@ -897,4 +899,59 @@ end
 function snake_boob(x,y,yoset)
   circfill(x,y+yoset,5,15)
   circfill(x,y+1+yoset,1,4)
+end
+
+function build_jonathon(x,y)
+  return {
+    x=x,y=y,
+    phase=0,
+    update=function(ent)
+      if ent.phase==0 then
+        monty_mov=false
+        add_ent(build_textbox2({
+          "greetings...", 
+          "my name is jon-a-thon...",
+          "i live in the am-a-zon...",
+          "i have a snake...",
+        }, function()
+          ent.phase=1
+        end))
+        ent.phase=-1
+      elseif ent.phase==1 then
+        add_ent(build_snake(64,64))
+        add_ent(build_textbox2({
+          "his name is jon-a-thon...",
+          "he has large wobbly boobies!",
+          "he doesn't wear a bra...",
+          "he is the no-bra co-bra!",
+          "his lack of brassiere\nis embarrassing!",
+          "legend has it that a suitable\nbra is hidden in this forest...",
+          "if you can find the bra i will\nhelp you on your journey...",
+          "good luck in your search!"
+        }, function()
+          foreach(current_ents,function(ent)
+            del(current_ents,ent)
+          end)
+        end))
+        ent.phase=2
+      end
+    end,
+    draw=function(ent)
+      local ft_s=18
+      local y_oset=0
+      if cntr_m4>=2 then
+        ft_s=6
+        y_oset=1
+      end
+      
+      pal(12,0)
+      spr(45,ent.x,ent.y+y_oset)
+      spr(45,ent.x+8,ent.y+y_oset,1,1,true)
+      pal(7,0)--tache
+      pal(3,2)--body
+      spr(ft_s,ent.x,ent.y+8+y_oset)
+      spr(ft_s,ent.x+8,ent.y+8+y_oset,1,1,true)
+      pal()
+    end
+  }
 end

@@ -308,7 +308,8 @@ end
 --enter jungle
 init_screens["41"]=function()
  add_ent(build_bra(32,32))
- add_ent(build_snake(64,64))
+ --add_ent(build_snake(64,64))
+ add_ent(build_jonathon(80,80))
 end
 
 init_screens["42"]=function()

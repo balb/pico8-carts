@@ -19,7 +19,7 @@ state={}
 --debug
 --state.spade_collected=true
 --init_screens["03"]()
-init_screens["60"]()
+--init_screens["60"]()
 
 function _update()
  --counters

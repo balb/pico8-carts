@@ -853,3 +853,48 @@ function build_machete(x,y)
     end
   }
 end
+
+function build_snake(x,y)
+  return {
+    x=x,y=y,
+    snake_cntr=1,
+    update=function(ent)
+      if cntr_m2==0 then
+        ent.snake_cntr+=1
+        if(ent.snake_cntr>6)ent.snake_cntr=1
+      end
+    end,
+    draw=function(ent)
+      pal(12, 0)
+      local xoset=0
+      if(cntr_m4>2)xoset+=1
+      spr(87,x-1+xoset,y-8)
+      pal()
+      snake_segment(ent.x,ent.y,5,5,ent.snake_cntr,1)
+      snake_segment(ent.x,ent.y+5,5,5,ent.snake_cntr,2)
+      snake_segment(ent.x,ent.y+10,5,4,ent.snake_cntr,3)
+      snake_segment(ent.x+1,ent.y+14,4,4,ent.snake_cntr,4)
+      snake_segment(ent.x+1,ent.y+18,3,3,ent.snake_cntr,5)
+      snake_segment(ent.x+1,ent.y+21,2,2,ent.snake_cntr,6)
+      snake_boob(ent.x-3,ent.y+6,cntr_m2)
+      snake_boob(ent.x+8,ent.y+6,abs(cntr_m2-1))
+    end,
+    box={0,0,7,15},
+    on_collide=function(ent)
+      
+    end
+  }
+end
+
+function snake_segment(sx,sy,w,h,sc,idx)
+  local oset=0
+  if(sc==idx)oset=1
+  local ssx=sx+oset
+  rectfill(ssx,sy,ssx+w,sy+h,10)
+  rect    (ssx,sy,ssx+w,sy+h,3)
+end
+
+function snake_boob(x,y,yoset)
+  circfill(x,y+yoset,5,15)
+  circfill(x,y+1+yoset,1,4)
+end

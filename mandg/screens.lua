@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=6
-map_y=0
+map_x=3
+map_y=1
 
 collide_sandwall=false
 
@@ -227,6 +227,7 @@ init_screens["60"]=function()
     if ent.ord==next then
       ent.on=true
       next+=1
+      sfx(0)
       if next==5 then
         --remove wall
         mset(101,15,97)
@@ -238,6 +239,7 @@ init_screens["60"]=function()
       end
     elseif ent.ord>next then
       next=1
+      sfx(1)
       for t in all(targets) do
         t.on=false
       end
@@ -306,6 +308,7 @@ end
 --enter jungle
 init_screens["41"]=function()
  add_ent(build_bra(32,32))
+ add_ent(build_snake(64,64))
 end
 
 init_screens["42"]=function()

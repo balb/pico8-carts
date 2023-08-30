@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=3
-map_y=1
+map_x=7
+map_y=2
 
 collide_sandwall=false
 
@@ -307,9 +307,9 @@ end
 
 --enter jungle
 init_screens["41"]=function()
- add_ent(build_bra(32,32))
+ --add_ent(build_bra(32,32))
  --add_ent(build_snake(64,64))
- add_ent(build_jonathon(80,80))
+ --add_ent(build_jonathon(80,80))
 end
 
 init_screens["42"]=function()
@@ -319,6 +319,7 @@ init_screens["52"]=function()
 end
 
 init_screens["62"]=function()
+  add_ent(build_jonathon(80,80))
 end
 
 init_screens["72"]=function()
@@ -331,6 +332,11 @@ init_screens["73"]=function()
 end
 
 init_screens["71"]=function()
+  add_ent(build_firestone(16,32,3,0,88))
+  add_ent(build_firestone(8 ,48,3,8,96))
+  add_ent(build_firestone(16,64,3,0,88))
+  add_ent(build_firestone(8 ,80,3,8,96))
+  add_ent(build_firestone(16,96,3,0,88))
 end
 
 init_screens["70"]=function()

@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=7
-map_y=2
+map_x=6
+map_y=3
 
 collide_sandwall=false
 
@@ -329,6 +329,16 @@ init_screens["63"]=function()
 end
 
 init_screens["73"]=function()
+  local path={
+    {x=24,y=32},
+    {x=88,y=32},
+    {x=88,y=96},
+    {x=24,y=96}
+   }
+   add_ent(
+    build_monkey(88,24,path,2))
+
+  add_ent(build_bra(96,24))
 end
 
 init_screens["71"]=function()

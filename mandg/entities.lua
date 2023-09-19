@@ -619,7 +619,11 @@ function build_bra(x,y)
    spr(63,x,y)
    spr(63,x+8,y,1,1,true)
   end,
-  box={0,0,15,7}
+  box={0,0,15,7},
+  on_collide=function(ent)
+    state.has_bra=true
+    del(current_ents,ent)    
+  end
  }
 end
 

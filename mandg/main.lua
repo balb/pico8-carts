@@ -199,6 +199,8 @@ function _draw()
   spr(13,120,0)
  elseif state.has_simple_key then
   spr(47,120,0)
+ elseif state.has_bra then
+  spr(104,120,-1)  
  end
  
  foreach(current_ents,draw_entity)

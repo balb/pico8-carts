@@ -338,7 +338,7 @@ init_screens["73"]=function()
    add_ent(
     build_monkey(88,24,path,2))
 
-  add_ent(build_bra(96,24))
+  if(not state.has_bra) add_ent(build_bra(96,24))
 end
 
 init_screens["71"]=function()

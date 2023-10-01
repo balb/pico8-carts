@@ -20,6 +20,8 @@ state={}
 --state.spade_collected=true
 --init_screens["03"]()
 --init_screens["60"]()
+--state.has_bra=true
+--state.has_met_jonathon=true
 
 function _update()
  --counters

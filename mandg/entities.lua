@@ -882,8 +882,17 @@ function build_snake(x,y)
       snake_segment(ent.x+1,ent.y+14,4,4,ent.snake_cntr,4)
       snake_segment(ent.x+1,ent.y+18,3,3,ent.snake_cntr,5)
       snake_segment(ent.x+1,ent.y+21,2,2,ent.snake_cntr,6)
-      snake_boob(ent.x-3,ent.y+6,cntr_m2)
-      snake_boob(ent.x+8,ent.y+6,abs(cntr_m2-1))
+      
+      if state.has_bra_on then
+        snake_boob(ent.x-3,ent.y+6,0)
+        snake_boob(ent.x+8,ent.y+6,0)
+        -- bra
+        spr(63,x-5,y+2)
+        spr(63,x+3,y+2,1,1,true)
+      else
+        snake_boob(ent.x-3,ent.y+6,cntr_m2)
+        snake_boob(ent.x+8,ent.y+6,abs(cntr_m2-1))
+      end
     end,
     box={0,0,7,15},
     on_collide=function(ent)
@@ -901,7 +910,11 @@ function snake_segment(sx,sy,w,h,sc,idx)
 end
 
 function snake_boob(x,y,yoset)
-  circfill(x,y+yoset,5,15)
+  if state.has_bra_on then
+    circfill(x,y+yoset,4,15)
+  else
+    circfill(x,y+yoset,5,15)
+  end
   circfill(x,y+1+yoset,1,4)
 end
 
@@ -931,11 +944,64 @@ function build_jonathon(x,y)
           "his lack of brassiere\nis embarrassing!",
           "legend has it that a suitable\nbra is hidden in this forest...",
           "if you can find the bra i will\nhelp you on your journey...",
-          "good luck in your search!"
+          "good luck with your search!"
         }, function()
           foreach(current_ents,function(ent)
             del(current_ents,ent)
           end)
+        end))
+        ent.phase=2
+      end
+    end,
+    draw=function(ent)
+      local ft_s=18
+      local y_oset=0
+      if cntr_m4>=2 then
+        ft_s=6
+        y_oset=1
+      end
+      
+      pal(12,0)
+      spr(45,ent.x,ent.y+y_oset)
+      spr(45,ent.x+8,ent.y+y_oset,1,1,true)
+      pal(7,0)--tache
+      pal(3,2)--body
+      spr(ft_s,ent.x,ent.y+8+y_oset)
+      spr(ft_s,ent.x+8,ent.y+8+y_oset,1,1,true)
+      pal()
+    end
+  }
+end
+
+function build_jonathon_2(x,y)
+  return {
+    x=x,y=y,
+    phase=0,
+    update=function(ent)
+      if ent.phase==0 then
+        monty_mov=false
+        
+        add_ent(build_snake(64,64))
+        add_ent(build_textbox2({
+          "rejoice!!!", 
+          "you have found the bar.",
+          "time to tame those boobies..."
+        }, function()
+          ent.phase=1
+          state.has_bra_on=true
+        end))
+        ent.phase=-1
+      elseif ent.phase==1 then
+        add_ent(build_textbox2({
+          "ahh, that's much better.",
+          "maybe a little small but\nit'll do the job.",
+          "as promised i will help you\non your journey.", 
+          "by clearning a path through\nthe forest. goodbye!"
+        }, function()
+          foreach(current_ents,function(ent)
+            del(current_ents,ent)
+          end)
+          -- todo: clear path
         end))
         ent.phase=2
       end

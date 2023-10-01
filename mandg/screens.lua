@@ -1,7 +1,7 @@
 current_ents={}
 init_screens={}
-map_x=6
-map_y=3
+map_x=4
+map_y=2
 
 collide_sandwall=false
 
@@ -319,7 +319,12 @@ init_screens["52"]=function()
 end
 
 init_screens["62"]=function()
-  add_ent(build_jonathon(80,80))
+  if not state.has_met_jonathon then
+    add_ent(build_jonathon(80,80))
+    state.has_met_jonathon = true
+  elseif state.has_bra then
+    add_ent(build_jonathon_2(80,80))
+  end
 end
 
 init_screens["72"]=function()

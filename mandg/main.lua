@@ -1,7 +1,7 @@
-start_map_x=4
-start_map_y=2
-start_monty_x=32
-start_monty_y=32
+start_map_x = 4
+start_map_y = 2
+start_monty_x = 32
+start_monty_y = 32
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -10,16 +10,16 @@ start_monty_y=32
 --btn_x=❎
 --btn_o=🅾️
 
-scenes=nil
-scene=nil
+scenes = nil
+scene = nil
 
 function _init()
-  scenes=build_scenes()
+  scenes = build_scenes()
   switch_scene("title")
 end
 
 function switch_scene(s)
-  scene=scenes[s]
+  scene = scenes[s]
   scene:init()
 end
 

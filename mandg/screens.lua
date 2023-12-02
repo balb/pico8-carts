@@ -37,13 +37,10 @@ end
 
 function build_screen()
   return {
-    ents={
-
-    },
-    update=function(self)
-      
+    ents = {},
+    update = function(self)
     end,
-    draw=function(self)
+    draw = function(self)
       print("i am the screen", 10, 10)
     end
   }

@@ -1,17 +1,12 @@
 --dir: up=0,down=1,left=2,right=3
 function build_monty()
   return {
-    x = 0,
-    y = 0,
-    dir = 0,
+    x = start_monty_x,
+    y = start_monty_y,
+    dir = 1,
     mov = false,
     walk_cntr = 0,
     walk_step = 0,
-    init = function(self)
-      self.x = start_monty_x
-      self.y = start_monty_y
-      self.dir = 1
-    end,
     update = function(self)
       self.walk_cntr += 1
       if (self.walk_cntr == 11) self.walk_cntr = 0

@@ -36,7 +36,27 @@ function build_scene_main()
       self.monty:init()
     end,
     update=function(self)
-      self.screen:update(self.monty)
+      self.monty.mov=true
+      if btn(⬆️) then
+        self.monty.dir=0
+        --next_y-=1
+      elseif btn(⬇️) then
+        self.monty.dir=1
+        --next_y+=1
+      elseif btn(⬅️) then
+        self.monty.dir=2
+        --next_x-=1
+      elseif btn(➡️) then
+        self.monty.dir=3
+        --next_x+=1
+      else
+        self.monty.mov=false
+      end
+      
+      
+      
+      self.screen:update()
+      self.monty:update()
       --if btnp(⬆️) then
       --  self.map_y-=1
       --elseif btnp(⬇️) then
@@ -46,10 +66,14 @@ function build_scene_main()
       --elseif btnp(➡️) then
       --  self.map_x+=1
       --end
+
+
+
     end,
     draw=function(self)
       map(self.map_x*16,self.map_y*16,0,0)
-      self.screen:draw(self.monty)
+      self.screen:draw()
+      self.monty:draw()
     end
   }
 end

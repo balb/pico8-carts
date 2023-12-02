@@ -40,21 +40,11 @@ function build_screen()
     ents={
 
     },
-    update=function(self,monty)
-      monty:update()
-      --if btnp(⬆️) then
-      --  scene.map_y-=1
-      --elseif btnp(⬇️) then
-      --  scene.map_y+=1
-      --elseif btnp(⬅️) then
-      --  scene.map_x-=1
-      --elseif btnp(➡️) then
-      --  scene.map_x+=1
-      --end
+    update=function(self)
+      
     end,
-    draw=function(self,monty)
+    draw=function(self)
       print("i am the screen", 10, 10)
-      monty:draw()
     end
   }
 end

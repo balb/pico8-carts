@@ -1,5 +1,5 @@
-start_map_x = 4
-start_map_y = 2
+start_map_x = 3
+start_map_y = 1
 start_monty_x = 32
 start_monty_y = 32
 

@@ -54,6 +54,8 @@ function build_scene_main()
         self.monty.mov = false
       end
 
+      -- todo: check collision
+
       if not map_collide(scene, next_x, next_y) then
         --screen wrap
         if next_x == -5 then
@@ -82,6 +84,8 @@ function build_scene_main()
     end,
     draw = function(self)
       map(self.map_x * 16, self.map_y * 16, 0, 0)
+      print(self.map_x, 0, 0)
+      print(self.map_y, 16, 0)
       self.screen:draw()
       self.monty:draw()
     end

@@ -5,12 +5,21 @@ function build_monty()
     y = start_monty_y,
     dir = 1,
     mov = false,
+    box = { 4, 0, 11, 15 },
     walk_cntr = 0,
     walk_step = 0,
+    dying = 0,
+    die = function(self)
+      self.dying = 20
+    end,
     update = function(self)
       self.walk_cntr += 1
       if (self.walk_cntr == 11) self.walk_cntr = 0
       self.walk_step = self.walk_cntr < 6 and 0 or 1
+
+      if self.dying > 0 then
+        self.dying -= 1
+      end
     end,
     draw = function(self)
       draw_monty(self)
@@ -19,10 +28,11 @@ function build_monty()
 end
 
 function draw_monty(monty)
-  --if monty.dying>0 or monty.warp>0 then
-  -- pal(3, flr(rnd(16)))
-  -- pal(11, flr(rnd(16)))
-  --end
+  if monty.dying > 0 then
+    -- or monty.warp>0 then
+    pal(3, flr(rnd(16)))
+    pal(11, flr(rnd(16)))
+  end
 
   --head
   draw_monty_row(monty, 1, 0)
@@ -40,7 +50,8 @@ function draw_monty(monty)
     --not moving
     draw_monty_row(monty, 17, 8)
   end
-  --pal()
+
+  pal()
 
   --if state.dig_sandwall or monty.dig_shoot>0 then
   -- draw spade

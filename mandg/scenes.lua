@@ -54,7 +54,18 @@ function build_scene_main()
         self.monty.mov = false
       end
 
-      -- todo: check collision
+      local collision = false
+      foreach(
+        self.screen.ents, function(ent)
+          local ent_collision = check_collision(self.monty, ent)
+          --if ent_collision ...
+          collision = collision or ent_collision
+        end
+      )
+
+      if collision then
+        self.monty:die()
+      end
 
       if not map_collide(scene, next_x, next_y) then
         --screen wrap
@@ -90,6 +101,28 @@ function build_scene_main()
       self.monty:draw()
     end
   }
+end
+
+function check_collision(monty, ent)
+  if (ent.box == nil) return false
+  local ex0 = ent.x + ent.box[1]
+  local ey0 = ent.y + ent.box[2]
+  local ew = ent.box[3]
+  local eh = ent.box[4]
+
+  local mx0 = monty.x + monty.box[1]
+  local my0 = monty.y + monty.box[2]
+  local mw = monty.box[3]
+  local mh = monty.box[4]
+
+  return ex0 < mx0 + mw and ex0 + ew > mx0
+      and ey0 < my0 + mh and eh + ey0 > my0
+  --if ent.on_collide != nil then
+  --  ent.on_collide(ent)
+  --else
+  --normal enemy
+  --  return true
+  --end
 end
 
 function map_collide(scene, next_x, next_y)

@@ -9,8 +9,13 @@ function build_monty()
     walk_cntr = 0,
     walk_step = 0,
     dying = 0,
+    death_count = 0,
     die = function(self)
-      self.dying = 20
+      if self.dying == 0 then
+        freeze()
+        self.death_count += 1
+        self.dying = 20
+      end
     end,
     update = function(self)
       self.walk_cntr += 1
@@ -19,6 +24,12 @@ function build_monty()
 
       if self.dying > 0 then
         self.dying -= 1
+        if self.dying == 0 then
+          unfreeze()
+
+          -- todo: move to start of screen
+          self.y = 20
+        end
       end
     end,
     draw = function(self)

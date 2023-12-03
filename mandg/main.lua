@@ -31,3 +31,11 @@ function _draw()
   cls()
   scene:draw()
 end
+
+function freeze()
+  scene:freeze()
+end
+
+function unfreeze()
+  scene:unfreeze()
+end

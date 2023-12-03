@@ -27,13 +27,26 @@ function build_scene_main()
     screens = build_screens(),
     screen = nil,
     monty = build_monty(),
+    frozen = false,
     init = function(self)
       self:set_screen()
     end,
     set_screen = function(self)
       self.screen = self.screens[self.map_x .. self.map_y]
     end,
+    freeze = function(self)
+      frozen = true
+    end,
+    unfreeze = function(self)
+      frozen = false
+    end,
     update = function(self)
+      if frozen then
+        -- need to update monty to unfreeze
+        self.monty:update()
+        return
+      end
+
       local next_x = self.monty.x
       local next_y = self.monty.y
 
@@ -95,10 +108,12 @@ function build_scene_main()
     end,
     draw = function(self)
       map(self.map_x * 16, self.map_y * 16, 0, 0)
-      print(self.map_x, 0, 0)
-      print(self.map_y, 16, 0)
+      --print(self.map_x, 0, 0)
+      --print(self.map_y, 16, 0)
       self.screen:draw()
       self.monty:draw()
+
+      print("deaths: " .. self.monty.death_count, 0, 0)
     end
   }
 end

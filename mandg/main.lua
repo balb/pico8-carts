@@ -1,7 +1,7 @@
 start_map_x = 2
 start_map_y = 0
-start_monty_x = 64
-start_monty_y = 112
+start_monty_x = 8
+start_monty_y = 64
 
 --btn_up=⬆️
 --btn_down=⬇️

@@ -1,7 +1,7 @@
 function build_screens()
   local tab = {}
   tab["00"] = build_screen({})
-  tab["10"] = build_screen({})
+  tab["10"] = build_screen_desert_top_firestones()
   tab["20"] = build_screen_desert_fuzzies()
   tab["30"] = build_screen({})
   tab["40"] = build_screen({})
@@ -38,10 +38,16 @@ end
 function build_screen(ents)
   return {
     ents = ents,
+    add_ent = function(self, ent)
+      add(self.ents, ent)
+    end,
+    del_ent = function(self, ent)
+      del(self.ents, ent)
+    end,
     update = function(self)
       foreach(
         self.ents, function(ent)
-          ent:update()
+          ent:update(self)
         end
       )
     end,
@@ -81,5 +87,16 @@ function build_screen_desert_fuzzies()
   add(ents, build_fuzzy(64, 96, path, 4))
   add(ents, build_fuzzy(80, 80, path, 1))
   add(ents, build_fuzzy(56, 72, path, 2))
+  return build_screen(ents)
+end
+
+function build_screen_desert_top_firestones()
+  local ents = {
+    build_firestone(8, 40, 3, 8, 32),
+    build_firestone(8, 72, 3, 12, 40),
+    build_firestone(8, 96, 3, 16, 24),
+    build_firestone(48, 16, 1, 2, 64),
+    build_firestone(72, 16, 1, 14, 64)
+  }
   return build_screen(ents)
 end

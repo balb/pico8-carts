@@ -75,17 +75,23 @@ function build_firestone(x, y, dir, t, dist)
   return {
     x = x, y = y,
     timer = 0,
+    arrow_added = false,
     update = function(self, screen)
       self.timer = time_toggle(18, 18)
       if self.timer == t then
-        local x_offset = 0
-        local y_offset = 0
-        if dir == 3 then
-          x_offset = 8
-        elseif dir == 1 then
-          y_offset = 8
+        if not self.arrow_added then
+          local x_offset = 0
+          local y_offset = 0
+          if dir == 3 then
+            x_offset = 8
+          elseif dir == 1 then
+            y_offset = 8
+          end
+          screen:add_ent(build_arrow(x + x_offset, y + y_offset, dir, dist))
+          self.arrow_added = true
         end
-        screen:add_ent(build_arrow(x + x_offset, y + y_offset, dir, dist))
+      else
+        self.arrow_added = false
       end
     end,
     draw = function(self)
@@ -96,7 +102,7 @@ function build_firestone(x, y, dir, t, dist)
         s2 += 2
       end
       spr(s2, x, y, 1, 1, flip_x, flip_y)
-      --print(self.timer, 96, 0)
+      -- print(self.timer, 96, 0)
     end,
     box = { 1, 1, 6, 6 }
   }

@@ -2,7 +2,7 @@ function build_screens()
   local tab = {}
   tab["00"] = build_screen({})
   tab["10"] = build_screen({})
-  tab["20"] = build_screen({})
+  tab["20"] = build_screen_desert_fuzzies()
   tab["30"] = build_screen({})
   tab["40"] = build_screen({})
   tab["50"] = build_screen({})
@@ -53,4 +53,33 @@ function build_screen(ents)
       )
     end
   }
+end
+
+--
+function build_screen_desert_fuzzies()
+  local ents = {}
+  local path = {
+    { x = 24, y = 24 },
+    { x = 88, y = 24 },
+    { x = 88, y = 56 },
+    { x = 24, y = 56 }
+  }
+  add(ents, build_fuzzy(24, 24, path, 2))
+  add(ents, build_fuzzy(56, 24, path, 2))
+  add(ents, build_fuzzy(88, 24, path, 3))
+  add(ents, build_fuzzy(88, 56, path, 4))
+  add(ents, build_fuzzy(56, 56, path, 4))
+  add(ents, build_fuzzy(24, 56, path, 1))
+  path = {
+    { x = 80, y = 72 },
+    { x = 24, y = 72 },
+    { x = 24, y = 96 },
+    { x = 80, y = 96 }
+  }
+  add(ents, build_fuzzy(24, 72, path, 3))
+  add(ents, build_fuzzy(32, 96, path, 4))
+  add(ents, build_fuzzy(64, 96, path, 4))
+  add(ents, build_fuzzy(80, 80, path, 1))
+  add(ents, build_fuzzy(56, 72, path, 2))
+  return build_screen(ents)
 end

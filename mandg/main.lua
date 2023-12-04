@@ -1,7 +1,7 @@
-start_map_x = 3
-start_map_y = 1
-start_monty_x = 32
-start_monty_y = 32
+start_map_x = 2
+start_map_y = 0
+start_monty_x = 64
+start_monty_y = 112
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -30,8 +30,6 @@ end
 function _draw()
   cls()
   scene:draw()
-  print(time_toggle(30), 64, 0)
-  print(time_toggle(12), 96, 0)
 end
 
 function freeze()
@@ -42,7 +40,7 @@ function unfreeze()
   scene:unfreeze()
 end
 
-function time_toggle(t)
+function time_toggle(t, mod)
   local time = flr(time() * 100)
-  return flr(time / t) % 2
+  return flr(time / t) % mod
 end

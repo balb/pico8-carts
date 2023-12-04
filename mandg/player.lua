@@ -52,7 +52,7 @@ function draw_monty(monty)
   draw_monty_row(monty, 1, 0)
   --feet
   if monty.mov then
-    local offset = time_toggle(12)
+    local offset = time_toggle(12, 2)
     if monty.dir < 2 then
       local s1 = 5 + monty.dir + 16 * offset
       local s2 = 5 + monty.dir + 16 * abs(offset - 1)

@@ -117,8 +117,8 @@ function build_scene_main()
     end,
     draw = function(self)
       map(self.map_x * 16, self.map_y * 16, 0, 0)
-      --print(self.map_x, 0, 0)
-      --print(self.map_y, 16, 0)
+      print(self.map_x, 64, 0)
+      print(self.map_y, 80, 0)
       self.screen:draw()
       self.monty:draw()
 

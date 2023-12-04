@@ -6,8 +6,6 @@ function build_monty()
     dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
-    walk_cntr = 0,
-    walk_step = 0,
     dying = 0,
     death_count = 0,
     die = function(self)
@@ -18,10 +16,6 @@ function build_monty()
       end
     end,
     update = function(self)
-      self.walk_cntr += 1
-      if (self.walk_cntr == 11) self.walk_cntr = 0
-      self.walk_step = self.walk_cntr < 6 and 0 or 1
-
       if self.dying > 0 then
         self.dying -= 1
         if self.dying == 0 then
@@ -49,13 +43,14 @@ function draw_monty(monty)
   draw_monty_row(monty, 1, 0)
   --feet
   if monty.mov then
+    local offset = time_toggle(12)
     if monty.dir < 2 then
-      local s1 = 5 + monty.dir + 16 * monty.walk_step
-      local s2 = 5 + monty.dir + 16 * abs(monty.walk_step - 1)
+      local s1 = 5 + monty.dir + 16 * offset
+      local s2 = 5 + monty.dir + 16 * abs(offset - 1)
       spr(s1, monty.x, monty.y + 8)
       spr(s2, monty.x + 8, monty.y + 8, 1, 1, true)
     else
-      spr(7 + 16 * monty.walk_step, monty.x, monty.y + 8, 2, 1, monty.dir == 2)
+      spr(7 + 16 * offset, monty.x, monty.y + 8, 2, 1, monty.dir == 2)
     end
   else
     --not moving

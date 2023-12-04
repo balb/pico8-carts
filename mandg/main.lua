@@ -30,6 +30,8 @@ end
 function _draw()
   cls()
   scene:draw()
+  print(time_toggle(30), 64, 0)
+  print(time_toggle(12), 96, 0)
 end
 
 function freeze()
@@ -38,4 +40,9 @@ end
 
 function unfreeze()
   scene:unfreeze()
+end
+
+function time_toggle(t)
+  local time = flr(time() * 100)
+  return flr(time / t) % 2
 end

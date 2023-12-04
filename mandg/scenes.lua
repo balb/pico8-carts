@@ -82,25 +82,34 @@ function build_scene_main()
 
       if not map_collide(scene, next_x, next_y) then
         --screen wrap
+        local change_screen = false
         if next_x == -5 then
           next_x = 116
           self.map_x -= 1
+          change_screen = true
         elseif next_x == 117 then
           next_x = -4
           self.map_x += 1
+          change_screen = true
         end
 
         if next_y == 5 then
           next_y = 116
           self.map_y -= 1
+          change_screen = true
         elseif next_y == 117 then
           next_y = 6
           self.map_y += 1
+          change_screen = true
         end
 
         self.monty.x = next_x
         self.monty.y = next_y
-        self:set_screen()
+
+        if change_screen then
+          self.monty:stash_pos()
+          self:set_screen()
+        end
       end
 
       self.screen:update()

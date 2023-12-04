@@ -4,6 +4,9 @@ function build_monty()
     x = start_monty_x,
     y = start_monty_y,
     dir = 1,
+    init_x = start_monty_x,
+    init_y = start_monty_y,
+    init_dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
     dying = 0,
@@ -15,14 +18,20 @@ function build_monty()
         self.dying = 20
       end
     end,
+    stash_pos = function(self)
+      self.init_x = self.x
+      self.init_y = self.y
+      self.init_dir = self.dir
+    end,
     update = function(self)
       if self.dying > 0 then
         self.dying -= 1
         if self.dying == 0 then
           unfreeze()
-
-          -- todo: move to start of screen
-          self.y = 20
+          -- reset position
+          self.x = self.init_x
+          self.y = self.init_y
+          self.dir = self.init_dir
         end
       end
     end,

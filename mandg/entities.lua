@@ -141,7 +141,8 @@ function build_old_woman()
     { text = "with those spectacles you\nmust have poor eyesight!" },
     { text = "let me test your vision.\nif you pass the test i will\nhelp you on your journey." },
     {
-      text = "ok then, how many fingers am\ni holding up?\n\n     2     3",
+      --text = "ok then, how many fingers am\ni holding up?\n\n     2     3",
+      text = "ok then, how many fingers am\ni holding up?",
       answers = { 1, 2 },
       fingers = 3
     },
@@ -201,10 +202,10 @@ function build_old_woman()
     chat = 1,
     answer = 1,
     text_ticker = build_text_ticker(chats[1].text),
-    q_and_a = build_q_and_a(5, "dhfsdkjf", 6, "three"),
+    q_and_a = nil,
     update = function(self)
       self.text_ticker:update()
-      self.q_and_a:update()
+      if (self.q_and_a) self.q_and_a:update()
       --if(state.old_woman_done) return
       if chats[self.chat].done then
         --state.old_woman_done = true
@@ -228,26 +229,29 @@ function build_old_woman()
         else
           self.chat += 1
         end
-        self.text_ticker:set_text(chats[self.chat].text)
+        self.text_ticker = build_text_ticker(chats[self.chat].text)
+        local ans = chats[self.chat].answers
+        if ans then
+          self.q_and_a = build_q_and_a(ans[1], ans[1] .. "yip", ans[2], ans[2] .. "yap")
+        end
+
         self.answer = 1
       end
 
-      if chats[self.chat].answers then
+      --[[ if chats[self.chat].answers then
         if btnp(⬅️) then
           self.answer = 1
         elseif btnp(➡️) then
           self.answer = 2
         end
-      end
+      end ]]
     end,
     draw = function(self)
       self.text_ticker:draw()
-      self.q_and_a:draw()
+      if (self.q_and_a) self.q_and_a:draw()
       --if(state.old_woman_done or chats[self.chat].done) return
-
       --print(chats[self.chat].text, 4, 100, 7)
-
-      if chats[self.chat].answers then
+      --[[ if chats[self.chat].answers then
         if self.answer == 1 then
           print(">", 20, 118, flr(rnd(16)))
         elseif self.answer == 2 then
@@ -255,9 +259,10 @@ function build_old_woman()
         end
         -- reset print color
         print("", 0, 0, 7)
-      end
-
+      end ]]
       local offset = time_toggle(24, 2)
+
+      -- pal for eyes
       pal(12, 0)
 
       --draw feet first
@@ -308,11 +313,6 @@ function build_text_ticker(text)
     text = text,
     len = 1,
     ready = false,
-    set_text = function(self, text)
-      self.text = text
-      self.len = 1
-      self.ready = false
-    end,
     update = function(self)
       if not self.ready then
         if self.len < #self.text then

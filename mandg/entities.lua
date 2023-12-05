@@ -141,27 +141,29 @@ function build_old_woman()
     { text = "with those spectacles you\nmust have poor eyesight!" },
     { text = "let me test your vision.\nif you pass the test i will\nhelp you on your journey." },
     {
-      --text = "ok then, how many fingers am\ni holding up?\n\n     2     3",
       text = "ok then, how many fingers am\ni holding up?",
       answers = { 5, "two", 6, "three" },
       fingers = 3
     },
     --[[ 5 ]] {
       text = "wrong! the answer is 3.\nlet's try again...",
-      fingers = 3,
-      jump = 2
+      fingers = 3
     },
     --[[ 6 ]] {
       text = "wrong! the answer is 2.\nlet's try again...",
       fingers = 2
     },
     {
-      text = "how many fingers am i\nholding up this time?\n\n     1     2",
-      answers = { 1, 1 },
+      text = "how many fingers am i\nholding up this time?",
+      answers = { 8, "one", 9, "two" },
       fingers = 1
     },
-    {
+    --[[ 8 ]] {
       text = "wrong! i am not holding\nup any fingers.\none more try...",
+      fingers = 0
+    },
+    --[[ 9 ]] {
+      text = "temp - wrong! i am not holding\nup any fingers.\none more try...",
       fingers = 0
     },
     { text = "i'll make it easy this time..." },
@@ -200,7 +202,6 @@ function build_old_woman()
   return {
     x = 32, y = 40,
     chat = 1,
-    answer = 1,
     text_ticker = build_text_ticker(chats[1].text),
     q_and_a = nil,
     update = function(self)
@@ -227,23 +228,12 @@ function build_old_woman()
         else
           self.chat += 1
         end
-
         self.q_and_a = nil
-
-        --[[ if chats[self.chat].answers then
-          self.chat += chats[self.chat].answers[self.answer]
-        elseif chats[self.chat].jump then
-          self.chat += chats[self.chat].jump
-        else
-          self.chat += 1
-        end ]]
         self.text_ticker = build_text_ticker(chats[self.chat].text)
         local ans = chats[self.chat].answers
         if ans then
           self.q_and_a = build_q_and_a(ans[1], ans[2], ans[3], ans[4])
         end
-
-        self.answer = 1
       end
     end,
     draw = function(self)

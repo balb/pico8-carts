@@ -142,34 +142,37 @@ function build_old_woman()
     { text = "let me test your vision.\nif you pass the test i will\nhelp you on your journey." },
     {
       text = "ok then, how many fingers am\ni holding up?",
-      answers = { 5, "two", 6, "three" },
+      answers = { "two", "three" },
+      get_next = function(ans)
+        if (ans == "two") return 5
+        if (ans == "three") return 6
+      end,
       fingers = 3
     },
     --[[ 5 ]] {
       text = "wrong! the answer is 3.\nlet's try again...",
+      get_next = function()
+        return 7
+      end,
       fingers = 3
     },
     --[[ 6 ]] {
       text = "wrong! the answer is 2.\nlet's try again...",
       fingers = 2
     },
-    {
+    --[[ 7 ]] {
       text = "how many fingers am i\nholding up this time?",
-      answers = { 8, "one", 9, "two" },
+      answers = { "one", "two" },
       fingers = 1
     },
-    --[[ 8 ]] {
+    {
       text = "wrong! i am not holding\nup any fingers.\none more try...",
-      fingers = 0
-    },
-    --[[ 9 ]] {
-      text = "temp - wrong! i am not holding\nup any fingers.\none more try...",
       fingers = 0
     },
     { text = "i'll make it easy this time..." },
     {
-      text = "how many fingers am i\nholding up?\n\n     5     5",
-      answers = { 1, 1 },
+      text = "how many fingers am i\nholding up?",
+      answers = { "five", "five" },
       fingers = 5
     },
     {
@@ -223,8 +226,12 @@ function build_old_woman()
       end
 
       if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
-        if self.q_and_a then
-          self.chat = self.q_and_a.answer
+        if chats[self.chat].get_next then
+          local answer = nil
+          if self.q_and_a then
+            answer = self.q_and_a.answer
+          end
+          self.chat = chats[self.chat].get_next(answer)
         else
           self.chat += 1
         end
@@ -232,7 +239,7 @@ function build_old_woman()
         self.text_ticker = build_text_ticker(chats[self.chat].text)
         local ans = chats[self.chat].answers
         if ans then
-          self.q_and_a = build_q_and_a(ans[1], ans[2], ans[3], ans[4])
+          self.q_and_a = build_q_and_a(ans[1], ans[2])
         end
       end
     end,
@@ -259,26 +266,26 @@ function build_old_woman()
   }
 end
 
-function build_q_and_a(a1_val, a1_text, a2_val, a2_text)
+function build_q_and_a(a1, a2)
   local x = 20
   local y = 118
   local w = 4
   return {
-    answer = a1_val,
+    answer = a1,
     update = function(self)
       if btnp(⬅️) then
-        self.answer = a1_val
+        self.answer = a1
       elseif btnp(➡️) then
-        self.answer = a2_val
+        self.answer = a2
       end
     end,
     draw = function(self)
-      local a2_x = x + (#a1_text + 4) * w
-      print(a1_text, x + w, y)
-      print(a2_text .. " ..." .. self.answer, a2_x, y)
-      if self.answer == a1_val then
+      local a2_x = x + (#a1 + 4) * w
+      print(a1, x + w, y)
+      print(a2 .. " ans:" .. self.answer, a2_x, y)
+      if self.answer == a1 then
         print(">", x, y, flr(rnd(16)))
-      elseif self.answer == a2_val then
+      elseif self.answer == a2 then
         print(">", a2_x - w, y, flr(rnd(16)))
       end
       -- reset print color

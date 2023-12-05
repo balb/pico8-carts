@@ -1,6 +1,6 @@
 function build_screens()
   local tab = {}
-  tab["00"] = build_screen({})
+  tab["00"] = build_screen({ build_old_woman() })
   tab["10"] = build_screen_desert_top_firestones()
   tab["20"] = build_screen_desert_fuzzies()
   tab["30"] = build_screen({})

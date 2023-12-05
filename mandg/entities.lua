@@ -135,6 +135,10 @@ function build_arrow(start_x, start_y, dir, dist)
   }
 end
 
+-- todo: border
+-- todo: pause before showing answers
+-- todo: clear the wall
+-- todo: freeze/move monty
 function build_old_woman()
   local chats = {
     { text = "oooh! hello young man.\nhee hee hee..." },
@@ -172,7 +176,7 @@ function build_old_woman()
     { text = "i'll make it easy this time..." },
     {
       text = "how many fingers am i\nholding up?",
-      answers = { "five", "five" },
+      answers = { "five", "five " },
       fingers = 5
     },
     {
@@ -180,7 +184,7 @@ function build_old_woman()
       fingers = 6
     },
     { text = "not to worry, i'll help you\nanyway. i will open up the way\nsouth using my magical powers.\ncontinue your journay that way." },
-    { done = true }
+    { text = "", done = true }
   }
 
   local function draw_finger_spr(a, b, c, d)
@@ -207,13 +211,12 @@ function build_old_woman()
     chat = 1,
     text_ticker = build_text_ticker(chats[1].text),
     q_and_a = nil,
-    update = function(self)
+    update = function(self, screen)
       self.text_ticker:update()
       if (self.q_and_a) self.q_and_a:update()
-      --if(state.old_woman_done) return
       if chats[self.chat].done then
-        --state.old_woman_done = true
-        -- clear the wall
+        screen:del_ent(self)
+        -- todo: clear the wall
         --[[ mset(20, 15, 64)
         mset(21, 15, 64)
         mset(22, 15, 64)
@@ -235,11 +238,12 @@ function build_old_woman()
         else
           self.chat += 1
         end
-        self.q_and_a = nil
         self.text_ticker = build_text_ticker(chats[self.chat].text)
         local ans = chats[self.chat].answers
         if ans then
           self.q_and_a = build_q_and_a(ans[1], ans[2])
+        else
+          self.q_and_a = nil
         end
       end
     end,
@@ -282,7 +286,7 @@ function build_q_and_a(a1, a2)
     draw = function(self)
       local a2_x = x + (#a1 + 4) * w
       print(a1, x + w, y)
-      print(a2 .. " ans:" .. self.answer, a2_x, y)
+      print(a2, a2_x, y)
       if self.answer == a1 then
         print(">", x, y, flr(rnd(16)))
       elseif self.answer == a2 then

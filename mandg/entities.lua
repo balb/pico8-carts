@@ -200,7 +200,9 @@ function build_old_woman()
     x = 32, y = 40,
     chat = 1,
     answer = 1,
+    text_ticker = build_text_ticker(chats[1].text),
     update = function(self)
+      self.text_ticker:update()
       --if(state.old_woman_done) return
       if chats[self.chat].done then
         --state.old_woman_done = true
@@ -216,7 +218,7 @@ function build_old_woman()
         return
       end
 
-      if btnp(❎) or btnp(🅾️) then
+      if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
         if chats[self.chat].answers then
           self.chat += chats[self.chat].answers[self.answer]
         elseif chats[self.chat].jump then
@@ -224,7 +226,7 @@ function build_old_woman()
         else
           self.chat += 1
         end
-
+        self.text_ticker:set_text(chats[self.chat].text)
         self.answer = 1
       end
 
@@ -237,9 +239,10 @@ function build_old_woman()
       end
     end,
     draw = function(self)
+      self.text_ticker:draw()
       --if(state.old_woman_done or chats[self.chat].done) return
 
-      print(chats[self.chat].text, 4, 100, 7)
+      --print(chats[self.chat].text, 4, 100, 7)
 
       if chats[self.chat].answers then
         if self.answer == 1 then
@@ -265,6 +268,31 @@ function build_old_woman()
       end
 
       pal()
+    end
+  }
+end
+
+function build_text_ticker(text)
+  return {
+    text = text,
+    len = 1,
+    ready = false,
+    set_text = function(self, text)
+      self.text = text
+      self.len = 1
+      self.ready = false
+    end,
+    update = function(self)
+      if not self.ready then
+        if self.len < #self.text then
+          self.len += 1
+        else
+          self.ready = true
+        end
+      end
+    end,
+    draw = function(self)
+      print(sub(self.text, 1, self.len), 4, 100, 7)
     end
   }
 end

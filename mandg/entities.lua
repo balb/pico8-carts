@@ -143,15 +143,15 @@ function build_old_woman()
     {
       --text = "ok then, how many fingers am\ni holding up?\n\n     2     3",
       text = "ok then, how many fingers am\ni holding up?",
-      answers = { 1, 2 },
+      answers = { 5, "two", 6, "three" },
       fingers = 3
     },
-    {
+    --[[ 5 ]] {
       text = "wrong! the answer is 3.\nlet's try again...",
       fingers = 3,
       jump = 2
     },
-    {
+    --[[ 6 ]] {
       text = "wrong! the answer is 2.\nlet's try again...",
       fingers = 2
     },
@@ -222,44 +222,33 @@ function build_old_woman()
       end
 
       if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
-        if chats[self.chat].answers then
+        if self.q_and_a then
+          self.chat = self.q_and_a.answer
+        else
+          self.chat += 1
+        end
+
+        self.q_and_a = nil
+
+        --[[ if chats[self.chat].answers then
           self.chat += chats[self.chat].answers[self.answer]
         elseif chats[self.chat].jump then
           self.chat += chats[self.chat].jump
         else
           self.chat += 1
-        end
+        end ]]
         self.text_ticker = build_text_ticker(chats[self.chat].text)
         local ans = chats[self.chat].answers
         if ans then
-          self.q_and_a = build_q_and_a(ans[1], ans[1] .. "yip", ans[2], ans[2] .. "yap")
+          self.q_and_a = build_q_and_a(ans[1], ans[2], ans[3], ans[4])
         end
 
         self.answer = 1
       end
-
-      --[[ if chats[self.chat].answers then
-        if btnp(⬅️) then
-          self.answer = 1
-        elseif btnp(➡️) then
-          self.answer = 2
-        end
-      end ]]
     end,
     draw = function(self)
       self.text_ticker:draw()
       if (self.q_and_a) self.q_and_a:draw()
-      --if(state.old_woman_done or chats[self.chat].done) return
-      --print(chats[self.chat].text, 4, 100, 7)
-      --[[ if chats[self.chat].answers then
-        if self.answer == 1 then
-          print(">", 20, 118, flr(rnd(16)))
-        elseif self.answer == 2 then
-          print(">", 44, 118, flr(rnd(16)))
-        end
-        -- reset print color
-        print("", 0, 0, 7)
-      end ]]
       local offset = time_toggle(24, 2)
 
       -- pal for eyes
@@ -296,7 +285,7 @@ function build_q_and_a(a1_val, a1_text, a2_val, a2_text)
     draw = function(self)
       local a2_x = x + (#a1_text + 4) * w
       print(a1_text, x + w, y)
-      print(a2_text, a2_x, y)
+      print(a2_text .. " ..." .. self.answer, a2_x, y)
       if self.answer == a1_val then
         print(">", x, y, flr(rnd(16)))
       elseif self.answer == a2_val then

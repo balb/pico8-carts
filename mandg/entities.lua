@@ -201,8 +201,10 @@ function build_old_woman()
     chat = 1,
     answer = 1,
     text_ticker = build_text_ticker(chats[1].text),
+    q_and_a = build_q_and_a(5, "dhfsdkjf", 6, "three"),
     update = function(self)
       self.text_ticker:update()
+      self.q_and_a:update()
       --if(state.old_woman_done) return
       if chats[self.chat].done then
         --state.old_woman_done = true
@@ -240,6 +242,7 @@ function build_old_woman()
     end,
     draw = function(self)
       self.text_ticker:draw()
+      self.q_and_a:draw()
       --if(state.old_woman_done or chats[self.chat].done) return
 
       --print(chats[self.chat].text, 4, 100, 7)
@@ -268,6 +271,34 @@ function build_old_woman()
       end
 
       pal()
+    end
+  }
+end
+
+function build_q_and_a(a1_val, a1_text, a2_val, a2_text)
+  local x = 20
+  local y = 118
+  local w = 4
+  return {
+    answer = a1_val,
+    update = function(self)
+      if btnp(⬅️) then
+        self.answer = a1_val
+      elseif btnp(➡️) then
+        self.answer = a2_val
+      end
+    end,
+    draw = function(self)
+      local a2_x = x + (#a1_text + 4) * w
+      print(a1_text, x + w, y)
+      print(a2_text, a2_x, y)
+      if self.answer == a1_val then
+        print(">", x, y, flr(rnd(16)))
+      elseif self.answer == a2_val then
+        print(">", a2_x - w, y, flr(rnd(16)))
+      end
+      -- reset print color
+      print("", 0, 0, 7)
     end
   }
 end

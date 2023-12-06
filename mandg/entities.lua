@@ -136,7 +136,6 @@ function build_arrow(start_x, start_y, dir, dist)
 end
 
 -- todo: border
--- todo: pause before showing answers
 -- todo: clear the wall
 -- todo: freeze/move monty
 function build_old_woman()
@@ -211,6 +210,7 @@ function build_old_woman()
     chat = 1,
     text_ticker = build_text_ticker(chats[1].text),
     q_and_a = nil,
+    add_q_and_a = false,
     update = function(self, screen)
       self.text_ticker:update()
       if (self.q_and_a) self.q_and_a:update()
@@ -239,12 +239,15 @@ function build_old_woman()
           self.chat += 1
         end
         self.text_ticker = build_text_ticker(chats[self.chat].text)
+        self.q_and_a = nil
+        self.add_q_and_a = chats[self.chat].answers != nil
+      end
+
+      -- don't show the answers until the text_ticker is ready
+      if self.add_q_and_a and self.text_ticker.ready then
         local ans = chats[self.chat].answers
-        if ans then
-          self.q_and_a = build_q_and_a(ans[1], ans[2])
-        else
-          self.q_and_a = nil
-        end
+        self.q_and_a = build_q_and_a(ans[1], ans[2])
+        self.add_q_and_a = false
       end
     end,
     draw = function(self)

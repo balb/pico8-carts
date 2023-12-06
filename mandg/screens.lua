@@ -44,6 +44,9 @@ function build_screen(ents)
     del_ent = function(self, ent)
       del(self.ents, ent)
     end,
+    on_enter = function(self)
+      -- override me
+    end,
     update = function(self)
       foreach(
         self.ents, function(ent)

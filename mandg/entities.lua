@@ -137,6 +137,8 @@ end
 
 -- todo: clear the wall
 -- todo: freeze/move monty
+-- todo: better end dialog
+-- todo: move chat to dialog.lua
 function build_old_woman()
   local chats = {
     { text = "oooh! hello young man.\nhee hee hee..." },
@@ -287,15 +289,15 @@ function build_q_and_a(a1, a2)
     end,
     draw = function(self)
       local a2_x = x + (#a1 + 4) * w
-      print(a1, x + w, y)
-      print(a2, a2_x, y)
+      print(a1, x + w, y, 10)
+      print(a2, a2_x, y, 10)
       if self.answer == a1 then
         print(">", x, y, flr(rnd(16)))
       elseif self.answer == a2 then
         print(">", a2_x - w, y, flr(rnd(16)))
       end
       -- reset print color
-      print("", 0, 0, 7)
+      color(7)
     end
   }
 end
@@ -322,10 +324,10 @@ function build_text_ticker(text)
       rect(0, 97, 127, 127, bcol)
       rect(0, 97, 2, 99, bcol)
       rect(0, 97, 1, 98, 0)
-      
+
       rect(125, 97, 127, 99, bcol)
       rect(126, 97, 127, 98, 0)
-      
+
       rect(125, 125, 127, 127, bcol)
       rect(126, 126, 127, 127, 0)
 
@@ -333,7 +335,7 @@ function build_text_ticker(text)
       rect(0, 126, 1, 127, 0)
 
       -- reset print color
-      print("", 0, 0, 7)
+      color(7)
     end
   }
 end

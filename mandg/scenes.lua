@@ -33,6 +33,7 @@ function build_scene_main()
     end,
     set_screen = function(self)
       self.screen = self.screens[self.map_x .. self.map_y]
+      self.screen:on_enter()
     end,
     freeze = function(self)
       frozen = true

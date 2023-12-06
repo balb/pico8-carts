@@ -135,7 +135,6 @@ function build_arrow(start_x, start_y, dir, dist)
   }
 end
 
--- todo: border
 -- todo: clear the wall
 -- todo: freeze/move monty
 function build_old_woman()
@@ -317,6 +316,24 @@ function build_text_ticker(text)
     end,
     draw = function(self)
       print(sub(self.text, 1, self.len), 4, 100, 7)
+
+      -- border
+      local bcol = 5
+      rect(0, 97, 127, 127, bcol)
+      rect(0, 97, 2, 99, bcol)
+      rect(0, 97, 1, 98, 0)
+      
+      rect(125, 97, 127, 99, bcol)
+      rect(126, 97, 127, 98, 0)
+      
+      rect(125, 125, 127, 127, bcol)
+      rect(126, 126, 127, 127, 0)
+
+      rect(0, 125, 2, 127, bcol)
+      rect(0, 126, 1, 127, 0)
+
+      -- reset print color
+      print("", 0, 0, 7)
     end
   }
 end

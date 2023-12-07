@@ -9,7 +9,7 @@ function build_screens()
   tab["60"] = build_screen({})
   tab["70"] = build_screen({})
   tab["01"] = build_screen({})
-  tab["11"] = build_screen({})
+  tab["11"] = build_screen_desert_5_idiots()
   tab["21"] = build_screen({ build_idiot(88, 88, 80, 112), build_idiot(56, 56, 40, 64) })
   tab["31"] = build_screen({})
   tab["41"] = build_screen({})
@@ -17,7 +17,7 @@ function build_screens()
   tab["61"] = build_screen({})
   tab["71"] = build_screen({})
   tab["02"] = build_screen({})
-  tab["12"] = build_screen({})
+  tab["12"] = build_screen_desert_dead_end()
   tab["22"] = build_screen({})
   tab["32"] = build_screen({})
   tab["42"] = build_screen({})
@@ -25,7 +25,7 @@ function build_screens()
   tab["62"] = build_screen({})
   tab["72"] = build_screen({})
   tab["03"] = build_screen({})
-  tab["13"] = build_screen({})
+  tab["13"] = build_screen_desert_sand_wall()
   tab["23"] = build_screen({})
   tab["33"] = build_screen({})
   tab["43"] = build_screen({})
@@ -109,4 +109,50 @@ function build_screen_desert_fuzzies()
   add(ents, build_fuzzy(80, 80, path, 1))
   add(ents, build_fuzzy(56, 72, path, 2))
   return build_screen(ents)
+end
+
+function build_screen_desert_5_idiots()
+  return build_screen({
+    build_idiot(16, 72, 8, 48),
+    build_idiot(40, 88, 8, 48),
+    build_idiot(72, 64, 72, 112),
+    build_idiot(88, 80, 72, 112),
+    build_idiot(104, 96, 72, 112)
+  })
+end
+
+function build_screen_desert_dead_end()
+  local path = {
+    { x = 80, y = 40 },
+    { x = 104, y = 40 },
+    { x = 104, y = 64 },
+    { x = 80, y = 64 }
+  }
+  return build_screen({
+    build_fuzzy(80, 40, path, 1),
+    build_fuzzy(104, 64, path, 3),
+    build_firestone(56, 64, 1, 8, 24),
+    build_firestone(64, 64, 1, 8, 24)
+  })
+end
+
+function build_screen_desert_sand_wall()
+  local path1 = {
+    { x = 24, y = 24 },
+    { x = 40, y = 24 },
+    { x = 40, y = 48 },
+    { x = 24, y = 48 }
+  }
+  local path2 = {
+    { x = 24, y = 80 },
+    { x = 40, y = 80 },
+    { x = 40, y = 104 },
+    { x = 24, y = 104 }
+  }
+  return build_screen({
+    build_idiot(112, 48, 72, 112),
+    build_idiot(72, 80, 72, 112),
+    build_fuzzy(24, 24, path1, 1),
+    build_fuzzy(40, 104, path2, 3)
+  })
 end

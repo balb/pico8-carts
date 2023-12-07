@@ -135,8 +135,6 @@ function build_arrow(start_x, start_y, dir, dist)
   }
 end
 
--- todo: clear the wall
--- todo: move chat to dialog.lua
 function build_old_woman()
   local chats = {
     { text = "oooh! hello young man.\nhee hee hee..." },
@@ -219,15 +217,7 @@ function build_old_woman()
         -- return control to player and remove old woman
         screen.scene_update_handler = nil
         screen:del_ent(self)
-        -- todo: clear the wall
-        --[[ mset(20, 15, 64)
-        mset(21, 15, 64)
-        mset(22, 15, 64)
-        mset(23, 15, 64)
-        mset(24, 15, 64)
-        mset(25, 15, 64)
-        mset(26, 15, 64)
-        mset(27, 15, 64) ]]
+        map_remove_desert_top_wall()
         return
       end
 

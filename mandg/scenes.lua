@@ -33,17 +33,24 @@ function build_scene_main()
     end,
     set_screen = function(self)
       self.screen = self.screens[self.map_x .. self.map_y]
-      self.screen:on_enter()
     end,
     freeze = function(self)
-      frozen = true
+      self.frozen = true
     end,
     unfreeze = function(self)
-      frozen = false
+      self.frozen = false
     end,
+    update_handler = nil,
     update = function(self)
-      if frozen then
+      if self.frozen then
         -- need to update monty to unfreeze
+        self.monty:update()
+        return
+      end
+
+      if self.screen.scene_update_handler then
+        self.screen:scene_update_handler(self.monty)
+        self.screen:update()
         self.monty:update()
         return
       end

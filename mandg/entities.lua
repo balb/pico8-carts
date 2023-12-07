@@ -136,7 +136,6 @@ function build_arrow(start_x, start_y, dir, dist)
 end
 
 -- todo: clear the wall
--- todo: freeze/move monty
 -- todo: better end dialog
 -- todo: move chat to dialog.lua
 function build_old_woman()
@@ -216,6 +215,8 @@ function build_old_woman()
       self.text_ticker:update()
       if (self.q_and_a) self.q_and_a:update()
       if chats[self.chat].done then
+        -- return control to player and remove old woman
+        screen.scene_update_handler = nil
         screen:del_ent(self)
         -- todo: clear the wall
         --[[ mset(20, 15, 64)

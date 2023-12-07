@@ -136,7 +136,6 @@ function build_arrow(start_x, start_y, dir, dist)
 end
 
 -- todo: clear the wall
--- todo: better end dialog
 -- todo: move chat to dialog.lua
 function build_old_woman()
   local chats = {
@@ -182,7 +181,9 @@ function build_old_woman()
       text = "wrong, 6 fingers!\nyou are as blind as a bat.\nhee hee hee...",
       fingers = 6
     },
-    { text = "not to worry, i'll help you\nanyway. i will open up the way\nsouth using my magical powers.\ncontinue your journay that way." },
+    { text = "you have failed the test\nbut i will help you anyway..." },
+    { text = "head south from here.\nand try not to die." },
+    { text = "be seeing you!" },
     { text = "", done = true }
   }
 

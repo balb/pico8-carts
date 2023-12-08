@@ -9,13 +9,68 @@ function build_scene_title()
   return {
     init = function()
     end,
-    update = function()
+
+    start_text_x = 27,
+    start_text_x_inc = 1,
+    start_text_y = 69,
+    start_text_y_inc = 1,
+
+    update = function(self)
       if btnp(❎) or btnp(🅾️) then
         switch_scene("main")
       end
+
+      self.start_text_x += self.start_text_x_inc
+      self.start_text_y += self.start_text_y_inc
+      if (self.start_text_x == 39 or self.start_text_x == 0) self.start_text_x_inc *= -1
+      if (self.start_text_y == 120 or self.start_text_y == 0) self.start_text_y_inc *= -1
     end,
-    draw = function()
-      print("I am the title", 10, 10)
+    title_txt = [[
+8""8""8
+8  8  8 eeeee eeeee eeeee e    e
+8e 8  8 8  88 8   8   8   8    8
+88 8  8 8   8 8e  8   8e  8eeee8
+88 8  8 8   8 88  8   88    88
+88 8  8 8eee8 88  8   88    88
+
+       eeeee eeeee eeeee
+       8   8 8   8 8   8
+       8eee8 8e  8 8e  8
+       88  8 88  8 88  8
+       88  8 88  8 88ee8
+
+ 8""""8
+ 8    " eeee eeeee eeeee eeeee
+ 8e     8    8   8   8   8   "
+ 88  ee 8eee 8eee8e  8e  8eeee
+ 88   8 88   88   8  88     88
+ 88eee8 88ee 88   8  88  8ee88
+]],
+    draw = function(self)
+      local col = 11
+      print(self.title_txt, 0, 4, col)
+      for x = 0, 127 do
+        for y = 0, 127 do
+          p = pget(x, y)
+          if p == 0 then
+            if pget(x - 1, y) == col
+                and pget(x + 1, y) == col then
+              pset(x, y, col)
+            elseif pget(x, y - 1) == col
+                and pget(x, y + 1) == col then
+              pset(x, y, col)
+            end
+          end
+        end
+      end
+
+      spr(2, 2, 50)
+      spr(2, 10, 50, 1, 1, true)
+      spr(18, 2, 58)
+      spr(18, 10, 58, 1, 1, true)
+
+      print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
+      color(7)
     end
   }
 end

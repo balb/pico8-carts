@@ -343,16 +343,21 @@ function build_sandwall()
     update = function()
     end,
     draw = function(self)
-      --rect(self.box[1], self.box[2], self.box[3], self.box[4])
-      --if self.collided then
-      --  print("yabba", 32, 32)
-      --  color(7)
-      --end
     end,
     on_collide = function(self, monty, screen)
       if monty.dir == 2 and not self.collided then
         self.collided = true
-        screen:on_collide_with_sandwall(monty)
+        -- question: how can we show this message again?
+        -- todo: pause ents
+        local text_ticker = build_text_ticker("if only i had a spade\nto dig my way through...")
+        screen:add_ent(text_ticker)
+        monty.mov = false
+        screen.scene_update_handler = function(self)
+          if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
+            self:del_ent(text_ticker)
+            self.scene_update_handler = nil
+          end
+        end
       end
     end
   }

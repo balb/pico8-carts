@@ -26,7 +26,7 @@ function build_screens()
   tab["72"] = build_screen({})
   tab["03"] = build_screen({})
   tab["13"] = build_screen_desert_sand_wall()
-  tab["23"] = build_screen({})
+  tab["23"] = build_screen_desert_cactus_and_spade()
   tab["33"] = build_screen({})
   tab["43"] = build_screen({})
   tab["53"] = build_screen({})
@@ -150,13 +150,24 @@ function build_screen_desert_sand_wall()
     { x = 40, y = 104 },
     { x = 24, y = 104 }
   }
-  local screen = build_screen({
+  return build_screen({
     build_idiot(112, 48, 72, 112),
     build_idiot(72, 80, 72, 112),
     build_fuzzy(24, 24, path1, 1),
     build_fuzzy(40, 104, path2, 3),
     build_sandwall()
   })
+end
 
-  return screen
+function build_screen_desert_cactus_and_spade()
+  local path = {
+    { x = 24, y = 24 },
+    { x = 88, y = 24 },
+    { x = 88, y = 96 },
+    { x = 24, y = 96 }
+  }
+  return build_screen({
+    build_cactus(88, 24, path, 2)
+    -- build_spade(96, 24)
+  })
 end

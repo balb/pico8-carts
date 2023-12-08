@@ -363,3 +363,91 @@ function build_sandwall()
     end
   }
 end
+
+function build_cactus(start_x, start_y, path, path_index)
+  local speed_x = 1.2
+  local speed_y = 1.2
+
+  return {
+    x = start_x, y = start_y,
+    path = path,
+    path_index = path_index,
+    cntr = 0,
+    update = function(ent, screen)
+      if (screen.pause_enemies) return
+      -- same a fuzzy
+      local next_x = ent.path[ent.path_index].x
+      local next_y = ent.path[ent.path_index].y
+      if ent.x < next_x then
+        ent.x += speed_x
+      elseif ent.x > next_x then
+        ent.x -= speed_x
+      end
+
+      if ent.y < next_y then
+        ent.y += speed_y
+      elseif ent.y > next_y then
+        ent.y -= speed_y
+      end
+
+      if abs(ent.x - next_x) < 1
+          and abs(ent.y - next_y) < 1 then
+        --clamp
+        ent.x = next_x
+        ent.y = next_y
+        ent.path_index += 1
+        if (ent.path_index > count(ent.path)) ent.path_index = 1
+      end
+
+      if ent.cntr == 30 then
+        local dir = rnd({ 2, 3 })
+        local dist = 112 - ent.x
+        if dir == 2 then
+          dist = ent.x - 8
+        end
+        screen:add_ent(build_fireball(ent.x, ent.y + 4, dir, dist))
+        ent.cntr = 0
+      end
+      ent.cntr += 1
+    end,
+    draw = function(ent)
+      local cntr_m2 = time_toggle(12, 2)
+      local offset = abs(cntr_m2 - 1)
+      spr(12, ent.x, ent.y + offset)
+      spr(12, ent.x + 8, ent.y + cntr_m2, 1, 1, true)
+      spr(28, ent.x, ent.y + 8 + offset)
+      spr(28, ent.x + 8, ent.y + 8 + cntr_m2, 1, 1, true)
+    end,
+    box = { 2, 2, 13, 13 }
+  }
+end
+
+function build_fireball(start_x, start_y, dir, dist)
+  -- based on arrow
+  local speed = 2.5
+  return {
+    x = start_x, y = start_y,
+    dist = dist,
+    update = function(ent, screen)
+      if (screen.pause_enemies) return
+      if dir == 0 then
+        ent.y -= speed
+      elseif dir == 1 then
+        ent.y += speed
+      elseif dir == 2 then
+        ent.x -= speed
+      else
+        ent.x += speed
+      end
+      ent.dist -= speed
+      if (ent.dist <= -2) screen:del_ent(ent)
+    end,
+    draw = function(ent)
+      local cntr_m2 = time_toggle(12, 2)
+      spr(44, ent.x, ent.y, 1, 1, cntr_m2 == 0)
+    end,
+    box = { 1, 1, 6, 6 },
+    -- todo: ??? check with arrow
+    del_on_death = true
+  }
+end

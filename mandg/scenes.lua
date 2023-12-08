@@ -34,6 +34,7 @@ function build_scene_main()
     set_screen = function(self)
       self.screen = self.screens[self.map_x .. self.map_y]
     end,
+    -- freez / frozen might be better named dying
     freeze = function(self)
       self.frozen = true
     end,

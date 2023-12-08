@@ -9,6 +9,9 @@ function build_monty()
     init_dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
+
+    has_spade = false,
+
     dying = 0,
     death_count = 0,
     die = function(self)
@@ -24,6 +27,7 @@ function build_monty()
       self.init_dir = self.dir
     end,
     update = function(self)
+      -- handle death
       if self.dying > 0 then
         self.dying -= 1
         if self.dying == 0 then
@@ -67,6 +71,17 @@ function draw_monty(monty)
   end
 
   pal()
+
+  -- top right icon
+  if monty.has_spade then
+    spr(54, 120, -1)
+    --[[ elseif state.has_north_key then
+  spr(13,120,0)
+ elseif state.has_simple_key then
+  spr(47,120,0)
+ elseif state.has_bra then
+  spr(104,120,-1)   ]]
+  end
 
   --if state.dig_sandwall or monty.dig_shoot>0 then
   -- draw spade

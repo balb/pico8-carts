@@ -450,3 +450,37 @@ function build_fireball(start_x, start_y, dir, dist)
     del_on_death = true
   }
 end
+
+function build_spade(x, y)
+  return {
+    x = x, y = y,
+    update = function()
+    end,
+    draw = function(ent)
+      pal(7, flr(rnd(16)))
+      spr(54, x, y)
+      pal()
+    end,
+    box = { 0, 1, 7, 6 },
+    collided = false,
+    on_collide = function(self, monty, screen)
+      if not self.collided then
+        self.collided = true
+        monty.mov = false
+        local text_ticker = build_text_ticker("this spiffing spade\nwill come in handy...")
+        screen:add_ent(text_ticker)
+        screen.pause_enemies = true
+        local spade_ent = self
+        screen.scene_update_handler = function(self)
+          if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
+            self:del_ent(text_ticker)
+            self.pause_enemies = false
+            self.scene_update_handler = nil
+            self:del_ent(spade_ent)
+            monty.has_spade = true
+          end
+        end
+      end
+    end
+  }
+end

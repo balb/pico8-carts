@@ -4,8 +4,8 @@ function build_idiot(start_x, start_y, min_x, max_x)
     x = start_x, y = start_y,
     min_x = min_x, max_x = max_x,
 
-    update = function(self)
-      -- if (state.freeze) return
+    update = function(self, screen)
+      if (screen.pause_enemies) return
       self.x += speed
       if self.x < self.min_x or self.x > self.max_x then
         speed *= -1
@@ -28,8 +28,8 @@ function build_fuzzy(start_x, start_y, path, path_index)
     x = start_x, y = start_y,
     path = path,
     path_index = path_index,
-    update = function(self)
-      -- if (state.freeze) return
+    update = function(self, screen)
+      if (screen.pause_enemies) return
       local next_x = self.path[self.path_index].x
       local next_y = self.path[self.path_index].y
       if self.x < next_x then
@@ -339,22 +339,23 @@ function build_sandwall()
   return {
     x = x, y = y,
     box = { x, y, x + 10, 127 },
-    collided = false,
     update = function()
     end,
-    draw = function(self)
+    draw = function()
     end,
+    collided = false,
     on_collide = function(self, monty, screen)
+      -- todo: question: how can we show this message again?
       if monty.dir == 2 and not self.collided then
         self.collided = true
-        -- question: how can we show this message again?
-        -- todo: pause ents
+        monty.mov = false
         local text_ticker = build_text_ticker("if only i had a spade\nto dig my way through...")
         screen:add_ent(text_ticker)
-        monty.mov = false
+        screen.pause_enemies = true
         screen.scene_update_handler = function(self)
           if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
             self:del_ent(text_ticker)
+            self.pause_enemies = false
             self.scene_update_handler = nil
           end
         end

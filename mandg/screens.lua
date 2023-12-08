@@ -44,6 +44,7 @@ function build_screen(ents)
     del_ent = function(self, ent)
       del(self.ents, ent)
     end,
+    pause_enemies = false,
     scene_update_handler = nil,
     update = function(self)
       foreach(

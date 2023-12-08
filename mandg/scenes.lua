@@ -39,6 +39,11 @@ function build_scene_main()
     end,
     unfreeze = function(self)
       self.frozen = false
+      foreach(
+        self.screen.ents, function(ent)
+          if (ent.del_on_death) self.screen:del_ent(ent)
+        end
+      )
     end,
     update_handler = nil,
     update = function(self)

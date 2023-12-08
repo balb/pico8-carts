@@ -447,7 +447,6 @@ function build_fireball(start_x, start_y, dir, dist)
       spr(44, ent.x, ent.y, 1, 1, cntr_m2 == 0)
     end,
     box = { 1, 1, 6, 6 },
-    -- todo: ??? check with arrow
     del_on_death = true
   }
 end

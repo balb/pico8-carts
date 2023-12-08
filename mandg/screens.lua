@@ -136,6 +136,8 @@ function build_screen_desert_dead_end()
   })
 end
 
+-- todo: pause ents
+-- todo: move scene_update_handler stuff to ent
 function build_screen_desert_sand_wall()
   local path1 = {
     { x = 24, y = 24 },
@@ -149,10 +151,26 @@ function build_screen_desert_sand_wall()
     { x = 40, y = 104 },
     { x = 24, y = 104 }
   }
-  return build_screen({
+  local screen = build_screen({
     build_idiot(112, 48, 72, 112),
     build_idiot(72, 80, 72, 112),
     build_fuzzy(24, 24, path1, 1),
-    build_fuzzy(40, 104, path2, 3)
+    build_fuzzy(40, 104, path2, 3),
+    build_sandwall()
   })
+
+  screen.text_ticker = nil
+  screen.on_collide_with_sandwall = function(self, monty)
+    self.text_ticker = build_text_ticker("if only i had a spade\nto dig my way through...")
+    self:add_ent(self.text_ticker)
+    monty.mov = false
+    self.scene_update_handler = function(self)
+      if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
+        self:del_ent(self.text_ticker)
+        self.scene_update_handler = nil
+      end
+    end
+  end
+
+  return screen
 end

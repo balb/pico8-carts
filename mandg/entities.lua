@@ -309,6 +309,7 @@ function build_text_ticker(text)
       end
     end,
     draw = function(self)
+      rectfill(0, 96, 127, 127, 0)
       print(sub(self.text, 1, self.len), 4, 100, 7)
 
       -- border
@@ -328,6 +329,31 @@ function build_text_ticker(text)
 
       -- reset print color
       color(7)
+    end
+  }
+end
+
+function build_sandwall()
+  local x = 0
+  local y = 13
+  return {
+    x = x, y = y,
+    box = { x, y, x + 10, 127 },
+    collided = false,
+    update = function()
+    end,
+    draw = function(self)
+      --rect(self.box[1], self.box[2], self.box[3], self.box[4])
+      --if self.collided then
+      --  print("yabba", 32, 32)
+      --  color(7)
+      --end
+    end,
+    on_collide = function(self, monty, screen)
+      if monty.dir == 2 and not self.collided then
+        self.collided = true
+        screen:on_collide_with_sandwall(monty)
+      end
     end
   }
 end

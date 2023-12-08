@@ -79,8 +79,11 @@ function build_scene_main()
       foreach(
         self.screen.ents, function(ent)
           local ent_collision = check_collision(self.monty, ent)
-          --if ent_collision ...
-          collision = collision or ent_collision
+          if ent_collision and ent.on_collide then
+            ent:on_collide(self.monty, self.screen)
+          else
+            collision = collision or ent_collision
+          end
         end
       )
 

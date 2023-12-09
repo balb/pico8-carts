@@ -343,18 +343,23 @@ function build_sandwall()
     end,
     draw = function()
     end,
-    collided = false,
     on_collide = function(self, monty, screen)
-      -- todo: question: how can we show this message again?
-      if monty.dir == 2 and not self.collided then
-        self.collided = true
+      if monty.dir == 2 and monty.mov then
         monty.mov = false
-        local text_ticker = build_text_ticker("if only i had a spade\nto dig my way through...")
+        local text = nil
+        if monty.has_spade then
+          text = "now to dig my way through!"
+        else
+          text = "if only i had a spade\nto dig my way through..."
+        end
+        local text_ticker = build_text_ticker(text)
         screen:add_ent(text_ticker)
         screen.pause_enemies = true
         screen.scene_update_handler = function(self)
           if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
             self:del_ent(text_ticker)
+
+            -- todo: if monty.has_spade...
             self.pause_enemies = false
             self.scene_update_handler = nil
           end

@@ -173,12 +173,19 @@ function build_screen_desert_cactus_and_spade()
 end
 
 function build_screen_desert_fli_boss()
-  return build_screen({
-    build_fli(),
-    build_textbox2({
-      "i am the mighty fli!...",
-      "how dare you enter my lair!...",
-      "you will now pay for this\nfoolhardy intrusion!"
-    })
+  local fli = build_fli()
+  local screen = build_screen({
+    fli,
+    build_textbox2(
+      {
+        "i am the mighty fli!...",
+        "how dare you enter my lair!...",
+        "you will now pay for this\nfoolhardy intrusion!"
+      }, function()
+        fli:start_fight()
+      end
+    )
   })
+
+  return screen
 end

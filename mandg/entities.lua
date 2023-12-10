@@ -523,24 +523,19 @@ function build_spade(x, y)
 end
 
 function build_fli()
-  local speed_x = 1.2
-  local speed_y = 1.2
-  local path = {
-    { x = 16, y = 20 },
-    { x = 80, y = 84 },
-    { x = 80, y = 100 },
-    { x = 16, y = 100 },
-    { x = 80, y = 36 },
-    { x = 80, y = 20 }
-  }
-
   return {
     x = 48, y = 52,
     path_index = 1,
     cntr = 0,
-    mode = 55,
+    mode = 0,
     hit_flash = 0,
-    update = function(ent, screen)
+    start_fight = function(self)
+      self.mode = 1
+    end,
+    update = function(self, screen)
+      if self.mode == 1 then
+        fli_update(self, screen)
+      end
     end,
     draw = function(ent)
       local cntr_m2 = time_toggle(12, 2)
@@ -561,4 +556,66 @@ function build_fli()
       ent.health -= 1
     end
   }
+end
+
+function fli_update(ent, screen)
+  local speed_x = 1.2
+  local speed_y = 1.2
+  local path = {
+    { x = 16, y = 20 },
+    { x = 80, y = 84 },
+    { x = 80, y = 100 },
+    { x = 16, y = 100 },
+    { x = 80, y = 36 },
+    { x = 80, y = 20 }
+  }
+
+  -- if(state.freeze)return
+  local next_x = path[ent.path_index].x
+  local next_y = path[ent.path_index].y
+  if ent.x < next_x then
+    ent.x += speed_x
+  elseif ent.x > next_x then
+    ent.x -= speed_x
+  end
+
+  if ent.y < next_y then
+    ent.y += speed_y
+  elseif ent.y > next_y then
+    ent.y -= speed_y
+  end
+
+  if abs(ent.x - next_x) < 1
+      and abs(ent.y - next_y) < 1 then
+    --clamp
+    ent.x = next_x
+    ent.y = next_y
+    ent.path_index += 1
+    if (ent.path_index > count(path)) ent.path_index = 1
+  end
+
+  if ent.cntr == 24 then
+    local dir = 3
+    local dist = 112 - ent.x
+    screen:add_ent(build_fireball(ent.x, ent.y + 4, dir, dist))
+    ent.cntr = 0
+  end
+  ent.cntr += 1
+
+  if (ent.hit_flash > 0) ent.hit_flash -= 1
+  --[[ if ent.health <= 0 then
+    ent.mode = 2
+    --state.freeze=true
+    screen:add_ent(build_textbox2({
+      "arrrrgh! defeated by a simple\nhuman. the shame!",
+      "oh well, can't complain.\nat least i had some company.",
+      "it does get lonely here.\nperhaps we could be friends?",
+      "as a kindly gesture please\naccept this key..."
+    }))
+    foreach(
+      screen.ents, function(ent)
+        if (ent.del_on_death) screen:del_ent(ent)
+      end
+    )
+  end ]]
 end

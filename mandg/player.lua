@@ -9,19 +9,13 @@ function build_monty()
     init_dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
-
     has_spade = true,
-
-    frozen = false,
-
     dying = 0,
-
     -- dead flag for del_on_death
     dead = false,
     death_count = 0,
     die = function(self)
       if self.dying == 0 then
-        self.frozen = true
         self.death_count += 1
         self.dying = 20
       end
@@ -40,12 +34,11 @@ function build_monty()
       self.sandwall_on_done = on_done
       self.dig_sandwall = true
     end,
-    update = function(self)
+    update = function(self, screen)
       -- handle death
       if self.dying > 0 then
         self.dying -= 1
         if self.dying == 0 then
-          self.frozen = false
           self.dead = true
           -- reset position
           self.x = self.init_x

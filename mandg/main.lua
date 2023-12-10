@@ -32,14 +32,6 @@ function _draw()
   scene:draw()
 end
 
-function freeze()
-  scene:freeze()
-end
-
-function unfreeze()
-  scene:unfreeze()
-end
-
 function time_toggle(t, mod)
   local time = flr(time() * 100)
   return flr(time / t) % mod

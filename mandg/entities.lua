@@ -294,6 +294,34 @@ function build_q_and_a(a1, a2)
   }
 end
 
+function build_textbox2(texts, on_done)
+  return {
+    idx = 1,
+    text_ticker = nil,
+    update = function(self, screen)
+      if self.text_ticker == nil then
+        self.text_ticker = build_text_ticker(texts[self.idx])
+        screen:add_ent(self.text_ticker)
+      elseif self.text_ticker.ready then
+        if btnp(❎) or btnp(🅾️) then
+          screen:del_ent(self.text_ticker)
+          self.idx += 1
+          if self.idx > count(texts) then
+            screen:del_ent(self)
+            if (on_done) on_done()
+          else
+            self.text_ticker = build_text_ticker(texts[self.idx])
+            screen:add_ent(self.text_ticker)
+          end
+        end
+      else
+      end
+    end,
+    draw = function(self)
+    end
+  }
+end
+
 function build_text_ticker(text)
   return {
     text = text,

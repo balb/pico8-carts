@@ -521,3 +521,44 @@ function build_spade(x, y)
     end
   }
 end
+
+function build_fli()
+  local speed_x = 1.2
+  local speed_y = 1.2
+  local path = {
+    { x = 16, y = 20 },
+    { x = 80, y = 84 },
+    { x = 80, y = 100 },
+    { x = 16, y = 100 },
+    { x = 80, y = 36 },
+    { x = 80, y = 20 }
+  }
+
+  return {
+    x = 48, y = 52,
+    path_index = 1,
+    cntr = 0,
+    mode = 55,
+    hit_flash = 0,
+    update = function(ent, screen)
+    end,
+    draw = function(ent)
+      local cntr_m2 = time_toggle(12, 2)
+      if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
+      --head
+      spr(46, ent.x, ent.y)
+      -- wings
+      spr(60 + cntr_m2, ent.x - 6, ent.y + 9)
+      spr(60 + cntr_m2, ent.x + 5, ent.y + 9, 1, 1, true)
+      --body
+      spr(62, ent.x + cntr_m2 - 1, ent.y + 8, 1, 1, cntr_m2 == 0)
+      if (ent.hit_flash) pal()
+    end,
+    box = { 0, 0, 7, 15 },
+    health = 10,
+    on_hit = function(ent)
+      ent.hit_flash = 10
+      ent.health -= 1
+    end
+  }
+end

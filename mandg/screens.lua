@@ -24,7 +24,7 @@ function build_screens()
   tab["52"] = build_screen({})
   tab["62"] = build_screen({})
   tab["72"] = build_screen({})
-  tab["03"] = build_screen({})
+  tab["03"] = build_screen_desert_fli_boss()
   tab["13"] = build_screen_desert_sand_wall()
   tab["23"] = build_screen_desert_cactus_and_spade()
   tab["33"] = build_screen({})
@@ -169,5 +169,16 @@ function build_screen_desert_cactus_and_spade()
   return build_screen({
     build_cactus(88, 24, path, 2),
     build_spade(96, 24)
+  })
+end
+
+function build_screen_desert_fli_boss()
+  return build_screen({
+    build_fli(),
+    build_textbox2({
+      "i am the mighty fli!...",
+      "how dare you enter my lair!...",
+      "you will now pay for this\nfoolhardy intrusion!"
+    })
   })
 end

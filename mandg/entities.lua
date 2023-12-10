@@ -355,13 +355,20 @@ function build_sandwall()
         local text_ticker = build_text_ticker(text)
         screen:add_ent(text_ticker)
         screen.pause_enemies = true
+        local sandwall_ent = self
         screen.scene_update_handler = function(self)
           if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
             self:del_ent(text_ticker)
-
-            -- todo: if monty.has_spade...
-            self.pause_enemies = false
-            self.scene_update_handler = nil
+            if not monty.has_spade then
+              self.pause_enemies = false
+              self.scene_update_handler = nil
+            else
+              monty:start_dig_sandwall(function()
+                self.pause_enemies = false
+                self.scene_update_handler = nil
+                screen:del_ent(sandwall_ent)
+              end)
+            end
           end
         end
       end

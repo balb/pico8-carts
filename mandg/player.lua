@@ -26,6 +26,15 @@ function build_monty()
       self.init_y = self.y
       self.init_dir = self.dir
     end,
+    -- sandwall props
+    sandwall_on_done = nil,
+    dig_sandwall = false,
+    sandwall_countdown = 100,
+    sandwall_dir = 1,
+    start_dig_sandwall = function(self, on_done)
+      self.sandwall_on_done = on_done
+      self.dig_sandwall = true
+    end,
     update = function(self)
       -- handle death
       if self.dying > 0 then
@@ -36,6 +45,22 @@ function build_monty()
           self.x = self.init_x
           self.y = self.init_y
           self.dir = self.init_dir
+        end
+      end
+
+      -- sandwall
+      if self.dig_sandwall then
+        self.sandwall_countdown -= 1
+
+        -- walk up and down
+        if self.y <= 8 or self.y >= 104 then
+          self.sandwall_dir *= -1
+        end
+        self.y += self.sandwall_dir * 2
+
+        if self.sandwall_countdown == 0 then
+          self.dig_sandwall = false
+          self.sandwall_on_done()
         end
       end
     end,
@@ -81,6 +106,16 @@ function draw_monty(monty)
   spr(47,120,0)
  elseif state.has_bra then
   spr(104,120,-1)   ]]
+  end
+
+  -- sandwall
+  if monty.dig_sandwall then
+    -- clear the sand wall
+    mset(16, flr((monty.y + 2) / 8) + 49, 64)
+
+    -- draw spade
+    local cntr_m2 = time_toggle(12, 2)
+    spr(54 + cntr_m2, monty.x - 5, monty.y + 6, 1, 1, false, cntr_m2)
   end
 
   --if state.dig_sandwall or monty.dig_shoot>0 then

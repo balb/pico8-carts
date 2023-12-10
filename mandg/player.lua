@@ -10,13 +10,18 @@ function build_monty()
     mov = false,
     box = { 4, 0, 11, 15 },
 
-    has_spade = false,
+    has_spade = true,
+
+    frozen = false,
 
     dying = 0,
+
+    -- dead flag for del_on_death
+    dead = false,
     death_count = 0,
     die = function(self)
       if self.dying == 0 then
-        freeze()
+        self.frozen = true
         self.death_count += 1
         self.dying = 20
       end
@@ -40,7 +45,8 @@ function build_monty()
       if self.dying > 0 then
         self.dying -= 1
         if self.dying == 0 then
-          unfreeze()
+          self.frozen = false
+          self.dead = true
           -- reset position
           self.x = self.init_x
           self.y = self.init_y

@@ -82,30 +82,25 @@ function build_scene_main()
     screens = build_screens(),
     screen = nil,
     monty = build_monty(),
-    frozen = false,
     init = function(self)
       self:set_screen()
     end,
     set_screen = function(self)
       self.screen = self.screens[self.map_x .. self.map_y]
     end,
-    -- freez / frozen might be better named dying
-    freeze = function(self)
-      self.frozen = true
-    end,
-    unfreeze = function(self)
-      self.frozen = false
-      foreach(
-        self.screen.ents, function(ent)
-          if (ent.del_on_death) self.screen:del_ent(ent)
-        end
-      )
-    end,
     update_handler = nil,
     update = function(self)
-      if self.frozen then
-        -- need to update monty to unfreeze
+      if self.monty.frozen then
+        -- need to update monty to unfreeze etc.
         self.monty:update()
+        if self.monty.dead then
+          foreach(
+            self.screen.ents, function(ent)
+              if (ent.del_on_death) self.screen:del_ent(ent)
+            end
+          )
+          self.monty.dead = false
+        end
         return
       end
 

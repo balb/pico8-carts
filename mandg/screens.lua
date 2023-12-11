@@ -174,18 +174,84 @@ end
 
 function build_screen_desert_fli_boss()
   local fli = build_fli()
-  local screen = build_screen({
-    fli,
-    build_textbox2(
-      {
-        "i am the mighty fli!...",
-        "how dare you enter my lair!...",
-        "you will now pay for this\nfoolhardy intrusion!"
-      }, function()
-        fli:start_fight()
-      end
-    )
-  })
+  local screen = build_screen({ fli })
+  screen.freeze_monty = false
+  screen:add_ent(build_textbox2(
+    {
+      "i am the mighty fli!...",
+      "how dare you enter my lair!...",
+      "you will now pay for this\nfoolhardy intrusion!"
+    }, function()
+      fli:start_fight()
+      screen.scene_update_handler = fli_scene_update_handler
+    end
+  ))
+
+  -- initial scene_update_handler
+  screen.scene_update_handler = function(self, monty)
+    if (monty.y > 72) monty.y -= 1
+    if (monty.x > 104) monty.x -= 1
+    if (monty.y <= 72 and monty.x <= 104) monty.mov = false
+  end
 
   return screen
+end
+
+-- fli scene_update_handler based on normal scene update
+function fli_scene_update_handler(self, monty)
+  -- stay put on death
+  monty.init_x = monty.x
+  monty.init_y = monty.y
+
+  if self.freeze_monty then
+    -- need to update monty to do death etc.
+    monty:update()
+    if monty.dead then
+      foreach(
+        self.ents, function(ent)
+          if (ent.del_on_death) self:del_ent(ent)
+        end
+      )
+      self.freeze_monty = false
+      monty.dead = false
+    end
+    return
+  end
+
+  local next_x = monty.x
+  local next_y = monty.y
+
+  monty.mov = true
+  if btn(⬆️) then
+    --monty.dir = 0
+    next_y -= 1
+  elseif btn(⬇️) then
+    --monty.dir = 1
+    next_y += 1
+  else
+    monty.mov = false
+  end
+
+  local collision = false
+  foreach(
+    self.ents, function(ent)
+      local ent_collision = check_collision(monty, ent)
+      collision = collision or ent_collision
+      --[[ if ent_collision and ent.on_collide then
+        ent:on_collide(self.monty, self.screen)
+      else
+        collision = collision or ent_collision
+      end ]]
+    end
+  )
+
+  if collision then
+    self.freeze_monty = true
+    monty:die()
+  end
+
+  if not map_collide(scene, next_x, next_y) then
+    monty.x = next_x
+    monty.y = next_y
+  end
 end

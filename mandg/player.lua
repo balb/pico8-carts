@@ -34,6 +34,12 @@ function build_monty()
       self.sandwall_on_done = on_done
       self.dig_sandwall = true
     end,
+    -- fli props
+    fli_dig_shoot = 0,
+    fli_dig_sand_blob = function(self)
+      if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
+    end,
+    --
     update = function(self, screen)
       -- handle death
       if self.dying > 0 then
@@ -57,10 +63,18 @@ function build_monty()
         end
         self.y += self.sandwall_dir * 2
 
+        -- clear the sand wall map tile
+        mset(16, flr((self.y + 2) / 8) + 49, 64)
+
         if self.sandwall_countdown == 0 then
           self.dig_sandwall = false
           self.sandwall_on_done()
         end
+      end
+
+      -- fli
+      if self.fli_dig_shoot > 0 then
+        self.fli_dig_shoot -= 1
       end
     end,
     draw = function(self)
@@ -107,20 +121,12 @@ function draw_monty(monty)
   spr(104,120,-1)   ]]
   end
 
-  -- sandwall
-  if monty.dig_sandwall then
-    -- clear the sand wall
-    mset(16, flr((monty.y + 2) / 8) + 49, 64)
-
+  -- sandwall / fli
+  if monty.dig_sandwall or monty.fli_dig_shoot > 0 then
     -- draw spade
     local cntr_m2 = time_toggle(12, 2)
     spr(54 + cntr_m2, monty.x - 5, monty.y + 6, 1, 1, false, cntr_m2)
   end
-
-  --if state.dig_sandwall or monty.dig_shoot>0 then
-  -- draw spade
-  --spr(54+monty.walk_step,monty.x-5,monty.y+6,1,1,false,monty.walk_step)
-  --end
 end
 
 function draw_monty_row(monty, s, y_offset)

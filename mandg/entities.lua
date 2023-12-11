@@ -570,7 +570,7 @@ function fli_update(ent, screen)
     { x = 80, y = 20 }
   }
 
-  -- if(state.freeze)return
+  -- if (state.frozen) return
   local next_x = path[ent.path_index].x
   local next_y = path[ent.path_index].y
   if ent.x < next_x then
@@ -605,7 +605,7 @@ function fli_update(ent, screen)
   if (ent.hit_flash > 0) ent.hit_flash -= 1
   --[[ if ent.health <= 0 then
     ent.mode = 2
-    --state.freeze=true
+    --state.frozen=true
     screen:add_ent(build_textbox2({
       "arrrrgh! defeated by a simple\nhuman. the shame!",
       "oh well, can't complain.\nat least i had some company.",
@@ -618,4 +618,43 @@ function fli_update(ent, screen)
       end
     )
   end ]]
+end
+
+function build_sand_blob(start_x, start_y)
+  -- based on fireball
+  local speed = 3
+  return {
+    x = start_x, y = start_y,
+    update = function(ent)
+      --[[ if (state.freeze) return
+      if boss_ent then
+        local ex0 = ent.x + ent.box[1]
+        local ey0 = ent.y + ent.box[2]
+        local ew = ent.box[3]
+        local eh = ent.box[4]
+
+        local mx0 = boss_ent.x + boss_ent.box[1]
+        local my0 = boss_ent.y + boss_ent.box[2]
+        local mw = boss_ent.box[3]
+        local mh = boss_ent.box[4]
+
+        if ex0 < mx0 + mw and ex0 + ew > mx0
+            -- boss hit
+            and ey0 < my0 + mh and eh + ey0 > my0 then
+          boss_ent.on_hit(boss_ent)
+          del(current_ents, ent)
+        else
+          --move
+          ent.x -= speed
+          if (ent.x <= 0) del(current_ents, ent)
+        end
+      end ]]
+    end,
+    draw = function(ent)
+      local cntr_m2 = time_toggle(12, 2)
+      spr(53, ent.x, ent.y, 1, 1, false, cntr_m2 == 0)
+    end,
+    box = { 1, 1, 6, 6 },
+    del_on_death = true
+  }
 end

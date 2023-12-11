@@ -232,6 +232,11 @@ function fli_scene_update_handler(self, monty)
     monty.mov = false
   end
 
+  if btnp(❎) or btnp(🅾️) then
+    monty:fli_dig_sand_blob()
+    self:add_ent(build_sand_blob(monty.x, monty.y + 6))
+  end
+
   local collision = false
   foreach(
     self.ents, function(ent)

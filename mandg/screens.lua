@@ -172,8 +172,8 @@ function build_screen_desert_cactus_and_spade()
 end
 
 function build_screen_desert_fli_boss()
-  local fli = build_fli()
-  local screen = build_screen({ fli })
+  boss_fli = build_fli()
+  local screen = build_screen({ boss_fli })
   freeze_monty = false
   screen:add_ent(build_textbox2(
     {
@@ -181,7 +181,7 @@ function build_screen_desert_fli_boss()
       "how dare you enter my lair!...",
       "you will now pay for this\nfoolhardy intrusion!"
     }, function()
-      fli:start_fight()
+      boss_fli:start_fight()
       screen.scene_update_handler = fli_scene_update_handler
     end
   ))
@@ -233,7 +233,7 @@ function fli_scene_update_handler(self, monty)
 
   if btnp(❎) or btnp(🅾️) then
     monty:fli_dig_sand_blob()
-    self:add_ent(build_sand_blob(monty.x, monty.y + 6))
+    self:add_ent(build_sand_blob(monty.x - 4, monty.y + 6))
   end
 
   local collision = false

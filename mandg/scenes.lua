@@ -186,12 +186,13 @@ function build_scene_main()
     end,
     draw = function(self)
       map(self.map_x * 16, self.map_y * 16, 0, 0)
-      print(self.map_x, 64, 0)
-      print(self.map_y, 80, 0)
+      --print(self.map_x, 64, 0)
+      --print(self.map_y, 80, 0)
       self.screen:draw()
       self.monty:draw()
 
-      print("deaths: " .. self.monty.death_count, 0, 0)
+      print("웃", 0, 0, 3)
+      print(self.monty.death_count, 8, 0, 7)
     end
   }
 end

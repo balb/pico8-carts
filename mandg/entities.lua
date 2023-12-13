@@ -548,6 +548,13 @@ function build_fli()
       --body
       spr(62, ent.x + cntr_m2 - 1, ent.y + 8, 1, 1, cntr_m2 == 0)
       if (ent.hit_flash) pal()
+      -- health
+      for i = 0, 10 do
+        if i < ent.health then
+          print("●", 16 + i * 6, 0, 8)
+        end
+      end
+      color(7)
     end,
     box = { 0, 0, 7, 15 },
     health = 10,
@@ -603,9 +610,9 @@ function fli_update(ent, screen)
   ent.cntr += 1
 
   if (ent.hit_flash > 0) ent.hit_flash -= 1
-  --[[ if ent.health <= 0 then
+  if ent.health <= 0 then
     ent.mode = 2
-    --state.frozen=true
+    -- freeze_monty = true
     screen:add_ent(build_textbox2({
       "arrrrgh! defeated by a simple\nhuman. the shame!",
       "oh well, can't complain.\nat least i had some company.",
@@ -617,7 +624,7 @@ function fli_update(ent, screen)
         if (ent.del_on_death) screen:del_ent(ent)
       end
     )
-  end ]]
+  end
 end
 
 function build_sand_blob(start_x, start_y)
@@ -625,30 +632,28 @@ function build_sand_blob(start_x, start_y)
   local speed = 3
   return {
     x = start_x, y = start_y,
-    update = function(ent)
-      --[[ if (state.freeze) return
-      if boss_ent then
-        local ex0 = ent.x + ent.box[1]
-        local ey0 = ent.y + ent.box[2]
-        local ew = ent.box[3]
-        local eh = ent.box[4]
+    update = function(ent, screen)
+      if (freeze_enemies) return
+      local ex0 = ent.x + ent.box[1]
+      local ey0 = ent.y + ent.box[2]
+      local ew = ent.box[3]
+      local eh = ent.box[4]
 
-        local mx0 = boss_ent.x + boss_ent.box[1]
-        local my0 = boss_ent.y + boss_ent.box[2]
-        local mw = boss_ent.box[3]
-        local mh = boss_ent.box[4]
+      local mx0 = boss_fli.x + boss_fli.box[1]
+      local my0 = boss_fli.y + boss_fli.box[2]
+      local mw = boss_fli.box[3]
+      local mh = boss_fli.box[4]
 
-        if ex0 < mx0 + mw and ex0 + ew > mx0
-            -- boss hit
-            and ey0 < my0 + mh and eh + ey0 > my0 then
-          boss_ent.on_hit(boss_ent)
-          del(current_ents, ent)
-        else
-          --move
-          ent.x -= speed
-          if (ent.x <= 0) del(current_ents, ent)
-        end
-      end ]]
+      if ex0 < mx0 + mw and ex0 + ew > mx0
+          -- boss hit
+          and ey0 < my0 + mh and eh + ey0 > my0 then
+        boss_fli:on_hit()
+        screen:del_ent(ent)
+      else
+        --move
+        ent.x -= speed
+        if (ent.x <= 0) screen:del_ent(ent)
+      end
     end,
     draw = function(ent)
       local cntr_m2 = time_toggle(12, 2)

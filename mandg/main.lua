@@ -1,7 +1,7 @@
 -- todo: scene_update_handler???
 
 start_map_x = 1
-start_map_y = 0
+start_map_y = 3
 start_monty_x = 8
 start_monty_y = 50
 
@@ -17,6 +17,8 @@ scene = nil
 
 freeze_enemies = false
 freeze_monty = false
+
+boss_fli = nil
 
 function _init()
   scenes = build_scenes()

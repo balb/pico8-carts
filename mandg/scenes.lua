@@ -89,9 +89,8 @@ function build_scene_main()
       self.screen = self.screens[self.map_x .. self.map_y]
     end,
     update_handler = nil,
-    freeze_monty = false,
     update = function(self)
-      if self.freeze_monty then
+      if freeze_monty then
         -- need to update monty to do death etc.
         self.monty:update()
         if self.monty.dead then
@@ -100,7 +99,7 @@ function build_scene_main()
               if (ent.del_on_death) self.screen:del_ent(ent)
             end
           )
-          self.freeze_monty = false
+          freeze_monty = false
           self.monty.dead = false
         end
         return
@@ -146,7 +145,7 @@ function build_scene_main()
       )
 
       if collision then
-        self.freeze_monty = true
+        freeze_monty = true
         self.monty:die()
       end
 

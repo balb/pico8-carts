@@ -44,7 +44,6 @@ function build_screen(ents)
     del_ent = function(self, ent)
       del(self.ents, ent)
     end,
-    pause_enemies = false,
     scene_update_handler = nil,
     update = function(self)
       foreach(
@@ -175,7 +174,7 @@ end
 function build_screen_desert_fli_boss()
   local fli = build_fli()
   local screen = build_screen({ fli })
-  screen.freeze_monty = false
+  freeze_monty = false
   screen:add_ent(build_textbox2(
     {
       "i am the mighty fli!...",
@@ -203,7 +202,7 @@ function fli_scene_update_handler(self, monty)
   monty.init_x = monty.x
   monty.init_y = monty.y
 
-  if self.freeze_monty then
+  if freeze_monty then
     -- need to update monty to do death etc.
     monty:update()
     if monty.dead then
@@ -212,7 +211,7 @@ function fli_scene_update_handler(self, monty)
           if (ent.del_on_death) self:del_ent(ent)
         end
       )
-      self.freeze_monty = false
+      freeze_monty = false
       monty.dead = false
     end
     return
@@ -251,7 +250,7 @@ function fli_scene_update_handler(self, monty)
   )
 
   if collision then
-    self.freeze_monty = true
+    freeze_monty = true
     monty:die()
   end
 

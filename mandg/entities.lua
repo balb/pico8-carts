@@ -5,7 +5,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
     min_x = min_x, max_x = max_x,
 
     update = function(self, screen)
-      if (screen.pause_enemies) return
+      if (freeze_enemies) return
       self.x += speed
       if self.x < self.min_x or self.x > self.max_x then
         speed *= -1
@@ -29,7 +29,7 @@ function build_fuzzy(start_x, start_y, path, path_index)
     path = path,
     path_index = path_index,
     update = function(self, screen)
-      if (screen.pause_enemies) return
+      if (freeze_enemies) return
       local next_x = self.path[self.path_index].x
       local next_y = self.path[self.path_index].y
       if self.x < next_x then
@@ -382,17 +382,17 @@ function build_sandwall()
         end
         local text_ticker = build_text_ticker(text)
         screen:add_ent(text_ticker)
-        screen.pause_enemies = true
+        freeze_enemies = true
         local sandwall_ent = self
         screen.scene_update_handler = function(self)
           if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
             self:del_ent(text_ticker)
             if not monty.has_spade then
-              self.pause_enemies = false
+              freeze_enemies = false
               self.scene_update_handler = nil
             else
               monty:start_dig_sandwall(function()
-                self.pause_enemies = false
+                freeze_enemies = false
                 self.scene_update_handler = nil
                 screen:del_ent(sandwall_ent)
               end)
@@ -415,7 +415,7 @@ function build_cactus(start_x, start_y, path, path_index)
     path_index = path_index,
     cntr = 0,
     update = function(ent, screen)
-      if (screen.pause_enemies) return
+      if (freeze_enemies) return
       -- same a fuzzy
       local next_x = ent.path[ent.path_index].x
       local next_y = ent.path[ent.path_index].y
@@ -470,7 +470,7 @@ function build_fireball(start_x, start_y, dir, dist)
     x = start_x, y = start_y,
     dist = dist,
     update = function(ent, screen)
-      if (screen.pause_enemies) return
+      if (freeze_enemies) return
       if dir == 0 then
         ent.y -= speed
       elseif dir == 1 then
@@ -507,12 +507,12 @@ function build_spade(x, y)
       monty.mov = false
       local text_ticker = build_text_ticker("this spiffing spade\nwill come in handy...")
       screen:add_ent(text_ticker)
-      screen.pause_enemies = true
+      freeze_enemies = true
       local spade_ent = self
       screen.scene_update_handler = function(self)
         if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
           self:del_ent(text_ticker)
-          self.pause_enemies = false
+          freeze_enemies = false
           self.scene_update_handler = nil
           self:del_ent(spade_ent)
           monty.has_spade = true

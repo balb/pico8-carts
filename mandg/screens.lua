@@ -172,8 +172,9 @@ function build_screen_desert_cactus_and_spade()
 end
 
 function build_screen_desert_fli_boss()
-  boss_fli = build_fli()
-  local screen = build_screen({ boss_fli })
+  local fli = build_fli()
+  local screen = build_screen({ fli })
+  screen.boss_fli = fli
 
   screen:add_ent(build_textbox2(
     {
@@ -181,7 +182,7 @@ function build_screen_desert_fli_boss()
       "how dare you enter my lair!...",
       "you will now pay for this\nfoolhardy intrusion!"
     }, function()
-      boss_fli:start_fight()
+      fli:start_fight()
       screen.scene_update_handler = fli_scene_update_handler
     end
   ))

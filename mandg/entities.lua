@@ -611,6 +611,7 @@ function fli_update(ent, screen)
 
   if (ent.hit_flash > 0) ent.hit_flash -= 1
   if ent.health <= 0 then
+    ent.hit_flash = 0
     ent.mode = 2
 
     screen:add_ent(build_textbox2({
@@ -639,15 +640,14 @@ function build_sand_blob(start_x, start_y)
       local ew = ent.box[3]
       local eh = ent.box[4]
 
-      local mx0 = boss_fli.x + boss_fli.box[1]
-      local my0 = boss_fli.y + boss_fli.box[2]
-      local mw = boss_fli.box[3]
-      local mh = boss_fli.box[4]
+      local mx0 = screen.boss_fli.x + screen.boss_fli.box[1]
+      local my0 = screen.boss_fli.y + screen.boss_fli.box[2]
+      local mw = screen.boss_fli.box[3]
+      local mh = screen.boss_fli.box[4]
 
       if ex0 < mx0 + mw and ex0 + ew > mx0
-          -- boss hit
           and ey0 < my0 + mh and eh + ey0 > my0 then
-        boss_fli:on_hit()
+        screen.boss_fli:on_hit()
         screen:del_ent(ent)
       else
         --move

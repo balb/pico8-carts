@@ -9,8 +9,8 @@
 --btn_o=🅾️
 
 -- consts
-start_map_x = 3
-start_map_y = 1
+start_map_x = 1
+start_map_y = 3
 start_monty_x = 8
 start_monty_y = 50
 
@@ -19,9 +19,6 @@ scenes = nil
 scene = nil
 
 freeze_enemies = false
-
--- todo: this should be a screen prop
-boss_fli = nil
 
 function _init()
   scenes = build_scenes()

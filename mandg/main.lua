@@ -1,9 +1,5 @@
+-- todo: think about death and textbox freeze
 -- todo: scene_update_handler???
-
-start_map_x = 1
-start_map_y = 3
-start_monty_x = 8
-start_monty_y = 50
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -12,12 +8,19 @@ start_monty_y = 50
 --btn_x=❎
 --btn_o=🅾️
 
+-- consts
+start_map_x = 3
+start_map_y = 1
+start_monty_x = 8
+start_monty_y = 50
+
+-- globals
 scenes = nil
 scene = nil
 
 freeze_enemies = false
-freeze_monty = false
 
+-- todo: this should be a screen prop
 boss_fli = nil
 
 function _init()

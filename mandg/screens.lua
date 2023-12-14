@@ -174,7 +174,7 @@ end
 function build_screen_desert_fli_boss()
   boss_fli = build_fli()
   local screen = build_screen({ boss_fli })
-  freeze_monty = false
+
   screen:add_ent(build_textbox2(
     {
       "i am the mighty fli!...",
@@ -202,7 +202,8 @@ function fli_scene_update_handler(self, monty)
   monty.init_x = monty.x
   monty.init_y = monty.y
 
-  if freeze_monty then
+  -- handle dying
+  if monty.dying > 0 then
     -- need to update monty to do death etc.
     monty:update()
     if monty.dead then
@@ -211,7 +212,7 @@ function fli_scene_update_handler(self, monty)
           if (ent.del_on_death) self:del_ent(ent)
         end
       )
-      freeze_monty = false
+
       monty.dead = false
     end
     return
@@ -250,7 +251,6 @@ function fli_scene_update_handler(self, monty)
   )
 
   if collision then
-    freeze_monty = true
     monty:die()
   end
 

@@ -612,7 +612,7 @@ function fli_update(ent, screen)
   if (ent.hit_flash > 0) ent.hit_flash -= 1
   if ent.health <= 0 then
     ent.mode = 2
-    -- freeze_monty = true
+
     screen:add_ent(build_textbox2({
       "arrrrgh! defeated by a simple\nhuman. the shame!",
       "oh well, can't complain.\nat least i had some company.",

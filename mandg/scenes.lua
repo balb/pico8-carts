@@ -90,7 +90,8 @@ function build_scene_main()
     end,
     update_handler = nil,
     update = function(self)
-      if freeze_monty then
+      -- handle dying
+      if self.monty.dying > 0 then
         -- need to update monty to do death etc.
         self.monty:update()
         if self.monty.dead then
@@ -99,7 +100,7 @@ function build_scene_main()
               if (ent.del_on_death) self.screen:del_ent(ent)
             end
           )
-          freeze_monty = false
+
           self.monty.dead = false
         end
         return
@@ -145,7 +146,6 @@ function build_scene_main()
       )
 
       if collision then
-        freeze_monty = true
         self.monty:die()
       end
 

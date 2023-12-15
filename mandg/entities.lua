@@ -612,14 +612,13 @@ function fli_update(ent, screen)
     ent.hit_flash = 0
     ent.mode = 2
 
-    -- todo: remove any lingering sandblobs (see below)
-
     screen:add_ent(build_textbox2({
       "arrrrgh! defeated by a simple\nhuman. the shame!",
       "oh well, can't complain.\nat least i had some company.",
       "it does get lonely here.\nperhaps we could be friends?",
       "as a kindly gesture please\naccept this key..."
     }))
+
     foreach(
       screen.ents, function(ent)
         if (ent.del_on_death) screen:del_ent(ent)

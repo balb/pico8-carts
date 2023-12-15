@@ -133,22 +133,25 @@ function build_scene_main()
         else
           self.monty.mov = false
         end
-      end
 
-      -- fli boss
-      if self.screen.boss_fli then
-        -- stay put on death
-        self.monty.init_x = self.monty.x
-        self.monty.init_y = self.monty.y
-        -- face fli and lock x pos
-        self.monty.dir = 2
-        next_x = self.monty.x
-        -- fire!
-        -- todo: limit
-        if btnp(❎) or btnp(🅾️) then
-          self.monty:fli_dig_sand_blob()
-          self.screen:add_ent(build_sand_blob(self.monty.x - 4, self.monty.y + 6))
+        -- fli boss
+        if self.screen.boss_fli then
+          -- stay put on death
+          self.monty.init_x = self.monty.x
+          self.monty.init_y = self.monty.y
+          -- face fli and lock x pos
+          self.monty.dir = 2
+          next_x = self.monty.x
+          -- fire!
+          if (btnp(❎) or btnp(🅾️)) and self.screen.sand_blob_choke == 0 then
+            self.monty:fli_dig_sand_blob()
+            self.screen:add_ent(build_sand_blob(self.monty.x - 4, self.monty.y + 6))
+            self.screen.sand_blob_choke = 12
+          end
+          if (self.screen.sand_blob_choke > 0) self.screen.sand_blob_choke -= 1
         end
+
+        -- end freeze
       end
 
       local collision = false

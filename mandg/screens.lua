@@ -175,7 +175,6 @@ function build_screen_desert_fli_boss()
   local fli = build_fli()
   local screen = build_screen({ fli })
   screen.boss_fli = fli
-
   screen:add_ent(build_textbox2(
     {
       "i am the mighty fli!...",
@@ -193,6 +192,8 @@ function build_screen_desert_fli_boss()
     if (monty.x > 104) monty.x -= 1
     if (monty.y <= 72 and monty.x <= 104) monty.mov = false
   end
+
+  screen.sand_blob_choke = 0
 
   return screen
 end

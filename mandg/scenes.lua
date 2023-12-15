@@ -6,49 +6,59 @@ function build_scenes()
 end
 
 function build_scene_title()
-  return {
-    init = function()
-    end,
-
-    start_text_x = 27,
-    start_text_x_inc = 1,
-    start_text_y = 69,
-    start_text_y_inc = 1,
-
-    update = function(self)
-      if btnp(❎) or btnp(🅾️) then
-        switch_scene("main")
-      end
-
-      self.start_text_x += self.start_text_x_inc
-      self.start_text_y += self.start_text_y_inc
-      if (self.start_text_x == 39 or self.start_text_x == 0) self.start_text_x_inc *= -1
-      if (self.start_text_y == 120 or self.start_text_y == 0) self.start_text_y_inc *= -1
-    end,
-    title_txt = [[
+  local monty_txt = [[
 8""8""8
 8  8  8 eeeee eeeee eeeee e    e
 8e 8  8 8  88 8   8   8   8    8
 88 8  8 8   8 8e  8   8e  8eeee8
 88 8  8 8   8 88  8   88    88
 88 8  8 8eee8 88  8   88    88
+  ]]
+  local and_txt = [[
+        eeeee eeeee eeeee
+        8   8 8   8 8   8
+        8eee8 8e  8 8e  8
+        88  8 88  8 88  8
+        88  8 88  8 88ee8
+  ]]
+  local gerts_txt = [[
+  8""""8
+  8    " eeee eeeee eeeee eeeee
+  8e     8    8   8   8   8   "
+  88  ee 8eee 8eee8e  8e  8eeee
+  88   8 88   88   8  88     88
+  88eee8 88ee 88   8  88  8ee88
+  ]]
 
-       eeeee eeeee eeeee
-       8   8 8   8 8   8
-       8eee8 8e  8 8e  8
-       88  8 88  8 88  8
-       88  8 88  8 88ee8
+  return {
+    count = 0,
+    init = function()
+    end,
+    start_text_x = 27,
+    start_text_y = 42,
+    update = function(self)
+      if btnp(❎) or btnp(🅾️) then
+        switch_scene("main")
+      end
 
- 8""""8
- 8    " eeee eeeee eeeee eeeee
- 8e     8    8   8   8   8   "
- 88  ee 8eee 8eee8e  8e  8eeee
- 88   8 88   88   8  88     88
- 88eee8 88ee 88   8  88  8ee88
-]],
+      self.start_text_x += 1
+      if self.start_text_x > 127 then
+        self.start_text_x = -80
+        if self.start_text_y == 81 then
+          self.start_text_y = 42
+        else
+          self.start_text_y = 81
+        end
+      end
+
+      if (self.count < 1000) self.count += 1
+    end,
     draw = function(self)
       local col = 11
-      print(self.title_txt, 0, 4, col)
+      print(monty_txt, 0, 4, col)
+
+      if (self.count > 40) print(and_txt, 0, 50, col)
+      if (self.count > 80) print(gerts_txt, 0, 88, col)
       for x = 0, 127 do
         for y = 0, 127 do
           local p = pget(x, y)
@@ -64,10 +74,13 @@ function build_scene_title()
         end
       end
 
-      spr(2, 2, 50)
-      spr(2, 10, 50, 1, 1, true)
-      spr(18, 2, 58)
-      spr(18, 10, 58, 1, 1, true)
+      -- monty
+      local y_offset = 0
+      if (self.count <= 40) y_offset = time_toggle(12, 2)
+      spr(2, 2, 54 + y_offset)
+      spr(2, 10, 54 + y_offset, 1, 1, true)
+      spr(18, 2, 62 + y_offset)
+      spr(18, 10, 62 + y_offset, 1, 1, true)
 
       print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
       color(7)

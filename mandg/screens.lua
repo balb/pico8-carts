@@ -183,7 +183,7 @@ function build_screen_desert_fli_boss()
       "you will now pay for this\nfoolhardy intrusion!"
     }, function()
       fli:start_fight()
-      screen.scene_update_handler = fli_scene_update_handler
+      screen.scene_update_handler = nil
     end
   ))
 
@@ -195,68 +195,4 @@ function build_screen_desert_fli_boss()
   end
 
   return screen
-end
-
--- fli scene_update_handler based on normal scene update
-function fli_scene_update_handler(self, monty)
-  -- stay put on death
-  monty.init_x = monty.x
-  monty.init_y = monty.y
-
-  -- handle dying
-  if monty.dying > 0 then
-    -- need to update monty to do death etc.
-    monty:update()
-    if monty.dead then
-      foreach(
-        self.ents, function(ent)
-          if (ent.del_on_death) self:del_ent(ent)
-        end
-      )
-
-      monty.dead = false
-    end
-    return
-  end
-
-  local next_x = monty.x
-  local next_y = monty.y
-
-  monty.mov = true
-  if btn(⬆️) then
-    --monty.dir = 0
-    next_y -= 1
-  elseif btn(⬇️) then
-    --monty.dir = 1
-    next_y += 1
-  else
-    monty.mov = false
-  end
-
-  if btnp(❎) or btnp(🅾️) then
-    monty:fli_dig_sand_blob()
-    self:add_ent(build_sand_blob(monty.x - 4, monty.y + 6))
-  end
-
-  local collision = false
-  foreach(
-    self.ents, function(ent)
-      local ent_collision = check_collision(monty, ent)
-      collision = collision or ent_collision
-      --[[ if ent_collision and ent.on_collide then
-        ent:on_collide(self.monty, self.screen)
-      else
-        collision = collision or ent_collision
-      end ]]
-    end
-  )
-
-  if collision then
-    monty:die()
-  end
-
-  if not map_collide(scene, next_x, next_y) then
-    monty.x = next_x
-    monty.y = next_y
-  end
 end

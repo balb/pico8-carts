@@ -324,11 +324,12 @@ function build_textbox2(texts, on_done)
   }
 end
 
-function build_text_ticker(text)
+function build_text_ticker(text, pin_top)
   return {
     text = text,
     len = 1,
     ready = false,
+    pin_top = pin_top,
     update = function(self)
       if not self.ready then
         if self.len < #self.text then
@@ -339,23 +340,25 @@ function build_text_ticker(text)
       end
     end,
     draw = function(self)
-      rectfill(0, 96, 127, 127, 0)
-      print(sub(self.text, 1, self.len), 4, 100, 7)
+      local y = 8
+      if (not self.pin_top) y = 96
+      rectfill(0, y, 127, y + 32, 0)
+      print(sub(self.text, 1, self.len), 4, y + 4, 7)
 
       -- border
       local bcol = 5
-      rect(0, 97, 127, 127, bcol)
-      rect(0, 97, 2, 99, bcol)
-      rect(0, 97, 1, 98, 0)
+      rect(0, y + 1, 127, y + 31, bcol)
+      rect(0, y + 1, 2, y + 3, bcol)
+      rect(0, y + 1, 1, y + 2, 0)
 
-      rect(125, 97, 127, 99, bcol)
-      rect(126, 97, 127, 98, 0)
+      rect(125, y + 1, 127, y + 3, bcol)
+      rect(126, y + 1, 127, y + 2, 0)
 
-      rect(125, 125, 127, 127, bcol)
-      rect(126, 126, 127, 127, 0)
+      rect(125, y + 28, 127, y + 31, bcol)
+      rect(126, y + 29, 127, y + 31, 0)
 
-      rect(0, 125, 2, 127, bcol)
-      rect(0, 126, 1, 127, 0)
+      rect(0, y + 28, 2, y + 31, bcol)
+      rect(0, y + 29, 1, y + 31, 0)
 
       -- reset print color
       color(7)
@@ -382,7 +385,7 @@ function build_sandwall()
         else
           text = "if only i had a spade\nto dig my way through..."
         end
-        local text_ticker = build_text_ticker(text)
+        local text_ticker = build_text_ticker(text, monty.y > 80)
         screen:add_ent(text_ticker)
         freeze_enemies = true
         local sandwall_ent = self

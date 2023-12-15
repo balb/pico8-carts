@@ -552,7 +552,7 @@ function build_fli()
       -- health
       for i = 0, 10 do
         if i < ent.health then
-          print("●", 16 + i * 6, 0, 8)
+          print("●", 32 + i * 6, 0, 8)
         end
       end
       color(7)

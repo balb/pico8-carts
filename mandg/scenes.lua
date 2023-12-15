@@ -51,7 +51,7 @@ function build_scene_title()
       print(self.title_txt, 0, 4, col)
       for x = 0, 127 do
         for y = 0, 127 do
-          p = pget(x, y)
+          local p = pget(x, y)
           if p == 0 then
             if pget(x - 1, y) == col
                 and pget(x + 1, y) == col then
@@ -116,7 +116,9 @@ function build_scene_main()
       local next_x = self.monty.x
       local next_y = self.monty.y
 
-      if not freeze_enemies then
+      if freeze_enemies then
+        self.monty.mov = false
+      else
         self.monty.mov = true
         if btn(⬆️) then
           self.monty.dir = 0
@@ -207,7 +209,7 @@ function build_scene_main()
     end,
     draw = function(self)
       map(self.map_x * 16, self.map_y * 16, 0, 0)
-      print(self.map_x .. "," .. self.map_y, 64, 0)
+      -- print(self.map_x .. "," .. self.map_y, 64, 0)
       self.screen:draw()
       self.monty:draw()
 

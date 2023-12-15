@@ -1,5 +1,6 @@
 -- todo: think about death and textbox freeze
 -- todo: scene_update_handler???
+-- todo: does on_collide need all those args?
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -9,7 +10,7 @@
 --btn_o=🅾️
 
 -- consts
-start_map_x = 1
+start_map_x = 2
 start_map_y = 3
 start_monty_x = 8
 start_monty_y = 50
@@ -18,6 +19,7 @@ start_monty_y = 50
 scenes = nil
 scene = nil
 
+-- todo: rename
 freeze_enemies = false
 
 function _init()

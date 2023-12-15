@@ -299,6 +299,7 @@ function build_textbox2(texts, on_done)
     idx = 1,
     text_ticker = nil,
     update = function(self, screen)
+      freeze_enemies = true
       if self.text_ticker == nil then
         self.text_ticker = build_text_ticker(texts[self.idx])
         screen:add_ent(self.text_ticker)
@@ -307,6 +308,7 @@ function build_textbox2(texts, on_done)
           screen:del_ent(self.text_ticker)
           self.idx += 1
           if self.idx > count(texts) then
+            freeze_enemies = false
             screen:del_ent(self)
             if (on_done) on_done()
           else
@@ -503,21 +505,17 @@ function build_spade(x, y)
       pal()
     end,
     box = { 0, 1, 7, 6 },
-    on_collide = function(self, monty, screen)
+    colliding = false,
+    on_collide = function(spade, monty, screen)
+      if (spade.colliding) return
+      spade.colliding = true
       monty.mov = false
-      local text_ticker = build_text_ticker("this spiffing spade\nwill come in handy...")
-      screen:add_ent(text_ticker)
-      freeze_enemies = true
-      local spade_ent = self
-      screen.scene_update_handler = function(self)
-        if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
-          self:del_ent(text_ticker)
-          freeze_enemies = false
-          self.scene_update_handler = nil
-          self:del_ent(spade_ent)
+      screen:add_ent(build_textbox2(
+        { "this spiffing spade\nwill come in handy..." }, function()
+          screen:del_ent(spade)
           monty.has_spade = true
         end
-      end
+      ))
     end
   }
 end

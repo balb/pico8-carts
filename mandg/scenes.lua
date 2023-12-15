@@ -116,21 +116,23 @@ function build_scene_main()
       local next_x = self.monty.x
       local next_y = self.monty.y
 
-      self.monty.mov = true
-      if btn(⬆️) then
-        self.monty.dir = 0
-        next_y -= 1
-      elseif btn(⬇️) then
-        self.monty.dir = 1
-        next_y += 1
-      elseif btn(⬅️) then
-        self.monty.dir = 2
-        next_x -= 1
-      elseif btn(➡️) then
-        self.monty.dir = 3
-        next_x += 1
-      else
-        self.monty.mov = false
+      if not freeze_enemies then
+        self.monty.mov = true
+        if btn(⬆️) then
+          self.monty.dir = 0
+          next_y -= 1
+        elseif btn(⬇️) then
+          self.monty.dir = 1
+          next_y += 1
+        elseif btn(⬅️) then
+          self.monty.dir = 2
+          next_x -= 1
+        elseif btn(➡️) then
+          self.monty.dir = 3
+          next_x += 1
+        else
+          self.monty.mov = false
+        end
       end
 
       local collision = false

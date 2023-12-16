@@ -324,12 +324,11 @@ function build_textbox2(texts, on_done)
   }
 end
 
-function build_text_ticker(text, pin_top)
+function build_text_ticker(text)
   return {
     text = text,
     len = 1,
     ready = false,
-    pin_top = pin_top,
     update = function(self)
       if not self.ready then
         if self.len < #self.text then
@@ -340,8 +339,7 @@ function build_text_ticker(text, pin_top)
       end
     end,
     draw = function(self)
-      local y = 8
-      if (not self.pin_top) y = 96
+      local y = 96
       rectfill(0, y, 127, y + 32, 0)
       print(sub(self.text, 1, self.len), 4, y + 4, 7)
 
@@ -382,6 +380,9 @@ function build_sandwall()
         local text = nil
         if monty.has_spade then
           text = "now to dig my way through!"
+          if monty.y > 72 then
+            monty.move_to_pos = { x = monty.x, y = 72 }
+          end
         else
           text = "if only i had a spade\nto dig my way through..."
         end

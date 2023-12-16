@@ -122,7 +122,7 @@ function build_scene_main()
       local next_x = self.monty.x
       local next_y = self.monty.y
 
-      if freeze_enemies then
+      if g_freeze then
         self.monty.mov = false
       else
         self.monty.mov = true

@@ -5,7 +5,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
     min_x = min_x, max_x = max_x,
 
     update = function(self, screen)
-      if (freeze_enemies) return
+      if (g_freeze) return
       self.x += speed
       if self.x < self.min_x or self.x > self.max_x then
         speed *= -1
@@ -29,7 +29,7 @@ function build_fuzzy(start_x, start_y, path, path_index)
     path = path,
     path_index = path_index,
     update = function(self, screen)
-      if (freeze_enemies) return
+      if (g_freeze) return
       local next_x = self.path[self.path_index].x
       local next_y = self.path[self.path_index].y
       if self.x < next_x then
@@ -215,7 +215,7 @@ function build_old_woman()
       if (self.q_and_a) self.q_and_a:update()
       if chats[self.chat].done then
         -- return control to player and remove old woman
-        freeze_enemies = false
+        g_freeze = false
         screen:del_ent(self)
         map_remove_desert_top_wall()
         return
@@ -299,7 +299,7 @@ function build_textbox2(texts, on_done)
     idx = 1,
     text_ticker = nil,
     update = function(self, screen)
-      freeze_enemies = true
+      g_freeze = true
       if self.text_ticker == nil then
         self.text_ticker = build_text_ticker(texts[self.idx])
         screen:add_ent(self.text_ticker)
@@ -308,7 +308,7 @@ function build_textbox2(texts, on_done)
           screen:del_ent(self.text_ticker)
           self.idx += 1
           if self.idx > count(texts) then
-            freeze_enemies = false
+            g_freeze = false
             screen:del_ent(self)
             if (on_done) on_done()
           else
@@ -390,9 +390,9 @@ function build_sandwall()
         screen:add_ent(build_textbox2(
           { text }, function()
             if monty.has_spade then
-              freeze_enemies = true
+              g_freeze = true
               monty:start_dig_sandwall(function()
-                freeze_enemies = false
+                g_freeze = false
                 screen:del_ent(self)
               end)
             end
@@ -414,7 +414,7 @@ function build_cactus(start_x, start_y, path, path_index)
     path_index = path_index,
     cntr = 0,
     update = function(ent, screen)
-      if (freeze_enemies) return
+      if (g_freeze) return
       -- same a fuzzy
       local next_x = ent.path[ent.path_index].x
       local next_y = ent.path[ent.path_index].y
@@ -469,7 +469,7 @@ function build_fireball(start_x, start_y, dir, dist)
     x = start_x, y = start_y,
     dist = dist,
     update = function(ent, screen)
-      if (freeze_enemies) return
+      if (g_freeze) return
       if dir == 0 then
         ent.y -= speed
       elseif dir == 1 then
@@ -640,7 +640,7 @@ function build_sand_blob(start_x, start_y)
   return {
     x = start_x, y = start_y,
     update = function(ent, screen)
-      if (freeze_enemies) return
+      if (g_freeze) return
       local ex0 = ent.x + ent.box[1]
       local ey0 = ent.y + ent.box[2]
       local ew = ent.box[3]

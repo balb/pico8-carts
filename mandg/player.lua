@@ -28,11 +28,11 @@ function build_monty()
 
       if screen_key == "00" then
         -- old woman
-        freeze_enemies = true
+        g_freeze = true
         self.move_to_pos = { x = 72, y = 56 }
       elseif screen_key == "03" then
         -- fli boss
-        freeze_enemies = true
+        g_freeze = true
         self.move_to_pos = { x = 104, y = 72 }
       end
     end,
@@ -90,7 +90,7 @@ function build_monty()
 
       -- events
       if g_event == "fli_dead" then
-        --freeze_enemies
+        --g_freeze
         self.move_to_pos = { x = self.x, y = 72 }
         g_event = nil
       end

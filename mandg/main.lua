@@ -18,8 +18,7 @@ start_monty_y = 50
 scenes = nil
 scene = nil
 
--- todo: rename to g_freeze
-freeze_enemies = false
+g_freeze = false
 
 -- use g_event to pass messages from entities to monty
 g_event = nil

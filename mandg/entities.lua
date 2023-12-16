@@ -385,25 +385,18 @@ function build_sandwall()
         else
           text = "if only i had a spade\nto dig my way through..."
         end
-        local text_ticker = build_text_ticker(text, monty.y > 80)
-        screen:add_ent(text_ticker)
-        freeze_enemies = true
-        local sandwall_ent = self
-        screen.scene_update_handler = function(self)
-          if text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
-            self:del_ent(text_ticker)
-            if not monty.has_spade then
-              freeze_enemies = false
-              self.scene_update_handler = nil
-            else
+
+        screen:add_ent(build_textbox2(
+          { text }, function()
+            if monty.has_spade then
+              freeze_enemies = true
               monty:start_dig_sandwall(function()
                 freeze_enemies = false
-                self.scene_update_handler = nil
-                screen:del_ent(sandwall_ent)
+                screen:del_ent(self)
               end)
             end
           end
-        end
+        ))
       end
     end
   }

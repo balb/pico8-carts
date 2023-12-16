@@ -119,13 +119,6 @@ function build_scene_main()
         return
       end
 
-      if self.screen.scene_update_handler then
-        self.screen:scene_update_handler(self.monty)
-        self.screen:update()
-        self.monty:update()
-        return
-      end
-
       local next_x = self.monty.x
       local next_y = self.monty.y
 

@@ -9,7 +9,8 @@ function build_monty()
     init_dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
-    has_spade = false,
+    has_spade = true,
+    has_north_key = false,
     dying = 0,
     -- dead flag for del_on_death
     dead = false,
@@ -150,10 +151,12 @@ function draw_monty(monty)
   pal()
 
   -- top right icon
-  if monty.has_spade then
+  if monty.has_north_key then
+    spr(13, 120, 0)
+  elseif monty.has_spade then
     spr(54, 120, -1)
-    --[[ elseif state.has_north_key then
-  spr(13,120,0)
+    --[[
+
  elseif state.has_simple_key then
   spr(47,120,0)
  elseif state.has_bra then

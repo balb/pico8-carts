@@ -532,7 +532,25 @@ function build_fli()
       if self.mode == 1 then
         fli_update(self, screen)
       elseif self.mode == 2 then
-        if (self.y > 64) self.y -= 1
+        if self.x > 46 then
+          self.x -= 1
+        elseif self.x < 42 then
+          self.x += 1
+        end
+        if self.y > 66 then
+          self.y -= 1
+        elseif self.y < 62 then
+          self.y += 1
+        end
+      elseif self.mode == 3 then
+        screen:add_ent(build_textbox2({
+          "it will open the north\ndungeon...",
+          "you must go there to\ncontinue your quest.",
+          "good luck!",
+          "don't forget to pop back\nand say hi some time!"
+        }))
+        screen:add_ent(build_north_key())
+        self.mode = 0
       end
     end,
     draw = function(ent)
@@ -617,12 +635,16 @@ function fli_update(ent, screen)
     ent.hit_flash = 0
     ent.mode = 2
     g_event = "fli_dead"
-    screen:add_ent(build_textbox2({
-      "arrrrgh! defeated by a simple\nhuman. the shame!",
-      "oh well, can't complain.\nat least i had some company.",
-      "it does get lonely here.\nperhaps we could be friends?",
-      "as a kindly gesture please\naccept this key..."
-    }))
+    screen:add_ent(build_textbox2(
+      {
+        "arrrrgh! defeated by a simple\nhuman. the shame!",
+        "oh well, can't complain.\nat least i had some company.",
+        "it does get lonely here.\nperhaps we could be friends?",
+        "as a kindly gesture please\naccept this key..."
+      }, function()
+        ent.mode = 3
+      end
+    ))
 
     foreach(
       screen.ents, function(ent)
@@ -667,5 +689,24 @@ function build_sand_blob(start_x, start_y)
     end,
     box = { 1, 1, 6, 6 },
     del_on_death = true
+  }
+end
+
+function build_north_key()
+  return {
+    x = 108, y = 24,
+    update = function()
+    end,
+    draw = function(ent)
+      pal(7, flr(rnd(16)))
+      spr(13, ent.x, ent.y)
+      pal()
+    end,
+    on_collide = function(ent, monty, screen)
+      monty.has_north_key = true
+      g_event = "warp"
+      screen:del_ent(ent)
+    end,
+    box = { 0, 0, 7, 7 }
   }
 end

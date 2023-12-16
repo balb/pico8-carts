@@ -1,6 +1,6 @@
 function build_screens()
   local tab = {}
-  tab["00"] = build_screen_desert_old_woman()
+  tab["00"] = build_screen({ build_old_woman() })
   tab["10"] = build_screen_desert_top_firestones()
   tab["20"] = build_screen_desert_fuzzies()
   tab["30"] = build_screen({})
@@ -60,16 +60,6 @@ function build_screen(ents)
       )
     end
   }
-end
-
-function build_screen_desert_old_woman()
-  local screen = build_screen({ build_old_woman() })
-  screen.scene_update_handler = function(self, monty)
-    if (monty.x > 72) monty.x -= 1
-    if (monty.y < 56) monty.y += 1
-    if (monty.x == 72 and monty.y == 56) monty.mov = false
-  end
-  return screen
 end
 
 function build_screen_desert_top_firestones()

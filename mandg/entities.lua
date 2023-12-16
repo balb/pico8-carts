@@ -215,7 +215,7 @@ function build_old_woman()
       if (self.q_and_a) self.q_and_a:update()
       if chats[self.chat].done then
         -- return control to player and remove old woman
-        screen.scene_update_handler = nil
+        freeze_enemies = false
         screen:del_ent(self)
         map_remove_desert_top_wall()
         return

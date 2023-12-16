@@ -212,7 +212,7 @@ function build_scene_main()
         self.monty.y = next_y
 
         if change_screen then
-          self.monty:stash_pos()
+          self.monty:on_change_screen(self.map_x .. self.map_y)
           self:set_screen()
         end
       end

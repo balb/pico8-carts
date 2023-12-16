@@ -20,10 +20,17 @@ function build_monty()
         self.dying = 20
       end
     end,
-    stash_pos = function(self)
+    move_to_pos = nil,
+    on_change_screen = function(self, screen_key)
       self.init_x = self.x
       self.init_y = self.y
       self.init_dir = self.dir
+
+      if screen_key == "00" then
+        -- old woman
+        freeze_enemies = true
+        self.move_to_pos = { x = 72, y = 56 }
+      end
     end,
     -- sandwall props
     sandwall_on_done = nil,
@@ -75,6 +82,26 @@ function build_monty()
       -- fli
       if self.fli_dig_shoot > 0 then
         self.fli_dig_shoot -= 1
+      end
+
+      if self.move_to_pos then
+        self.mov = false
+        if self.y < self.move_to_pos.y then
+          self.y += 1
+          self.mov = true
+        elseif self.y > self.move_to_pos.y then
+          self.x -= 1
+          self.mov = true
+        end
+
+        if self.x < self.move_to_pos.x then
+          self.x += 1
+          self.mov = true
+        elseif self.x > self.move_to_pos.x then
+          self.x -= 1
+          self.mov = true
+        end
+        if (not self.mov) self.move_to_pos = nil
       end
     end,
     draw = function(self)

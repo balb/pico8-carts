@@ -30,6 +30,10 @@ function build_monty()
         -- old woman
         freeze_enemies = true
         self.move_to_pos = { x = 72, y = 56 }
+      elseif screen_key == "03" then
+        -- fli boss
+        freeze_enemies = true
+        self.move_to_pos = { x = 104, y = 72 }
       end
     end,
     -- sandwall props
@@ -90,7 +94,7 @@ function build_monty()
           self.y += 1
           self.mov = true
         elseif self.y > self.move_to_pos.y then
-          self.x -= 1
+          self.y -= 1
           self.mov = true
         end
 

@@ -172,18 +172,9 @@ function build_screen_desert_fli_boss()
       "you will now pay for this\nfoolhardy intrusion!"
     }, function()
       fli:start_fight()
-      screen.scene_update_handler = nil
     end
   ))
 
-  -- initial scene_update_handler
-  screen.scene_update_handler = function(self, monty)
-    if (monty.y > 72) monty.y -= 1
-    if (monty.x > 104) monty.x -= 1
-    if (monty.y <= 72 and monty.x <= 104) monty.mov = false
-  end
-
   screen.sand_blob_choke = 0
-
   return screen
 end

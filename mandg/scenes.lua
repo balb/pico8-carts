@@ -239,19 +239,13 @@ function check_collision(monty, ent)
 
   return ex0 < mx0 + mw and ex0 + ew > mx0
       and ey0 < my0 + mh and eh + ey0 > my0
-  --if ent.on_collide != nil then
-  --  ent.on_collide(ent)
-  --else
-  --normal enemy
-  --  return true
-  --end
 end
 
+-- todo: try not to use 'scene'
 function map_collide(scene, next_x, next_y)
   local x = flr((next_x + 3) / 8)
   local y = flr(next_y / 8)
   local check_6 = next_y % 8 != 0
-  --collide_sandwall=false
 
   local result = tile_collide(scene, x, y)
       or tile_collide(scene, x + 1, y)
@@ -261,13 +255,10 @@ function map_collide(scene, next_x, next_y)
       and (tile_collide(scene, x, y + 2)
         or tile_collide(scene, x + 1, y + 2))
 
-  --if(collide_sandwall)add_ent(build_sandwall())
   return result
 end
 
+-- todo: try not to use 'scene'
 function tile_collide(scene, x, y)
-  --if fget(mget((scene.map_x*16)+x,(scene.map_y*16)+y),1) then
-  --  collide_sandwall=true
-  --end
   return fget(mget(scene.map_x * 16 + x, scene.map_y * 16 + y), 0)
 end

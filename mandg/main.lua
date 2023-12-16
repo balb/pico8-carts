@@ -1,4 +1,3 @@
--- todo: fli help - hit ZX
 -- todo: fli key and warp
 -- todo: get desert done 100%
 
@@ -21,6 +20,8 @@ scene = nil
 
 -- todo: rename to g_freeze
 freeze_enemies = false
+
+-- use g_event to pass messages from entities to monty
 g_event = nil
 
 function _init()

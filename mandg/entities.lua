@@ -522,6 +522,7 @@ function build_fli()
     x = 48, y = 52,
     path_index = 1,
     cntr = 0,
+    help_cntr = 90,
     mode = 0,
     hit_flash = 0,
     start_fight = function(self)
@@ -551,6 +552,11 @@ function build_fli()
           print("●", 32 + i * 6, 0, 8)
         end
       end
+
+      if ent.mode == 1 and ent.help_cntr > 0 then
+        print("hit ❎ or 🅾️", 32, 112, flr(rnd(16)))
+      end
+
       color(7)
     end,
     box = { 0, 0, 7, 15 },
@@ -624,6 +630,8 @@ function fli_update(ent, screen)
       end
     )
   end
+
+  if (ent.help_cntr > 0) ent.help_cntr -= 1
 end
 
 function build_sand_blob(start_x, start_y)

@@ -530,6 +530,8 @@ function build_fli()
     update = function(self, screen)
       if self.mode == 1 then
         fli_update(self, screen)
+      elseif self.mode == 2 then
+        if (self.y > 64) self.y -= 1
       end
     end,
     draw = function(ent)
@@ -608,7 +610,7 @@ function fli_update(ent, screen)
   if ent.health <= 0 then
     ent.hit_flash = 0
     ent.mode = 2
-
+    g_event = "fli_dead"
     screen:add_ent(build_textbox2({
       "arrrrgh! defeated by a simple\nhuman. the shame!",
       "oh well, can't complain.\nat least i had some company.",

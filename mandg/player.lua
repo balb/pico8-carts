@@ -88,6 +88,14 @@ function build_monty()
         self.fli_dig_shoot -= 1
       end
 
+      -- events
+      if g_event == "fli_dead" then
+        --freeze_enemies
+        self.move_to_pos = { x = self.x, y = 72 }
+        g_event = nil
+      end
+
+      --
       if self.move_to_pos then
         self.mov = false
         if self.y < self.move_to_pos.y then

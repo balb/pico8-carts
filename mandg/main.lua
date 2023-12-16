@@ -1,6 +1,6 @@
--- todo: think about death and textbox freeze
--- todo: scene_update_handler???
--- todo: does on_collide need all those args?
+-- todo: fli help - hit ZX
+-- todo: fli key and warp
+-- todo: get desert done 100%
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -19,8 +19,9 @@ start_monty_y = 50
 scenes = nil
 scene = nil
 
--- todo: rename
+-- todo: rename to g_freeze
 freeze_enemies = false
+g_event = nil
 
 function _init()
   scenes = build_scenes()

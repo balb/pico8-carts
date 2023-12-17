@@ -1,5 +1,6 @@
--- todo: desert - fuzzy layout
--- todo: get desert done 100%
+-- todo: town square 100%
+-- todo: brick up the desert on complete
+-- todo: replace calls to time_toggle(12, 2) with single call
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -9,10 +10,10 @@
 --btn_o=🅾️
 
 -- consts
-start_map_x = 1
-start_map_y = 3
+start_map_x = 3
+start_map_y = 1
 start_monty_x = 8
-start_monty_y = 50
+start_monty_y = 60
 
 -- globals
 scenes = nil

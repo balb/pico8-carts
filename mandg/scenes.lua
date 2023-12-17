@@ -30,7 +30,7 @@ function build_scene_title()
   88eee8 88ee 88   8  88  8ee88
   ]]
 
-  local init_count = 30
+  local init_count = 36
   local init_monty_y = 54
 
   return {
@@ -139,22 +139,26 @@ function build_scene_title()
       end
       self.py:draw()
       if self.py.y > 64 then
+        local help_x = self.gerts.x - 30
+        local help_y = self.gerts.y - 10
+        local help_width = 32
+        local help_height = 16
         -- speach bubble
-        rectfill(self.gerts.x - 32, self.gerts.y - 20, self.gerts.x - 2, self.gerts.y + 2, 7)
+        rectfill(help_x, help_y, help_x + help_width, help_y + help_height, 7)
         -- top left
-        pset(self.gerts.x - 32, self.gerts.y - 20, 0)
-        pset(self.gerts.x - 32, self.gerts.y - 19, 0)
-        pset(self.gerts.x - 31, self.gerts.y - 20, 0)
+        pset(help_x, help_y, 0)
+        pset(help_x, help_y + 1, 0)
+        pset(help_x + 1, help_y, 0)
         -- top right
-        pset(self.gerts.x - 2, self.gerts.y - 20, 0)
-        pset(self.gerts.x - 3, self.gerts.y - 20, 0)
-        pset(self.gerts.x - 2, self.gerts.y - 19, 0)
+        pset(help_x + help_width, help_y, 0)
+        pset(help_x + help_width, help_y + 1, 0)
+        pset(help_x + help_width - 1, help_y, 0)
         -- bottom left
-        pset(self.gerts.x - 32, self.gerts.y + 2, 0)
-        pset(self.gerts.x - 32, self.gerts.y + 1, 0)
-        pset(self.gerts.x - 31, self.gerts.y + 2, 0)
+        pset(help_x, help_y + help_height, 0)
+        pset(help_x + 1, help_y + help_height, 0)
+        pset(help_x, help_y + help_height - 1, 0)
 
-        print("help!!!", self.gerts.x - 30, self.gerts.y - 11)
+        print("help!!!", help_x + 3, help_y + 6)
       end
     end
   }

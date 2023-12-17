@@ -130,15 +130,32 @@ function build_scene_title()
         spr(18, 10, init_monty_y + 8 + y_offset, 1, 1, true)
       end
 
-      if self.mode >= 3 then
+      if self.mode == 3 then
         print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
-        color(7)
       end
 
       if self.mode == 2 or self.mode >= 3 then
         self.gerts:draw()
       end
       self.py:draw()
+      if self.py.y > 64 then
+        -- speach bubble
+        rectfill(self.gerts.x - 32, self.gerts.y - 20, self.gerts.x - 2, self.gerts.y + 2, 7)
+        -- top left
+        pset(self.gerts.x - 32, self.gerts.y - 20, 0)
+        pset(self.gerts.x - 32, self.gerts.y - 19, 0)
+        pset(self.gerts.x - 31, self.gerts.y - 20, 0)
+        -- top right
+        pset(self.gerts.x - 2, self.gerts.y - 20, 0)
+        pset(self.gerts.x - 3, self.gerts.y - 20, 0)
+        pset(self.gerts.x - 2, self.gerts.y - 19, 0)
+        -- bottom left
+        pset(self.gerts.x - 32, self.gerts.y + 2, 0)
+        pset(self.gerts.x - 32, self.gerts.y + 1, 0)
+        pset(self.gerts.x - 31, self.gerts.y + 2, 0)
+
+        print("help!!!", self.gerts.x - 30, self.gerts.y - 11)
+      end
     end
   }
 end

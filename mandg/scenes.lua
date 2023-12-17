@@ -81,6 +81,13 @@ function build_scene_title()
         self.py.y += 2
       end
 
+      local y_offset = time_toggle(12, 2)
+      if self.py.y < 64 then
+        self.gerts.y = init_monty_y + y_offset
+      else
+        self.gerts.y += 2
+      end
+
       self.gerts:update()
       self.py:update()
     end,
@@ -129,7 +136,6 @@ function build_scene_title()
       end
 
       if self.mode == 2 or self.mode >= 3 then
-        self.gerts.y = init_monty_y + y_offset
         self.gerts:draw()
       end
       self.py:draw()

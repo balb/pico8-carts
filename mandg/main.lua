@@ -1,4 +1,4 @@
--- todo: implement warp
+-- todo: desert - fuzzy layout
 -- todo: get desert done 100%
 
 --btn_up=⬆️
@@ -19,8 +19,6 @@ scenes = nil
 scene = nil
 
 g_freeze = false
-
--- use g_event to pass messages from entities to monty
 g_event = nil
 
 function _init()

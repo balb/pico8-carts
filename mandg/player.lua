@@ -52,6 +52,11 @@ function build_monty()
       if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
     end,
     --
+    warp = 0,
+    do_warp = function(self)
+      g_freeze = true
+      self.warp = 100
+    end,
     update = function(self, screen)
       -- handle death
       if self.dying > 0 then
@@ -96,7 +101,7 @@ function build_monty()
         g_event = nil
       end
 
-      --
+      -- move_to_pos
       if self.move_to_pos then
         self.mov = false
         if self.y < self.move_to_pos.y then
@@ -116,6 +121,19 @@ function build_monty()
         end
         if (not self.mov) self.move_to_pos = nil
       end
+
+      -- warp
+      if self.warp > 0 then
+        self.warp -= 1
+        self.dir = time_toggle(12, 4)
+        if self.warp == 0 then
+          self.x = start_monty_x
+          self.y = start_monty_y
+          self.dir = 1
+          self.mov = false
+          g_event = "teleport"
+        end
+      end
     end,
     draw = function(self)
       draw_monty(self)
@@ -124,8 +142,7 @@ function build_monty()
 end
 
 function draw_monty(monty)
-  if monty.dying > 0 then
-    -- or monty.warp>0 then
+  if monty.dying > 0 or monty.warp > 0 then
     pal(3, flr(rnd(16)))
     pal(11, flr(rnd(16)))
   end

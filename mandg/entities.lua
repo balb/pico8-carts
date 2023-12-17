@@ -704,7 +704,7 @@ function build_north_key()
     end,
     on_collide = function(ent, monty, screen)
       monty.has_north_key = true
-      g_event = "warp"
+      monty:do_warp()
       screen:del_ent(ent)
     end,
     box = { 0, 0, 7, 7 }

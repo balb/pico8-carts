@@ -103,6 +103,17 @@ function build_scene_main()
     end,
     update_handler = nil,
     update = function(self)
+      -- teleport back to town sq
+      if g_event == "teleport" then
+        self.map_x = start_map_x
+        self.map_y = start_map_y
+        self.monty:on_change_screen(self.map_x .. self.map_y)
+        self:set_screen()
+        g_freeze = false
+        g_event = nil
+        return
+      end
+
       -- handle dying
       if self.monty.dying > 0 then
         -- need to update monty to do death etc.

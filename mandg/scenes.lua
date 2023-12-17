@@ -31,6 +31,7 @@ function build_scene_title()
   ]]
 
   local init_count = 30
+  local init_monty_y = 54
 
   return {
     count = init_count,
@@ -45,6 +46,7 @@ function build_scene_title()
     -- 3: show both and start text
     -- 4: in comes py
     mode = 0,
+    gerts = build_gerts(108, init_monty_y),
     py = build_py(96, -32),
     update = function(self)
       if btnp(❎) or btnp(🅾️) then
@@ -78,6 +80,8 @@ function build_scene_title()
       if self.mode == 4 then
         self.py.y += 2
       end
+
+      self.gerts:update()
       self.py:update()
     end,
     draw = function(self)
@@ -110,13 +114,13 @@ function build_scene_title()
         end
       end
 
+      local y_offset = time_toggle(12, 2)
       if self.mode == 0 or self.mode >= 3 then
         -- monty
-        local y_offset = time_toggle(12, 2)
-        spr(2, 2, 54 + y_offset)
-        spr(2, 10, 54 + y_offset, 1, 1, true)
-        spr(18, 2, 62 + y_offset)
-        spr(18, 10, 62 + y_offset, 1, 1, true)
+        spr(2, 2, init_monty_y + y_offset)
+        spr(2, 10, init_monty_y + y_offset, 1, 1, true)
+        spr(18, 2, init_monty_y + 8 + y_offset)
+        spr(18, 10, init_monty_y + 8 + y_offset, 1, 1, true)
       end
 
       if self.mode >= 3 then
@@ -124,6 +128,10 @@ function build_scene_title()
         color(7)
       end
 
+      if self.mode == 2 or self.mode >= 3 then
+        self.gerts.y = init_monty_y + y_offset
+        self.gerts:draw()
+      end
       self.py:draw()
     end
   }

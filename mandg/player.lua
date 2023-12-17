@@ -9,7 +9,7 @@ function build_monty()
     init_dir = 1,
     mov = false,
     box = { 4, 0, 11, 15 },
-    has_spade = true,
+    has_spade = false,
     has_north_key = false,
     dying = 0,
     -- dead flag for del_on_death

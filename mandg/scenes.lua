@@ -30,35 +30,71 @@ function build_scene_title()
   88eee8 88ee 88   8  88  8ee88
   ]]
 
+  local init_count = 30
+
   return {
-    count = 0,
+    count = init_count,
     init = function()
     end,
     start_text_x = 27,
     start_text_y = 42,
+    -- modes
+    -- 0: show monty
+    -- 1: show 'and'
+    -- 2: show gerts
+    -- 3: show both and start text
+    -- 4: in comes py
+    mode = 0,
+    py = build_py(96, -32),
     update = function(self)
       if btnp(❎) or btnp(🅾️) then
+        self.mode = 4
+      end
+      if self.mode == 4 and self.py.y > 128 then
         switch_scene("main")
       end
 
-      self.start_text_x += 1
-      if self.start_text_x > 127 then
-        self.start_text_x = -80
-        if self.start_text_y == 81 then
-          self.start_text_y = 42
-        else
-          self.start_text_y = 81
+      if self.mode >= 3 then
+        self.start_text_x += 1
+        if self.start_text_x > 127 then
+          self.start_text_x = -80
+          if self.start_text_y == 81 then
+            self.start_text_y = 42
+          else
+            self.start_text_y = 81
+          end
         end
       end
 
-      if (self.count < 1000) self.count += 1
+      if self.mode < 3 then
+        if self.count > 0 then
+          self.count -= 1
+        else
+          self.count = init_count
+          self.mode += 1
+        end
+      end
+
+      if self.mode == 4 then
+        self.py.y += 2
+      end
+      self.py:update()
     end,
     draw = function(self)
       local col = 11
-      print(monty_txt, 0, 4, col)
 
-      if (self.count > 40) print(and_txt, 0, 50, col)
-      if (self.count > 80) print(gerts_txt, 0, 88, col)
+      if self.mode == 0 or self.mode >= 3 then
+        print(monty_txt, 0, 4, col)
+      end
+
+      if self.mode == 1 or self.mode >= 3 then
+        print(and_txt, 0, 50, col)
+      end
+
+      if self.mode == 2 or self.mode >= 3 then
+        print(gerts_txt, 0, 88, col)
+      end
+
       for x = 0, 127 do
         for y = 0, 127 do
           local p = pget(x, y)
@@ -74,16 +110,21 @@ function build_scene_title()
         end
       end
 
-      -- monty
-      local y_offset = 0
-      if (self.count <= 40) y_offset = time_toggle(12, 2)
-      spr(2, 2, 54 + y_offset)
-      spr(2, 10, 54 + y_offset, 1, 1, true)
-      spr(18, 2, 62 + y_offset)
-      spr(18, 10, 62 + y_offset, 1, 1, true)
+      if self.mode == 0 or self.mode >= 3 then
+        -- monty
+        local y_offset = time_toggle(12, 2)
+        spr(2, 2, 54 + y_offset)
+        spr(2, 10, 54 + y_offset, 1, 1, true)
+        spr(18, 2, 62 + y_offset)
+        spr(18, 10, 62 + y_offset, 1, 1, true)
+      end
 
-      print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
-      color(7)
+      if self.mode >= 3 then
+        print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
+        color(7)
+      end
+
+      self.py:draw()
     end
   }
 end

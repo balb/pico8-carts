@@ -638,7 +638,7 @@ function fli_update(ent, screen)
     screen:add_ent(build_textbox2(
       {
         "arrrrgh! defeated by a simple\nhuman. the shame!",
-        "oh well, can't complain.\nat least i had some company.",
+        "oh well, i can't complain.\nat least i had some company.",
         "it does get lonely here.\nperhaps we could be friends?",
         "as a kindly gesture please\naccept this key..."
       }, function()
@@ -708,5 +708,49 @@ function build_north_key()
       screen:del_ent(ent)
     end,
     box = { 0, 0, 7, 7 }
+  }
+end
+
+function build_py(x, y)
+  return {
+    x = x, y = y,
+    mov = true,
+    update = function()
+    end,
+    draw = function(ent)
+      -- eyes
+      -- pset for bit of eye
+      pset(ent.x - 1, ent.y + 5, 12)
+      pset(ent.x - 1, ent.y + 6, 12)
+      spr(77, ent.x, ent.y)
+      pset(ent.x + 16, ent.y + 5, 12)
+      pset(ent.x + 16, ent.y + 6, 12)
+      spr(77, ent.x + 8, ent.y, 1, 1, true)
+      -- py top
+      spr(92, ent.x - 8, ent.y + 8)
+      spr(93, ent.x, ent.y + 8)
+      spr(93, ent.x + 8, ent.y + 8, 1, 1, true)
+      spr(92, ent.x + 16, ent.y + 8, 1, 1, true)
+      -- legs
+      local l_offset = 0
+      local r_offset = 0
+      if ent.mov then
+        local cntr_m2 = time_toggle(12, 2)
+        if cntr_m2 == 0 then
+          l_offset = -2
+        else
+          r_offset = -2
+        end
+      end
+      spr(124, ent.x - 8, ent.y + 24 + l_offset)
+      spr(125, ent.x, ent.y + 24 + l_offset)
+      spr(125, ent.x + 8, ent.y + 24 + r_offset, 1, 1, true)
+      spr(124, ent.x + 16, ent.y + 24 + r_offset, 1, 1, true)
+      -- py bottom
+      spr(108, ent.x - 8, ent.y + 16)
+      spr(109, ent.x, ent.y + 16)
+      spr(109, ent.x + 8, ent.y + 16, 1, 1, true)
+      spr(108, ent.x + 16, ent.y + 16, 1, 1, true)
+    end
   }
 end

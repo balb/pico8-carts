@@ -703,6 +703,7 @@ function build_north_key()
       pal()
     end,
     on_collide = function(ent, monty, screen)
+      monty.has_spade = false
       monty.has_north_key = true
       monty:do_warp()
       screen:del_ent(ent)
@@ -831,6 +832,7 @@ function build_door(x, y, k)
       if not ent.collided then
         if k == "north_key" then
           if monty.has_north_key then
+            monty.has_north_key = false
             screen:del_ent(ent)
           else
             screen:add_ent(build_textbox2(

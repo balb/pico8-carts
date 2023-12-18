@@ -1,6 +1,10 @@
 -- todo: town square 100%
+-- todo: mention going west to desert
 -- todo: brick up the desert on complete
+-- todo: warp not triggering on_change_screen
 -- todo: replace calls to time_toggle(12, 2) with single call
+-- todo: bug! hammer next in old woman room crashes
+-- todo: bug! has_north_key_message not working
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -25,6 +29,7 @@ g_event = nil
 function _init()
   scenes = build_scenes()
   switch_scene("title")
+  --switch_scene("main")
 end
 
 function switch_scene(s)

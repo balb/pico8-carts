@@ -181,12 +181,12 @@ function build_scene_main()
     update = function(self)
       -- teleport back to town sq
       if g_event == "teleport" then
+        g_event = nil
         self.map_x = start_map_x
         self.map_y = start_map_y
         self.monty:on_change_screen(self.map_x .. self.map_y)
         self:set_screen()
         g_freeze = false
-        g_event = nil
         return
       end
 

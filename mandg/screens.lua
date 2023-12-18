@@ -70,8 +70,7 @@ function build_screen_town_square()
       "you must find his whereabouts\nif i am to be freed.",
       "go swiftly now my friend.\ngood luck!"
     }), ]]
-    build_door(56, 0),
-    build_door(56, 104)
+    build_door(56, 0, "north_key")
   })
   return screen
 end

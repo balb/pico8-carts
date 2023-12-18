@@ -790,7 +790,7 @@ function build_gerts(x, y)
   }
 end
 
-function build_door(x, y)
+function build_door(x, y, k)
   return {
     x = x, y = y,
     open = false,
@@ -810,20 +810,35 @@ function build_door(x, y)
       spr(86, x + 7, y + 12, 1, 1, true)
       spr(86, x, y + 8)
       spr(86, x + 7, y + 8, 1, 1, true)
+
+      -- key hole
+      local key_x = x + 8
+      local key_y = y + 13
+      rectfill(key_x + 1, key_y, key_x + 2, key_y + 3, 0)
+      rectfill(key_x, key_y + 1, key_x + 3, key_y + 2, 0)
+      rectfill(key_x, key_y + 4, key_x + 3, key_y + 4, 0)
+      pset(key_x + 2, key_y - 1, 4)
+      pset(key_x + 2, key_y + 5, 4)
       pal()
     end,
-    box = { 0, 0, 7, 23 },
-    collided = false
-    --[[ on_collide=function(ent)
-     if not ent.collided then
-       if state.has_simple_key then
-         ent.open=true
-       else
-         state.freeze=true
-         add_ent(build_textbox2({"hmm, it appears this door\nis locked."}))
-       end
-       ent.collided=true
-     end
-   end, ]]
+    box = { 0, 0, 7, 24 },
+    collided = false,
+    on_collide = function(ent, monty, screen)
+      if not ent.collided then
+        if k == "north_key" then
+          if monty.has_north_key then
+            screen:del_ent(ent)
+          else
+            screen:add_ent(build_textbox2(
+              { "hmm, it appears this door\nis locked." }, function()
+                ent.collided = false
+                monty.y += 2
+              end
+            ))
+          end
+        end
+        ent.collided = true
+      end
+    end
   }
 end

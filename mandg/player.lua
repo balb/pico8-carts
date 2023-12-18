@@ -27,7 +27,10 @@ function build_monty()
       self.init_y = self.y
       self.init_dir = self.dir
 
-      if screen_key == "00" then
+      if screen_key == "31" then
+        -- town square
+        if (self.has_north_key) g_event = "has_north_key_message"
+      elseif screen_key == "00" then
         -- old woman
         g_freeze = true
         self.move_to_pos = { x = 72, y = 56 }

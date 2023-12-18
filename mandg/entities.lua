@@ -768,21 +768,24 @@ function build_gerts(x, y)
     draw = function(ent)
       -- hat propeller
       if ent.cntr > 0 then
-        pset(ent.x + 6, ent.y + 1, 5)
-        pset(ent.x + 9, ent.y + 1, 5)
+        pset(ent.x + 6, ent.y + 1, 12)
+        pset(ent.x + 9, ent.y + 1, 12)
       end
       if ent.cntr > 1 then
-        pset(ent.x + 5, ent.y + 1, 5)
-        pset(ent.x + 10, ent.y + 1, 5)
+        pset(ent.x + 5, ent.y + 1, 12)
+        pset(ent.x + 10, ent.y + 1, 12)
       end
       if ent.cntr > 2 then
-        pset(ent.x + 4, ent.y + 1, 5)
-        pset(ent.x + 11, ent.y + 1, 5)
+        pset(ent.x + 4, ent.y + 1, 12)
+        pset(ent.x + 11, ent.y + 1, 12)
       end
+      -- blue to black for the eyes
+      pal(12, 0)
       spr(68, ent.x, ent.y)
       spr(68, ent.x + 8, ent.y, 1, 1, true)
       spr(84, ent.x, ent.y + 8)
       spr(84, ent.x + 8, ent.y + 8, 1, 1, true)
+      pal()
     end
   }
 end

@@ -11,7 +11,7 @@ function build_screens()
   tab["01"] = build_screen({})
   tab["11"] = build_screen_desert_5_idiots()
   tab["21"] = build_screen({ build_idiot(88, 88, 80, 112), build_idiot(56, 56, 40, 64) })
-  tab["31"] = build_screen({})
+  tab["31"] = build_screen_town_square()
   tab["41"] = build_screen({})
   tab["51"] = build_screen({})
   tab["61"] = build_screen({})
@@ -59,6 +59,19 @@ function build_screen(ents)
       )
     end
   }
+end
+
+function build_screen_town_square()
+  local screen = build_screen({
+    build_gerts(56, 64),
+    build_textbox2({
+      "help me monty!",
+      "i was kidnapped by an evil pie\nand imprisoned in this cage...",
+      "you must find his whereabouts\nif i am to be freed.",
+      "go swiftly now my friend.\ngood luck!"
+    })
+  })
+  return screen
 end
 
 function build_screen_desert_top_firestones()

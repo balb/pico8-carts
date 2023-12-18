@@ -148,7 +148,10 @@ function draw_monty(monty)
   end
 
   --head
+  -- blue to black for the eyes
+  pal(12, 0)
   draw_monty_row(monty, 1, 0)
+  pal()
   --feet
   if monty.mov then
     local offset = time_toggle(12, 2)

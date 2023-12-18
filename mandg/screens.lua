@@ -64,12 +64,14 @@ end
 function build_screen_town_square()
   local screen = build_screen({
     build_gerts(56, 64),
-    build_textbox2({
+    --[[ build_textbox2({
       "help me monty!",
       "i was kidnapped by an evil pie\nand imprisoned in this cage...",
       "you must find his whereabouts\nif i am to be freed.",
       "go swiftly now my friend.\ngood luck!"
-    })
+    }), ]]
+    build_door(56, 0),
+    build_door(56, 104)
   })
   return screen
 end

@@ -779,13 +779,51 @@ function build_gerts(x, y)
         pset(ent.x + 4, ent.y + 1, 12)
         pset(ent.x + 11, ent.y + 1, 12)
       end
-      -- blue to black for the eyes
-      pal(12, 0)
       spr(68, ent.x, ent.y)
       spr(68, ent.x + 8, ent.y, 1, 1, true)
+      -- blue to black for the eyes
+      pal(12, 0)
       spr(84, ent.x, ent.y + 8)
       spr(84, ent.x + 8, ent.y + 8, 1, 1, true)
       pal()
     end
+  }
+end
+
+function build_door(x, y)
+  return {
+    x = x, y = y,
+    open = false,
+    update = function()
+    end,
+    draw = function(ent)
+      if (ent.open) return
+      pal(12, 0)
+      --top
+      spr(70, x, y)
+      spr(70, x + 7, y, 1, 1, true)
+      --bottom
+      spr(86, x, y + 16)
+      spr(86, x + 7, y + 16, 1, 1, true)
+      --middle
+      spr(86, x, y + 12)
+      spr(86, x + 7, y + 12, 1, 1, true)
+      spr(86, x, y + 8)
+      spr(86, x + 7, y + 8, 1, 1, true)
+      pal()
+    end,
+    box = { 0, 0, 7, 23 },
+    collided = false
+    --[[ on_collide=function(ent)
+     if not ent.collided then
+       if state.has_simple_key then
+         ent.open=true
+       else
+         state.freeze=true
+         add_ent(build_textbox2({"hmm, it appears this door\nis locked."}))
+       end
+       ent.collided=true
+     end
+   end, ]]
   }
 end

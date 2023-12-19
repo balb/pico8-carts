@@ -508,7 +508,7 @@ function build_spade(x, y)
       spade.colliding = true
       monty.mov = false
       screen:add_ent(build_textbox2(
-        { "this spiffing spade\nwill come in handy..." }, function()
+        { "this spiffing spade\nwill come in handy!" }, function()
           screen:del_ent(spade)
           monty.has_spade = true
         end
@@ -707,6 +707,7 @@ function build_north_key()
       monty.has_north_key = true
       monty:do_warp()
       screen:del_ent(ent)
+      map_add_desert_town_square_wall()
     end,
     box = { 0, 0, 7, 7 }
   }

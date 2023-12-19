@@ -8,3 +8,10 @@ function map_remove_desert_top_wall()
     mset(26, 15, 64)
     mset(27, 15, 64)
 end
+
+function map_add_desert_town_square_wall()
+    mset(48, 22, 65)
+    mset(48, 23, 65)
+    mset(48, 24, 65)
+    mset(48, 25, 65)
+end

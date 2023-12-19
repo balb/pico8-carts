@@ -1,9 +1,7 @@
 -- todo: town square 100%
 -- todo: mention going west to desert
--- todo: brick up the desert on complete
 -- todo: replace calls to time_toggle(12, 2) with single call
 -- todo: bug! hammer next in old woman room crashes
--- todo: move fuzzy down a bit in sandwall room
 -- todo: 9 legged spida
 
 --btn_up=⬆️

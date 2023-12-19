@@ -454,12 +454,11 @@ function build_cactus(start_x, start_y, path, path_index)
       ent.cntr += 1
     end,
     draw = function(ent)
-      local cntr_m2 = time_toggle(12, 2)
-      local offset = abs(cntr_m2 - 1)
+      local offset = abs(g_toggle2 - 1)
       spr(12, ent.x, ent.y + offset)
-      spr(12, ent.x + 8, ent.y + cntr_m2, 1, 1, true)
+      spr(12, ent.x + 8, ent.y + g_toggle2, 1, 1, true)
       spr(28, ent.x, ent.y + 8 + offset)
-      spr(28, ent.x + 8, ent.y + 8 + cntr_m2, 1, 1, true)
+      spr(28, ent.x + 8, ent.y + 8 + g_toggle2, 1, 1, true)
     end,
     box = { 2, 2, 13, 13 }
   }
@@ -486,8 +485,7 @@ function build_fireball(start_x, start_y, dir, dist)
       if (ent.dist <= -2) screen:del_ent(ent)
     end,
     draw = function(ent)
-      local cntr_m2 = time_toggle(12, 2)
-      spr(44, ent.x, ent.y, 1, 1, cntr_m2 == 0)
+      spr(44, ent.x, ent.y, 1, 1, g_toggle2 == 0)
     end,
     box = { 1, 1, 6, 6 },
     del_on_death = true
@@ -556,15 +554,14 @@ function build_fli()
       end
     end,
     draw = function(ent)
-      local cntr_m2 = time_toggle(12, 2)
       if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
       --head
       spr(46, ent.x, ent.y)
       -- wings
-      spr(60 + cntr_m2, ent.x - 6, ent.y + 9)
-      spr(60 + cntr_m2, ent.x + 5, ent.y + 9, 1, 1, true)
+      spr(60 + g_toggle2, ent.x - 6, ent.y + 9)
+      spr(60 + g_toggle2, ent.x + 5, ent.y + 9, 1, 1, true)
       --body
-      spr(62, ent.x + cntr_m2 - 1, ent.y + 8, 1, 1, cntr_m2 == 0)
+      spr(62, ent.x + g_toggle2 - 1, ent.y + 8, 1, 1, g_toggle2 == 0)
       if (ent.hit_flash) pal()
       -- health
       for i = 0, 10 do
@@ -686,8 +683,7 @@ function build_sand_blob(start_x, start_y)
       end
     end,
     draw = function(ent)
-      local cntr_m2 = time_toggle(12, 2)
-      spr(53, ent.x, ent.y, 1, 1, false, cntr_m2 == 0)
+      spr(53, ent.x, ent.y, 1, 1, false, g_toggle2 == 0)
     end,
     box = { 1, 1, 6, 6 },
     del_on_death = true
@@ -760,8 +756,7 @@ function build_py(x, y)
       local l_offset = 0
       local r_offset = 0
       if ent.mov then
-        local cntr_m2 = time_toggle(12, 2)
-        if cntr_m2 == 0 then
+        if g_toggle2 == 0 then
           l_offset = -2
         else
           r_offset = -2

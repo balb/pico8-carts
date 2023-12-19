@@ -81,9 +81,8 @@ function build_scene_title()
         self.py.y += 2
       end
 
-      local y_offset = time_toggle(12, 2)
       if self.py.y < 64 then
-        self.gerts.y = init_monty_y + y_offset
+        self.gerts.y = init_monty_y + g_toggle2
       else
         self.gerts.y += 2
       end
@@ -121,13 +120,12 @@ function build_scene_title()
         end
       end
 
-      local y_offset = time_toggle(12, 2)
       if self.mode == 0 or self.mode >= 3 then
         -- monty
-        spr(2, 2, init_monty_y + y_offset)
-        spr(2, 10, init_monty_y + y_offset, 1, 1, true)
-        spr(18, 2, init_monty_y + 8 + y_offset)
-        spr(18, 10, init_monty_y + 8 + y_offset, 1, 1, true)
+        spr(2, 2, init_monty_y + g_toggle2)
+        spr(2, 10, init_monty_y + g_toggle2, 1, 1, true)
+        spr(18, 2, init_monty_y + 8 + g_toggle2)
+        spr(18, 10, init_monty_y + 8 + g_toggle2, 1, 1, true)
       end
 
       if self.mode == 3 then

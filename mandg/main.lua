@@ -1,5 +1,4 @@
 -- todo: town square 100%
--- todo: replace calls to time_toggle(12, 2) with single call
 -- todo: 9 legged spida
 
 --btn_up=⬆️

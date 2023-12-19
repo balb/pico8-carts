@@ -189,14 +189,13 @@ function draw_monty(monty)
   pal()
   --feet
   if monty.mov then
-    local offset = time_toggle(12, 2)
     if monty.dir < 2 then
-      local s1 = 5 + monty.dir + 16 * offset
-      local s2 = 5 + monty.dir + 16 * abs(offset - 1)
+      local s1 = 5 + monty.dir + 16 * g_toggle2
+      local s2 = 5 + monty.dir + 16 * abs(g_toggle2 - 1)
       spr(s1, monty.x, monty.y + 8)
       spr(s2, monty.x + 8, monty.y + 8, 1, 1, true)
     else
-      spr(7 + 16 * offset, monty.x, monty.y + 8, 2, 1, monty.dir == 2)
+      spr(7 + 16 * g_toggle2, monty.x, monty.y + 8, 2, 1, monty.dir == 2)
     end
   else
     --not moving

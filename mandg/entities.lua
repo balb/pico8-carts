@@ -544,12 +544,11 @@ function build_fli()
         end
       elseif self.mode == 3 then
         screen:add_ent(build_textbox2({
-          "it will open the north\ndungeon...",
-          "you must go there to\ncontinue your quest.",
+          "it will help you on\nyour quest.",
           "good luck!",
-          "don't forget to pop back\nand say hi some time!"
+          "don't forget to pop back\nand say hi some time."
         }))
-        screen:add_ent(build_north_key())
+        screen:add_ent(build_machete())
         self.mode = 0
       end
     end,
@@ -640,7 +639,7 @@ function fli_update(ent, screen)
         "arrrrgh! defeated by a simple\nhuman. the shame!",
         "oh well, i can't complain.\nat least i had some company.",
         "it does get lonely here.\nperhaps we could be friends?",
-        "as a kindly gesture please\naccept this key..."
+        "as a kindly gesture please\naccept this machete..."
       }, function()
         ent.mode = 3
       end
@@ -692,7 +691,28 @@ function build_sand_blob(start_x, start_y)
   }
 end
 
-function build_north_key()
+function build_machete()
+  return {
+    x = 108, y = 24,
+    update = function()
+    end,
+    draw = function(ent)
+      pal(7, flr(rnd(16)))
+      spr(14, ent.x, ent.y)
+      pal()
+    end,
+    on_collide = function(ent, monty, screen)
+      monty.has_spade = false
+      monty.has_machete = true
+      monty:do_warp()
+      screen:del_ent(ent)
+      map_add_desert_town_square_wall()
+    end,
+    box = { 0, 0, 7, 7 }
+  }
+end
+
+--[[ function build_north_key()
   return {
     x = 108, y = 24,
     update = function()
@@ -711,7 +731,7 @@ function build_north_key()
     end,
     box = { 0, 0, 7, 7 }
   }
-end
+end ]]
 
 function build_py(x, y)
   return {
@@ -766,7 +786,10 @@ function build_gerts(x, y)
     update = function(ent, screen)
       ent.cntr += ent.inc
       if (ent.cntr == 0 or ent.cntr == 3) ent.inc *= -1
-      if g_event == "has_north_key_message" then
+      if g_event == "has_machete_message" then
+        screen:add_ent(build_textbox2({ "monty! use the machete to\nhack your way into\nthe east forest!" }))
+        g_event = nil
+      elseif g_event == "has_north_key_message" then
         screen:add_ent(build_textbox2({ "monty! you have the key\nto the north dungeon.\nget in there quick!" }))
         g_event = nil
       end

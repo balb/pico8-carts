@@ -10,6 +10,7 @@ function build_monty()
     mov = false,
     box = { 4, 0, 11, 15 },
     has_spade = false,
+    has_machete = false,
     has_north_key = false,
     dying = 0,
     -- dead flag for del_on_death
@@ -26,10 +27,13 @@ function build_monty()
       self.init_x = self.x
       self.init_y = self.y
       self.init_dir = self.dir
-
       if screen_key == "31" then
         -- town square
-        if (self.has_north_key) g_event = "has_north_key_message"
+        if self.has_machete then
+          g_event = "has_machete_message"
+        elseif self.has_north_key then
+          g_event = "has_north_key_message"
+        end
       elseif screen_key == "00" then
         -- old woman
         g_freeze = true
@@ -174,17 +178,19 @@ function draw_monty(monty)
   pal()
 
   -- top right icon
-  if monty.has_north_key then
-    spr(13, 120, 0)
-  elseif monty.has_spade then
+  if monty.has_spade then
     spr(54, 120, -1)
-    --[[
+  elseif monty.has_machete then
+    spr(14, 120, 0)
+  elseif monty.has_north_key then
+    spr(13, 120, 0)
+  end
+  --[[
 
  elseif state.has_simple_key then
   spr(47,120,0)
  elseif state.has_bra then
   spr(104,120,-1)   ]]
-  end
 
   -- sandwall / fli
   if monty.dig_sandwall or monty.fli_dig_shoot > 0 then

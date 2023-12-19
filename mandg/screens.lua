@@ -20,7 +20,14 @@ function build_screens()
   })
   tab["51"] = build_screen({})
   tab["61"] = build_screen({})
-  tab["71"] = build_screen({})
+  tab["71"] = build_screen({
+    -- forest firestone walk
+    build_firestone(16, 32, 3, 0, 88),
+    build_firestone(8, 48, 3, 8, 96),
+    build_firestone(16, 64, 3, 0, 88),
+    build_firestone(8, 80, 3, 8, 96),
+    build_firestone(16, 96, 3, 0, 88)
+  })
   tab["02"] = build_screen({})
   tab["12"] = build_screen_desert_dead_end()
   tab["22"] = build_screen({})

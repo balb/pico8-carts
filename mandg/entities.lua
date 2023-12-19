@@ -368,10 +368,10 @@ end
 
 function build_sandwall()
   local x = 0
-  local y = 13
+  local y = 22
   return {
     x = x, y = y,
-    box = { x, y, x + 10, 127 },
+    box = { 0, 0, 10, 96 },
     update = function()
     end,
     draw = function(ent)
@@ -383,11 +383,11 @@ function build_sandwall()
         local text = nil
         if monty.has_spade then
           text = "now to dig my way through!"
-          if monty.y > 72 then
-            monty.move_to_pos = { x = monty.x, y = 72 }
-          end
         else
           text = "if only i had a spade\nto dig my way through..."
+        end
+        if monty.y > 72 then
+          monty.move_to_pos = { x = monty.x, y = 72 }
         end
 
         screen:add_ent(build_textbox2(

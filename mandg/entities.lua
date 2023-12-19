@@ -784,15 +784,19 @@ function build_gerts(x, y)
     mov = true,
     cntr = 0,
     inc = 1,
+    has_machete_message_added = false,
+    has_north_key_message_added = false,
     update = function(ent, screen)
       ent.cntr += ent.inc
       if (ent.cntr == 0 or ent.cntr == 3) ent.inc *= -1
-      if g_event == "has_machete_message" then
+      if g_event == "has_machete_message" and not ent.has_machete_message_added then
         screen:add_ent(build_textbox2({ "monty! use the machete to\nhack your way into\nthe east forest!" }))
         g_event = nil
-      elseif g_event == "has_north_key_message" then
+        ent.has_machete_message_added = true
+      elseif g_event == "has_north_key_message" and not ent.has_north_key_message_added then
         screen:add_ent(build_textbox2({ "monty! you have the key\nto the north dungeon.\nget in there quick!" }))
         g_event = nil
+        ent.has_north_key_message_added = true
       end
     end,
     draw = function(ent)

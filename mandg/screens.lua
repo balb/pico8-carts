@@ -12,7 +12,12 @@ function build_screens()
   tab["11"] = build_screen_desert_5_idiots()
   tab["21"] = build_screen({ build_idiot(88, 88, 80, 112), build_idiot(56, 56, 40, 64) })
   tab["31"] = build_screen_town_square()
-  tab["41"] = build_screen({})
+  tab["41"] = build_screen({
+    -- forest 1
+    build_jazzer(32, 88, 72, 112),
+    build_idiot(96, 64, 64, 112),
+    build_idiot(96, 80, 72, 112)
+  })
   tab["51"] = build_screen({})
   tab["61"] = build_screen({})
   tab["71"] = build_screen({})
@@ -20,7 +25,7 @@ function build_screens()
   tab["12"] = build_screen_desert_dead_end()
   tab["22"] = build_screen({})
   tab["32"] = build_screen({})
-  tab["42"] = build_screen({})
+  tab["42"] = build_screen_forest_2()
   tab["52"] = build_screen({})
   tab["62"] = build_screen({})
   tab["72"] = build_screen({})
@@ -191,4 +196,21 @@ function build_screen_desert_fli_boss()
 
   screen.sand_blob_choke = 0
   return screen
+end
+
+function build_screen_forest_2()
+  local path1 = {
+    { x = 72, y = 48 },
+    { x = 96, y = 48 },
+    { x = 96, y = 72 },
+    { x = 72, y = 72 }
+  }
+  return build_screen({
+    build_firestone(56, 40, 2, 14, 40),
+    build_firestone(64, 80, 1, 2, 24),
+    build_idiot(96, 40, 72, 104),
+    build_fuzzy(72, 48, path1, 1),
+    build_idiot(32, 48, 8, 48),
+    build_jazzer(56, 88, 88, 112)
+  })
 end

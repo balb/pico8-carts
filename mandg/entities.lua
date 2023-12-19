@@ -69,7 +69,7 @@ end
 
 function build_firestone(x, y, dir, t, dist)
   local s = 32
-  local flip_x = false
+  local flip_x = dir == 2
   local flip_y = false
   if (dir < 2) s = 48
   return {
@@ -82,10 +82,12 @@ function build_firestone(x, y, dir, t, dist)
         if not self.arrow_added then
           local x_offset = 0
           local y_offset = 0
-          if dir == 3 then
-            x_offset = 8
-          elseif dir == 1 then
+          if dir == 1 then
             y_offset = 8
+          elseif dir == 2 then
+            x_offset = -8
+          elseif dir == 3 then
+            x_offset = 8
           end
           screen:add_ent(build_arrow(x + x_offset, y + y_offset, dir, dist))
           self.arrow_added = true
@@ -129,7 +131,7 @@ function build_arrow(start_x, start_y, dir, dist)
     draw = function(self)
       local s = 35
       if (dir < 2) s = 51
-      spr(s, self.x, self.y)
+      spr(s, self.x, self.y, 1, 1, dir == 2)
     end,
     box = { 1, 1, 6, 6 }
   }
@@ -375,7 +377,7 @@ function build_sandwall()
     update = function()
     end,
     draw = function(ent)
-      outline_ent(ent)
+      --outline_ent(ent)
     end,
     on_collide = function(self, monty, screen)
       if monty.dir == 2 and monty.mov then
@@ -884,7 +886,7 @@ function build_foliage()
     update = function()
     end,
     draw = function(ent)
-      outline_ent(ent)
+      --outline_ent(ent)
     end,
     on_collide = function(self, monty, screen)
       if monty.dir == 3 and monty.mov then
@@ -912,5 +914,26 @@ function build_foliage()
         ))
       end
     end
+  }
+end
+
+function build_jazzer(start_x, start_y, min_y, max_y)
+  return {
+    x = start_x, y = start_y,
+    min_y = min_y, max_y = max_y,
+    speed = 0.75,
+    update = function(ent)
+      ent.y += ent.speed
+      if ent.y < ent.min_y or ent.y > ent.max_y then
+        ent.speed *= -1
+        ent.y += ent.speed
+      end
+    end,
+    draw = function(ent)
+      local s = 36
+      if (g_toggle2 == 0) s = 37
+      spr(s, ent.x, ent.y)
+    end,
+    box = { 1, 1, 6, 6 }
   }
 end

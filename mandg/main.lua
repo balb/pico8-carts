@@ -4,6 +4,7 @@
 -- todo: replace calls to time_toggle(12, 2) with single call
 -- todo: bug! hammer next in old woman room crashes
 -- todo: move fuzzy down a bit in sandwall room
+-- todo: 9 legged spida
 
 --btn_up=⬆️
 --btn_down=⬇️
@@ -19,30 +20,30 @@ start_monty_x = 8
 start_monty_y = 60
 
 -- globals
-scenes = nil
-scene = nil
+g_scenes = nil
+g_scene = nil
 
 g_freeze = false
 g_event = nil
 
 function _init()
-  scenes = build_scenes()
+  g_scenes = build_scenes()
   switch_scene("title")
   --switch_scene("main")
 end
 
 function switch_scene(s)
-  scene = scenes[s]
-  scene:init()
+  g_scene = g_scenes[s]
+  g_scene:init()
 end
 
 function _update()
-  scene:update()
+  g_scene:update()
 end
 
 function _draw()
   cls()
-  scene:draw()
+  g_scene:draw()
 end
 
 function time_toggle(t, mod)

@@ -265,7 +265,7 @@ function build_scene_main()
         self.monty:die()
       end
 
-      if not map_collide(scene, next_x, next_y) then
+      if not map_collide(next_x, next_y) then
         --screen wrap
         local change_screen = false
         if next_x == -5 then
@@ -328,24 +328,22 @@ function check_collision(monty, ent)
       and ey0 < my0 + mh and eh + ey0 > my0
 end
 
--- todo: try not to use 'scene'
-function map_collide(scene, next_x, next_y)
+function map_collide(next_x, next_y)
   local x = flr((next_x + 3) / 8)
   local y = flr(next_y / 8)
   local check_6 = next_y % 8 != 0
 
-  local result = tile_collide(scene, x, y)
-      or tile_collide(scene, x + 1, y)
-      or tile_collide(scene, x, y + 1)
-      or tile_collide(scene, x + 1, y + 1)
+  local result = tile_collide(x, y)
+      or tile_collide(x + 1, y)
+      or tile_collide(x, y + 1)
+      or tile_collide(x + 1, y + 1)
       or check_6
-      and (tile_collide(scene, x, y + 2)
-        or tile_collide(scene, x + 1, y + 2))
+      and (tile_collide(x, y + 2)
+        or tile_collide(x + 1, y + 2))
 
   return result
 end
 
--- todo: try not to use 'scene'
-function tile_collide(scene, x, y)
-  return fget(mget(scene.map_x * 16 + x, scene.map_y * 16 + y), 0)
+function tile_collide(x, y)
+  return fget(mget(g_scene.map_x * 16 + x, g_scene.map_y * 16 + y), 0)
 end

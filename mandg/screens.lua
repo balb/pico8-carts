@@ -68,7 +68,8 @@ function build_screen_town_square()
       "help me monty!",
       "i was kidnapped by an evil pie\nand imprisoned in this cage...",
       "you must find his whereabouts\nif i am to be freed.",
-      "go swiftly now my friend.\ngood luck!"
+      "head west into the desert and\nsearch there for clues.",
+      "good luck!"
     }),
     build_door(56, 0, "north_key")
   })

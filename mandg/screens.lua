@@ -62,7 +62,7 @@ function build_screen(ents)
 end
 
 function build_screen_town_square()
-  local screen = build_screen({
+  return build_screen({
     build_gerts(56, 64),
     build_textbox2({
       "help me monty!",
@@ -71,9 +71,9 @@ function build_screen_town_square()
       "head west into the desert and\nsearch there for clues.",
       "good luck!"
     }),
-    build_door(56, 0, "north_key")
+    build_door(56, 0, "north_key"),
+    build_foliage()
   })
-  return screen
 end
 
 function build_screen_desert_top_firestones()

@@ -372,7 +372,8 @@ function build_sandwall()
     box = { x, y, x + 10, 127 },
     update = function()
     end,
-    draw = function()
+    draw = function(ent)
+      outline_ent(ent)
     end,
     on_collide = function(self, monty, screen)
       if monty.dir == 2 and monty.mov then
@@ -868,6 +869,46 @@ function build_door(x, y, k)
           end
         end
         ent.collided = true
+      end
+    end
+  }
+end
+
+function build_foliage()
+  local x = 119
+  local y = 13
+  return {
+    x = x, y = y,
+    box = { 0, 0, 6, 110 },
+    update = function()
+    end,
+    draw = function(ent)
+      outline_ent(ent)
+    end,
+    on_collide = function(self, monty, screen)
+      if monty.dir == 3 and monty.mov then
+        monty.mov = false
+        local text = nil
+        if monty.has_machete then
+          text = "now to slash my way\nthrough the foliage!"
+        else
+          text = "if only i had a machete to\nslash my way through the\nfoliage..."
+        end
+        if monty.y > 72 then
+          monty.move_to_pos = { x = monty.x, y = 72 }
+        end
+
+        screen:add_ent(build_textbox2(
+          { text }, function()
+            if monty.has_machete then
+              g_freeze = true
+              monty:start_slash_foliage(function()
+                g_freeze = false
+                screen:del_ent(self)
+              end)
+            end
+          end
+        ))
       end
     end
   }

@@ -53,6 +53,15 @@ function build_monty()
       self.sandwall_on_done = on_done
       self.dig_sandwall = true
     end,
+    -- foliage props
+    foliage_on_done = nil,
+    slash_foliage = false,
+    foliage_countdown = 100,
+    foliage_dir = 1,
+    start_slash_foliage = function(self, on_done)
+      self.foliage_on_done = on_done
+      self.slash_foliage = true
+    end,
     -- fli props
     fli_dig_shoot = 0,
     fli_dig_sand_blob = function(self)
@@ -93,6 +102,25 @@ function build_monty()
         if self.sandwall_countdown == 0 then
           self.dig_sandwall = false
           self.sandwall_on_done()
+        end
+      end
+
+      -- foliage
+      if self.slash_foliage then
+        self.foliage_countdown -= 1
+
+        -- walk up and down
+        if self.y <= 8 or self.y >= 104 then
+          self.foliage_dir *= -1
+        end
+        self.y += self.foliage_dir * 2
+
+        -- clear the foliage map tile
+        mset(63, flr((self.y + 2) / 8) + 17, 66)
+
+        if self.foliage_countdown == 0 then
+          self.slash_foliage = false
+          self.foliage_on_done()
         end
       end
 

@@ -220,11 +220,16 @@ function draw_monty(monty)
  elseif state.has_bra then
   spr(104,120,-1)   ]]
 
-  -- sandwall / fli
   if monty.dig_sandwall or monty.fli_dig_shoot > 0 then
     -- draw spade
-    local cntr_m2 = time_toggle(12, 2)
-    spr(54 + cntr_m2, monty.x - 5, monty.y + 6, 1, 1, false, cntr_m2)
+    spr(54 + g_toggle2, monty.x - 5, monty.y + 6, 1, 1, false, g_toggle2)
+  elseif monty.slash_foliage then
+    -- draw machete
+    local s = 14
+    if g_toggle2 == 1 then
+      s = 85
+    end
+    spr(s, monty.x + 12, monty.y + 6)
   end
 end
 

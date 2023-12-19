@@ -24,6 +24,8 @@ g_scene = nil
 g_freeze = false
 g_event = nil
 
+g_toggle2 = 0
+
 function _init()
   g_scenes = build_scenes()
   switch_scene("title")
@@ -36,6 +38,7 @@ function switch_scene(s)
 end
 
 function _update()
+  g_toggle2 = time_toggle(12, 2)
   g_scene:update()
 end
 

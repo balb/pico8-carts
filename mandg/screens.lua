@@ -33,7 +33,7 @@ function build_screens()
   tab["22"] = build_screen({})
   tab["32"] = build_screen({})
   tab["42"] = build_screen_forest_2()
-  tab["52"] = build_screen({})
+  tab["52"] = build_screen_forest_lake_fuzzies()
   tab["62"] = build_screen({})
   tab["72"] = build_screen({})
   tab["03"] = build_screen_desert_fli_boss()
@@ -220,4 +220,31 @@ function build_screen_forest_2()
     build_idiot(32, 48, 8, 48),
     build_jazzer(56, 88, 88, 112)
   })
+end
+
+function build_screen_forest_lake_fuzzies()
+  local path1 = {
+    { x = 48, y = 64 },
+    { x = 72, y = 64 },
+    { x = 72, y = 80 },
+    { x = 80, y = 80 },
+    { x = 80, y = 104 },
+    { x = 40, y = 104 },
+    { x = 40, y = 96 },
+    { x = 32, y = 96 },
+    { x = 32, y = 80 },
+    { x = 40, y = 80 },
+    { x = 40, y = 72 },
+    { x = 48, y = 72 }
+  }
+
+  local screen = build_screen({})
+  foreach(
+    { 3, 5, 7, 9, 11 },
+    function(i)
+      screen:add_ent(build_fuzzy(path1[i].x, path1[i].y, path1, i))
+    end
+  )
+
+  return screen
 end

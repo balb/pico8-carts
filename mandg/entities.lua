@@ -148,6 +148,7 @@ function build_old_woman()
       get_next = function(ans)
         if (ans == "two") return 5
         if (ans == "three") return 6
+        return -1
       end,
       fingers = 3
     },
@@ -224,6 +225,7 @@ function build_old_woman()
       end
 
       if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
+        local origChat = self.chat
         if chats[self.chat].get_next then
           local answer = nil
           if self.q_and_a then
@@ -233,9 +235,15 @@ function build_old_woman()
         else
           self.chat += 1
         end
-        self.text_ticker = build_text_ticker(chats[self.chat].text)
-        self.q_and_a = nil
-        self.add_q_and_a = chats[self.chat].answers != nil
+
+        if self.chat == -1 then
+          -- answer not ready
+          self.chat = origChat
+        else
+          self.text_ticker = build_text_ticker(chats[self.chat].text)
+          self.q_and_a = nil
+          self.add_q_and_a = chats[self.chat].answers != nil
+        end
       end
 
       -- don't show the answers until the text_ticker is ready

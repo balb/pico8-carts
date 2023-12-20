@@ -390,9 +390,9 @@ function build_sandwall()
         monty.mov = false
         local text = nil
         if monty.has_spade then
-          text = "now to dig my way through!"
+          text = "now to dig my way through the\nsand!"
         else
-          text = "if only i had a spade\nto dig my way through..."
+          text = "if only i had a spade to dig\nmy way through the sand..."
         end
         if monty.y > 72 then
           monty.move_to_pos = { x = monty.x, y = 72 }

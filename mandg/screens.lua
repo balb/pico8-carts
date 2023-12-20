@@ -250,7 +250,7 @@ function build_screen_forest_lake_fuzzies()
 end
 
 function build_screen_forest_jonathon()
-  local jonathon = build_jonathon(80, 80)
+  local jonathon = build_jonathon(84, 72)
   local screen = build_screen({
     jonathon,
     build_textbox2(

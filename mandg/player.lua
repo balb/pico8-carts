@@ -42,6 +42,9 @@ function build_monty()
         -- fli boss
         g_freeze = true
         self.move_to_pos = { x = 104, y = 72 }
+      elseif screen_key == "62" then
+        -- jonathon
+        self.move_to_pos = { x = 24, y = 72 }
       end
     end,
     -- sandwall props

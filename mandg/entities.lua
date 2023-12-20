@@ -1011,21 +1011,8 @@ function build_jonathon(x, y)
     x = x, y = y,
     phase = 0,
     update = function(ent, screen)
-      if ent.phase == 0 then
-        --monty_mov=false
-        --screen:add_ent(build_textbox2(
-        --  {
-        --    "greetings...",
-        --    "my name is jon-a-thon...",
-        --    "i live in the am-a-zon...",
-        --    "i have a snake..."
-        --  }, function()
-        --    ent.phase = 1
-        --  end
-        --))
-        --ent.phase=-1
-      elseif ent.phase == 1 then
-        screen:add_ent(build_snake(64, 64))
+      if ent.phase == 1 then
+        screen:add_ent(build_snake(66, 32))
         screen:add_ent(build_textbox2(
           {
             "his name is jon-a-thon...",
@@ -1037,11 +1024,11 @@ function build_jonathon(x, y)
             "if you can find the bra i will\nhelp you on your journey...",
             "good luck with your search!"
           }, function()
-            foreach(
+            --[[ foreach(
               screen.ents, function(ent)
                 screen:del_ent(ent)
               end
-            )
+            ) ]]
           end
         ))
         ent.phase = 2

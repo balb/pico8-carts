@@ -223,9 +223,7 @@ function build_old_woman()
         return
       end
 
-      -- need to check chats[self.chat] isn't nil here.
-      -- not sure why but it prevents a crash when hammering the buttons
-      if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) and chats[self.chat] then
+      if self.text_ticker.ready and (btnp(❎) or btnp(🅾️)) then
         if chats[self.chat].get_next then
           local answer = nil
           if self.q_and_a then

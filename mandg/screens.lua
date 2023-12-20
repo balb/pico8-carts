@@ -34,7 +34,7 @@ function build_screens()
   tab["32"] = build_screen({})
   tab["42"] = build_screen_forest_2()
   tab["52"] = build_screen_forest_lake_fuzzies()
-  tab["62"] = build_screen({})
+  tab["62"] = build_screen_forest_jonathon()
   tab["72"] = build_screen({})
   tab["03"] = build_screen_desert_fli_boss()
   tab["13"] = build_screen_desert_sand_wall()
@@ -246,5 +246,23 @@ function build_screen_forest_lake_fuzzies()
     end
   )
 
+  return screen
+end
+
+function build_screen_forest_jonathon()
+  local jonathon = build_jonathon(80, 80)
+  local screen = build_screen({
+    jonathon,
+    build_textbox2(
+      {
+        "greetings...",
+        "my name is jon-a-thon...",
+        "i live in the am-a-zon...",
+        "i have a snake..."
+      }, function()
+        jonathon.phase = 1
+      end
+    )
+  })
   return screen
 end

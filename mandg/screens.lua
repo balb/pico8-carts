@@ -154,10 +154,10 @@ end
 
 function build_screen_desert_sand_wall()
   local path1 = {
-    { x = 24, y = 24 },
-    { x = 40, y = 24 },
-    { x = 40, y = 48 },
-    { x = 24, y = 48 }
+    { x = 24, y = 32 },
+    { x = 40, y = 32 },
+    { x = 40, y = 56 },
+    { x = 24, y = 56 }
   }
   local path2 = {
     { x = 24, y = 80 },
@@ -168,7 +168,7 @@ function build_screen_desert_sand_wall()
   return build_screen({
     build_idiot(112, 48, 72, 112),
     build_idiot(72, 80, 72, 112),
-    build_fuzzy(24, 24, path1, 1),
+    build_fuzzy(24, 32, path1, 1),
     build_fuzzy(40, 104, path2, 3),
     build_sandwall()
   })

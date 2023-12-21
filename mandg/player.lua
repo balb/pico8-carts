@@ -13,6 +13,7 @@ function build_monty()
     has_machete = false,
     has_bra = false,
     has_north_key = false,
+    has_simple_key = false,
     dying = 0,
     -- dead flag for del_on_death
     dead = false,

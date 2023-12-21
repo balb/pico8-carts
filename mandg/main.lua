@@ -1,3 +1,8 @@
+-- todo: empty func?
+-- todo: build ent func?
+-- todo: delete dead ents func
+-- todo: purple fuzzies in dungeon
+-- todo: plain purple and orange tiles
 
 -- consts
 start_map_x = 3

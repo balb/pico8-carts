@@ -89,7 +89,7 @@ function build_firestone(x, y, dir, t, dist)
           elseif dir == 3 then
             x_offset = 8
           end
-          screen:add_ent(build_arrow(x + x_offset, y + y_offset, dir, dist))
+          screen:add_ent(build_projectile("arrow", x + x_offset, y + y_offset, dir, dist))
           self.arrow_added = true
         end
       else
@@ -107,34 +107,6 @@ function build_firestone(x, y, dir, t, dist)
       -- print(self.timer, 96, 0)
     end,
     box = { 1, 1, 6, 6 }
-  }
-end
-
-function build_arrow(start_x, start_y, dir, dist)
-  local speed = 2.5
-  return {
-    x = start_x, y = start_y,
-    dist = dist,
-    update = function(self, screen)
-      if dir == 0 then
-        self.y -= speed
-      elseif dir == 1 then
-        self.y += speed
-      elseif dir == 2 then
-        self.x -= speed
-      else
-        self.x += speed
-      end
-      self.dist -= speed
-      if (self.dist <= -2) screen:del_ent(self)
-    end,
-    draw = function(self)
-      local s = 35
-      if (dir < 2) s = 51
-      spr(s, self.x, self.y, 1, 1, dir == 2)
-    end,
-    box = { 1, 1, 6, 6 },
-    del_on_death = true
   }
 end
 
@@ -1118,7 +1090,7 @@ function build_monkey(start_x, start_y, path, path_index)
         if dir == 2 then
           dist = ent.x - 8
         end
-        screen:add_ent(build_projectile(ent.x, ent.y + 4, dir, dist, "banana"))
+        screen:add_ent(build_projectile("banana", ent.x, ent.y + 4, dir, dist))
         ent.cntr = 0
       end
       ent.cntr += 1
@@ -1136,7 +1108,7 @@ function build_monkey(start_x, start_y, path, path_index)
   }
 end
 
-function build_projectile(start_x, start_y, dir, dist, type)
+function build_projectile(type, start_x, start_y, dir, dist)
   local speed = 2.5
   return {
     x = start_x, y = start_y,
@@ -1156,7 +1128,10 @@ function build_projectile(start_x, start_y, dir, dist, type)
       if (ent.dist <= -2) screen:del_ent(ent)
     end,
     draw = function(ent)
-      if type == "banana" then
+      if type == "arrow" then
+        local s = iif(dir < 2, 51, 35)
+        spr(s, ent.x, ent.y, 1, 1, dir == 2)
+      elseif type == "banana" then
         local s = iif(g_toggle2 == 0, 30, 52)
         spr(s, ent.x, ent.y, 1, 1, g_toggle4 == 1 or g_toggle4 == 2)
       end

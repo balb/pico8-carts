@@ -1016,24 +1016,16 @@ function build_jonathon(x, y)
     update = function(ent, screen)
       if ent.phase == 1 then
         screen:add_ent(build_snake(66, 32))
-        screen:add_ent(build_textbox2(
-          {
-            "his name is jon-a-thon...",
-            "he has large wobbly boobies!",
-            "he doesn't wear a bra...",
-            "he is the no-bra co-bra!",
-            "his lack of brassiere\nis embarrassing!",
-            "legend has it that a suitable\nbra is hidden in this forest...",
-            "if you can find the bra i will\nhelp you on your journey...",
-            "good luck with your search!"
-          }, function()
-            --[[ foreach(
-              screen.ents, function(ent)
-                screen:del_ent(ent)
-              end
-            ) ]]
-          end
-        ))
+        screen:add_ent(build_textbox2({
+          "his name is jon-a-thon...",
+          "he has large wobbly boobies!",
+          "he doesn't wear a bra...",
+          "he is the no-bra co-bra!",
+          "his lack of brassiere\nis embarrassing!",
+          "legend has it that a suitable\nbra is hidden in this forest...",
+          "if you can find the bra i will\nhelp you on your journey...",
+          "good luck with your search!"
+        }))
         ent.phase = 2
       end
 
@@ -1042,10 +1034,22 @@ function build_jonathon(x, y)
         screen:add_ent(build_textbox2(
           {
             "rejoice!!!",
-            "you have found the bar.",
+            "you have found the bra.",
             "time to tame those boobies..."
           }, function()
             g_event = "remove_bra_icon"
+            screen:add_ent(build_textbox2(
+              {
+                "ahh, that's much better.",
+                "maybe a little snug but\nit'll do the job.",
+                "as promised i will help you\non your journey.",
+                "by clearning a path through\nthe forest. goodbye!"
+              }, function()
+                -- todo: block up the jungle to prevent back tracking
+                -- todo: forest or jungle?
+                -- todo: north key
+              end
+            ))
           end
         ))
       end

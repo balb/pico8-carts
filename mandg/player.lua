@@ -24,6 +24,7 @@ function build_monty()
       end
     end,
     move_to_pos = nil,
+    move_to_pos_dir = nil,
     on_change_screen = function(self, screen_key)
       self.init_x = self.x
       self.init_y = self.y
@@ -49,6 +50,7 @@ function build_monty()
           self.jonathon_phase += 1
         elseif self.jonathon_phase == 1 and self.has_bra then
           self.move_to_pos = { x = 24, y = 72 }
+          self.move_to_pos_dir = 3
           self.jonathon_phase += 1
           g_event = "jonathon_with_bra"
         end
@@ -169,7 +171,13 @@ function build_monty()
           self.x -= 1
           self.mov = true
         end
-        if (not self.mov) self.move_to_pos = nil
+        if not self.mov then
+          self.move_to_pos = nil
+          if self.move_to_pos_dir then
+            self.dir = self.move_to_pos_dir
+            self.move_to_pos_dir = nil
+          end
+        end
       end
 
       -- warp

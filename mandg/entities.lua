@@ -428,7 +428,7 @@ function build_cactus(start_x, start_y, path, path_index)
         if dir == 2 then
           dist = ent.x - 8
         end
-        screen:add_ent(build_fireball(ent.x, ent.y + 4, dir, dist))
+        screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
         ent.cntr = 0
       end
       ent.cntr += 1
@@ -441,34 +441,6 @@ function build_cactus(start_x, start_y, path, path_index)
       spr(28, ent.x + 8, ent.y + 8 + g_toggle2, 1, 1, true)
     end,
     box = { 2, 2, 13, 13 }
-  }
-end
-
-function build_fireball(start_x, start_y, dir, dist)
-  -- based on arrow
-  local speed = 2.5
-  return {
-    x = start_x, y = start_y,
-    dist = dist,
-    update = function(ent, screen)
-      if (g_freeze) return
-      if dir == 0 then
-        ent.y -= speed
-      elseif dir == 1 then
-        ent.y += speed
-      elseif dir == 2 then
-        ent.x -= speed
-      else
-        ent.x += speed
-      end
-      ent.dist -= speed
-      if (ent.dist <= -2) screen:del_ent(ent)
-    end,
-    draw = function(ent)
-      spr(44, ent.x, ent.y, 1, 1, g_toggle2 == 0)
-    end,
-    box = { 1, 1, 6, 6 },
-    del_on_death = true
   }
 end
 
@@ -604,7 +576,7 @@ function fli_update(ent, screen)
   if ent.cntr == 24 then
     local dir = 3
     local dist = 112 - ent.x
-    screen:add_ent(build_fireball(ent.x, ent.y + 4, dir, dist))
+    screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
     ent.cntr = 0
   end
   ent.cntr += 1
@@ -636,7 +608,6 @@ function fli_update(ent, screen)
 end
 
 function build_sand_blob(start_x, start_y)
-  -- based on fireball
   local speed = 3
   return {
     x = start_x, y = start_y,
@@ -1131,6 +1102,8 @@ function build_projectile(type, start_x, start_y, dir, dist)
       if type == "arrow" then
         local s = iif(dir < 2, 51, 35)
         spr(s, ent.x, ent.y, 1, 1, dir == 2)
+      elseif type == "fireball" then
+        spr(44, ent.x, ent.y, 1, 1, g_toggle2 == 0)
       elseif type == "banana" then
         local s = iif(g_toggle2 == 0, 30, 52)
         spr(s, ent.x, ent.y, 1, 1, g_toggle4 == 1 or g_toggle4 == 2)

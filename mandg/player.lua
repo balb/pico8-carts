@@ -146,6 +146,9 @@ function build_monty()
         --g_freeze
         self.move_to_pos = { x = self.x, y = 72 }
         g_event = nil
+      elseif g_event == "remove_bra_icon" then
+        self.has_bra = false
+        g_event = "add_bra_to_snake"
       end
 
       -- move_to_pos

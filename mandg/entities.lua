@@ -948,12 +948,17 @@ function build_snake(x, y)
     x = 130, y = y,
     target_x = x,
     snake_cntr = 1,
+    show_bra = false,
     update = function(ent)
       if g_toggle2 == 0 then
         ent.snake_cntr += 1
         if (ent.snake_cntr > 6) ent.snake_cntr = 1
       end
       if (ent.x > ent.target_x) ent.x -= 1
+      if g_event == "add_bra_to_snake" then
+        ent.show_bra = true
+        g_event = nil
+      end
     end,
     draw = function(ent)
       pal(12, 0)
@@ -969,10 +974,9 @@ function build_snake(x, y)
       snake_segment(ent.x + 1, ent.y + 18, 3, 3, ent.snake_cntr, 5)
       snake_segment(ent.x + 1, ent.y + 21, 2, 2, ent.snake_cntr, 6)
 
-      local temp_has_bra_on = false
-      if temp_has_bra_on then
-        snake_boob(ent.x - 3, ent.y + 6, 0)
-        snake_boob(ent.x + 8, ent.y + 6, 0)
+      if ent.show_bra then
+        snake_boob(ent.x - 3, ent.y + 6, 0, true)
+        snake_boob(ent.x + 8, ent.y + 6, 0, true)
         -- bra
         spr(63, x - 5, y + 2)
         spr(63, x + 3, y + 2, 1, 1, true)
@@ -995,9 +999,8 @@ function snake_segment(sx, sy, w, h, sc, idx)
   rect(ssx, sy, ssx + w, sy + h, 3)
 end
 
-function snake_boob(x, y, yoset)
-  local temp_has_bra_on = false
-  if temp_has_bra_on then
+function snake_boob(x, y, yoset, show_bra)
+  if show_bra then
     circfill(x, y + yoset, 4, 15)
   else
     circfill(x, y + yoset, 5, 15)
@@ -1042,10 +1045,7 @@ function build_jonathon(x, y)
             "you have found the bar.",
             "time to tame those boobies..."
           }, function()
-            --ent.phase=1
-            --state.has_bra_on=true
-            --ent.show_bra = true
-            -- todo: show_bra
+            g_event = "remove_bra_icon"
           end
         ))
       end

@@ -1,12 +1,3 @@
--- todo: town square 100%
--- todo: 9 legged spida
-
---btn_up=⬆️
---btn_down=⬇️
---btn_left=⬅️
---btn_right=➡️
---btn_x=❎
---btn_o=🅾️
 
 -- consts
 start_map_x = 3
@@ -49,6 +40,6 @@ function time_toggle(t, mod)
   return flr(time / t) % mod
 end
 
-function outline_ent(ent)
-  rect(ent.x + ent.box[1], ent.y + ent.box[2], ent.x + ent.box[3], ent.y + ent.box[4])
-end
+--function outline_ent(ent)
+--  rect(ent.x + ent.box[1], ent.y + ent.box[2], ent.x + ent.box[3], ent.y + ent.box[4])
+--end

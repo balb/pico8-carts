@@ -718,7 +718,7 @@ function build_machete()
   }
 end
 
---[[ function build_north_key()
+function build_north_key()
   return {
     x = 108, y = 24,
     update = function()
@@ -729,15 +729,14 @@ end
       pal()
     end,
     on_collide = function(ent, monty, screen)
-      monty.has_spade = false
       monty.has_north_key = true
       monty:do_warp()
       screen:del_ent(ent)
-      map_add_desert_town_square_wall()
+      map_add_jungle_town_square_wall()
     end,
     box = { 0, 0, 7, 7 }
   }
-end ]]
+end
 
 function build_py(x, y)
   return {
@@ -1043,10 +1042,9 @@ function build_jonathon(x, y)
                 "ahh, that's much better.",
                 "maybe a little snug but\nit'll do the job.",
                 "as promised i will help you\non your journey.",
-                "by clearning a path through\nthe jungle. goodbye!"
+                "take this key.\nit opens the door\nto the north dungeon."
               }, function()
-                -- todo: block up the jungle to prevent back tracking
-                -- todo: north key
+                screen:add_ent(build_north_key())
               end
             ))
           end

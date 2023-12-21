@@ -133,7 +133,8 @@ function build_arrow(start_x, start_y, dir, dist)
       if (dir < 2) s = 51
       spr(s, self.x, self.y, 1, 1, dir == 2)
     end,
-    box = { 1, 1, 6, 6 }
+    box = { 1, 1, 6, 6 },
+    del_on_death = true
   }
 end
 

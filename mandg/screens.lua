@@ -20,14 +20,14 @@ function build_screens()
   })
   --tab["51"] = build_screen({})
   --tab["61"] = build_screen({})
-  tab["71"] = build_screen({
+  --[[ tab["71"] = build_screen({
     -- jungle firestone walk
     build_firestone(16, 32, 3, 0, 88),
     build_firestone(8, 48, 3, 8, 96),
     build_firestone(16, 64, 3, 0, 88),
     build_firestone(8, 80, 3, 8, 96),
     build_firestone(16, 96, 3, 0, 88)
-  })
+  }) ]]
   --tab["02"] = build_screen({})
   tab["12"] = build_screen_desert_dead_end()
   --tab["22"] = build_screen({})
@@ -43,8 +43,14 @@ function build_screens()
   --tab["43"] = build_screen({})
   --tab["53"] = build_screen({})
 
-  -- todo
-  tab["63"] = build_screen({})
+  tab["63"] = build_screen({
+    -- jungle firestone walk
+    build_firestone(102, 32, 2, 0, 88),
+    build_firestone(96, 48, 2, 8, 80),
+    build_firestone(64, 64, 2, 3, 48),
+    build_firestone(96, 80, 2, 8, 80),
+    build_firestone(102, 96, 2, 0, 88)
+  })
   tab["73"] = build_screen_jungle_monkey()
   return tab
 end

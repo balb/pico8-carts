@@ -448,6 +448,21 @@ function build_thrower(type, start_x, start_y, path, path_index)
         spr(119, ent.x, ent.y + 8)
         spr(120, ent.x + 8, ent.y + 8)
         pal()
+      else
+        -- skellington
+        pal(12, 0)
+        spr(15, ent.x, ent.y)
+        spr(15, ent.x + 7, ent.y, 1, 1, true)
+        spr(31, ent.x, ent.y + 8 + offset)
+        spr(31, ent.x + 7, ent.y + 8 + g_toggle2, 1, 1, true)
+        -- mouth
+        pset(ent.x + 5, ent.y + 8, 7)
+        pset(ent.x + 9, ent.y + 8, 7)
+        line(
+          ent.x + 6, ent.y + 8 + offset,
+          ent.x + 8, ent.y + 8 + offset, 7
+        )
+        pal()
       end
     end,
     box = { 2, 2, 13, 13 }

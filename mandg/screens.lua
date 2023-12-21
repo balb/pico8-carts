@@ -32,7 +32,7 @@ function build_screens()
     build_idiot(96, 64, 64, 112),
     build_idiot(96, 80, 72, 112)
   })
-  --tab["51"] = build_screen({})
+  tab["51"] = build_screen_north_dungeon_skellington()
   --tab["61"] = build_screen({})
   --[[ tab["71"] = build_screen({
     -- jungle firestone walk
@@ -320,5 +320,17 @@ function build_screen_north_dungeon_fuzzies()
     build_fuzzy(88, 104, path1, 1),
     build_fuzzy(32, 24, path2, 3),
     build_fuzzy(88, 56, path2, 1)
+  })
+end
+
+function build_screen_north_dungeon_skellington()
+  local path = {
+    { x = 24, y = 32 },
+    { x = 88, y = 32 },
+    { x = 88, y = 100 },
+    { x = 24, y = 100 }
+  }
+  return build_screen({
+    build_thrower("skellington", 88, 32, path, 2)
   })
 end

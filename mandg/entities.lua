@@ -387,7 +387,7 @@ function build_sandwall()
   }
 end
 
-function build_cactus(start_x, start_y, path, path_index)
+function build_thrower(type, start_x, start_y, path, path_index)
   local speed_x = 1.2
   local speed_y = 1.2
 
@@ -428,17 +428,20 @@ function build_cactus(start_x, start_y, path, path_index)
         if dir == 2 then
           dist = ent.x - 8
         end
-        screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
+        local projectile_type = iif(type == "monkey", "banana", "fireball")
+        screen:add_ent(build_projectile(projectile_type, ent.x, ent.y + 4, dir, dist))
         ent.cntr = 0
       end
       ent.cntr += 1
     end,
     draw = function(ent)
-      local offset = abs(g_toggle2 - 1)
-      spr(12, ent.x, ent.y + offset)
-      spr(12, ent.x + 8, ent.y + g_toggle2, 1, 1, true)
-      spr(28, ent.x, ent.y + 8 + offset)
-      spr(28, ent.x + 8, ent.y + 8 + g_toggle2, 1, 1, true)
+      if type == "cactus" then
+        local offset = abs(g_toggle2 - 1)
+        spr(12, ent.x, ent.y + offset)
+        spr(12, ent.x + 8, ent.y + g_toggle2, 1, 1, true)
+        spr(28, ent.x, ent.y + 8 + offset)
+        spr(28, ent.x + 8, ent.y + 8 + g_toggle2, 1, 1, true)
+      end
     end,
     box = { 2, 2, 13, 13 }
   }

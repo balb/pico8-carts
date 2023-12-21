@@ -204,7 +204,7 @@ function build_screen_desert_cactus_and_spade()
     { x = 24, y = 96 }
   }
   return build_screen({
-    build_cactus(88, 24, path, 2),
+    build_thrower("cactus", 88, 24, path, 2),
     build_spade(96, 24)
   })
 end

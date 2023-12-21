@@ -134,6 +134,7 @@ function build_monty()
 
         if self.foliage_countdown == 0 then
           self.slash_foliage = false
+          self.has_machete = false
           self.foliage_on_done()
         end
       end

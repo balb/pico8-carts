@@ -720,7 +720,7 @@ end
 
 function build_north_key()
   return {
-    x = 108, y = 24,
+    x = 64, y = 72,
     update = function()
     end,
     draw = function(ent)

@@ -805,21 +805,33 @@ function build_door(x, y, k)
     box = { 0, 0, 7, 24 },
     collided = false,
     on_collide = function(ent, monty, screen)
-      if not ent.collided then
-        if k == "north_key" then
-          if monty.has_north_key then
-            monty.has_north_key = false
-            screen:del_ent(ent)
-          else
-            screen:add_ent(build_textbox2(
-              { "hmm, it appears this door\nis locked." }, function()
-                ent.collided = false
-                monty.y += 2
-              end
-            ))
-          end
+      if (ent.collided) return
+      ent.collided = true
+      -- todo: could save some code here
+      if k == "north_key" then
+        if monty.has_north_key then
+          monty.has_north_key = false
+          screen:del_ent(ent)
+        else
+          screen:add_ent(build_textbox2(
+            { "hmm, it appears this door\nis locked." }, function()
+              ent.collided = false
+              monty.y += 2
+            end
+          ))
         end
-        ent.collided = true
+      elseif k == "simple_key" then
+        if monty.has_simple_key then
+          monty.has_simple_key = false
+          screen:del_ent(ent)
+        else
+          screen:add_ent(build_textbox2(
+            { "hmm, it appears this door\nis locked." }, function()
+              ent.collided = false
+              monty.x -= 2
+            end
+          ))
+        end
       end
     end
   }

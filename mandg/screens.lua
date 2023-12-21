@@ -9,8 +9,14 @@ function build_screens()
     build_jazzer(72, 64, 48, 81),
     build_jazzer(96, 56, 48, 81)
   })
-  --tab["40"] = build_screen_north_dungeon_fuzzies()
-  --tab["50"] = build_screen({})
+  tab["40"] = build_screen_north_dungeon_fuzzies()
+  tab["50"] = build_screen({
+    -- north dungeon locked door
+    build_door(113, 56, "simple_key"),
+    build_firestone(72, 40, 3, 8, 24),
+    build_firestone(64, 80, 3, 16, 32),
+    build_idiot(24, 96, 8, 88)
+  })
   --tab["60"] = build_screen({})
   --tab["70"] = build_screen({})
   --tab["01"] = build_screen({})
@@ -296,7 +302,7 @@ function build_screen_jungle_monkey()
   })
 end
 
---[[ function build_screen_north_dungeon_fuzzies()
+function build_screen_north_dungeon_fuzzies()
   local path1 = {
     { x = 88, y = 72 },
     { x = 32, y = 72 },
@@ -315,4 +321,4 @@ end
     build_fuzzy(32, 24, path2, 3),
     build_fuzzy(88, 56, path2, 1)
   })
-end ]]
+end

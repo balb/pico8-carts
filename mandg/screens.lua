@@ -297,7 +297,7 @@ function build_screen_jungle_monkey()
     { x = 24, y = 96 }
   }
   return build_screen({
-    build_monkey(88, 24, path, 2),
+    build_thrower("monkey", 88, 24, path, 2),
     build_bra(96, 24)
   })
 end

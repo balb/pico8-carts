@@ -435,12 +435,19 @@ function build_thrower(type, start_x, start_y, path, path_index)
       ent.cntr += 1
     end,
     draw = function(ent)
+      local offset = abs(g_toggle2 - 1)
       if type == "cactus" then
-        local offset = abs(g_toggle2 - 1)
         spr(12, ent.x, ent.y + offset)
         spr(12, ent.x + 8, ent.y + g_toggle2, 1, 1, true)
         spr(28, ent.x, ent.y + 8 + offset)
         spr(28, ent.x + 8, ent.y + 8 + g_toggle2, 1, 1, true)
+      elseif type == "monkey" then
+        pal(12, 0)
+        spr(103, ent.x, ent.y + offset)
+        spr(103, ent.x + 7, ent.y + offset, 1, 1, true)
+        spr(119, ent.x, ent.y + 8)
+        spr(120, ent.x + 8, ent.y + 8)
+        pal()
       end
     end,
     box = { 2, 2, 13, 13 }
@@ -1031,66 +1038,6 @@ function build_jonathon(x, y)
       spr(ft_s, ent.x + 8, ent.y + 8 + y_oset, 1, 1, true)
       pal()
     end
-  }
-end
-
--- based on build_cactus
-function build_monkey(start_x, start_y, path, path_index)
-  local speed_x = 1.2
-  local speed_y = 1.2
-
-  return {
-    x = start_x, y = start_y,
-    path = path,
-    path_index = path_index,
-    cntr = 0,
-    update = function(ent, screen)
-      if (g_freeze) return
-      -- same a fuzzy
-      local next_x = ent.path[ent.path_index].x
-      local next_y = ent.path[ent.path_index].y
-      if ent.x < next_x then
-        ent.x += speed_x
-      elseif ent.x > next_x then
-        ent.x -= speed_x
-      end
-
-      if ent.y < next_y then
-        ent.y += speed_y
-      elseif ent.y > next_y then
-        ent.y -= speed_y
-      end
-
-      if abs(ent.x - next_x) < 1
-          and abs(ent.y - next_y) < 1 then
-        --clamp
-        ent.x = next_x
-        ent.y = next_y
-        ent.path_index += 1
-        if (ent.path_index > count(ent.path)) ent.path_index = 1
-      end
-
-      if ent.cntr == 30 then
-        local dir = rnd({ 2, 3 })
-        local dist = 112 - ent.x
-        if dir == 2 then
-          dist = ent.x - 8
-        end
-        screen:add_ent(build_projectile("banana", ent.x, ent.y + 4, dir, dist))
-        ent.cntr = 0
-      end
-      ent.cntr += 1
-    end,
-    draw = function(ent)
-      pal(12, 0)
-      local offset = abs(g_toggle2 - 1)
-      spr(103, ent.x, ent.y + offset)
-      spr(103, ent.x + 7, ent.y + offset, 1, 1, true)
-      spr(119, ent.x, ent.y + 8)
-      spr(120, ent.x + 8, ent.y + 8)
-      pal()
-    end,
-    box = { 2, 2, 13, 13 }
   }
 end
 

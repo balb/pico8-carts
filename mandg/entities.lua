@@ -414,7 +414,6 @@ function build_sandwall()
   }
 end
 
--- todo: is the cactus hit box too big?
 function build_cactus(start_x, start_y, path, path_index)
   local speed_x = 1.2
   local speed_y = 1.2

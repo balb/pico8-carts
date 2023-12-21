@@ -1,5 +1,4 @@
 -- todo: town square 100%
--- todo: bug! hammer next in old woman room crashes
 -- todo: 9 legged spida
 
 --btn_up=⬆️

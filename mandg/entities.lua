@@ -794,7 +794,7 @@ function build_gerts(x, y)
       ent.cntr += ent.inc
       if (ent.cntr == 0 or ent.cntr == 3) ent.inc *= -1
       if g_event == "has_machete_message" and not ent.has_machete_message_added then
-        screen:add_ent(build_textbox2({ "monty! use the machete to\nhack your way into\nthe east forest!" }))
+        screen:add_ent(build_textbox2({ "monty! use the machete to\nhack your way into\nthe east jungle!" }))
         g_event = nil
         ent.has_machete_message_added = true
       elseif g_event == "has_north_key_message" and not ent.has_north_key_message_added then
@@ -1022,7 +1022,7 @@ function build_jonathon(x, y)
           "he doesn't wear a bra...",
           "he is the no-bra co-bra!",
           "his lack of brassiere\nis embarrassing!",
-          "legend has it that a suitable\nbra is hidden in this forest...",
+          "legend has it that a suitable\nbra is hidden in this jungle...",
           "if you can find the bra i will\nhelp you on your journey...",
           "good luck with your search!"
         }))
@@ -1043,10 +1043,9 @@ function build_jonathon(x, y)
                 "ahh, that's much better.",
                 "maybe a little snug but\nit'll do the job.",
                 "as promised i will help you\non your journey.",
-                "by clearning a path through\nthe forest. goodbye!"
+                "by clearning a path through\nthe jungle. goodbye!"
               }, function()
                 -- todo: block up the jungle to prevent back tracking
-                -- todo: forest or jungle?
                 -- todo: north key
               end
             ))

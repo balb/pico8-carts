@@ -13,7 +13,7 @@ function build_screens()
   tab["21"] = build_screen({ build_idiot(88, 88, 80, 112), build_idiot(56, 56, 40, 64) })
   tab["31"] = build_screen_town_square()
   tab["41"] = build_screen({
-    -- forest 1
+    -- jungle 1
     build_jazzer(32, 88, 72, 112),
     build_idiot(96, 64, 64, 112),
     build_idiot(96, 80, 72, 112)
@@ -21,7 +21,7 @@ function build_screens()
   --tab["51"] = build_screen({})
   --tab["61"] = build_screen({})
   tab["71"] = build_screen({
-    -- forest firestone walk
+    -- jungle firestone walk
     build_firestone(16, 32, 3, 0, 88),
     build_firestone(8, 48, 3, 8, 96),
     build_firestone(16, 64, 3, 0, 88),
@@ -32,9 +32,9 @@ function build_screens()
   tab["12"] = build_screen_desert_dead_end()
   --tab["22"] = build_screen({})
   --tab["32"] = build_screen({})
-  tab["42"] = build_screen_forest_2()
-  tab["52"] = build_screen_forest_lake_fuzzies()
-  tab["62"] = build_screen_forest_jonathon()
+  tab["42"] = build_screen_jungle_2()
+  tab["52"] = build_screen_jungle_lake_fuzzies()
+  tab["62"] = build_screen_jungle_jonathon()
   --tab["72"] = build_screen({})
   tab["03"] = build_screen_desert_fli_boss()
   tab["13"] = build_screen_desert_sand_wall()
@@ -45,7 +45,7 @@ function build_screens()
 
   -- todo
   tab["63"] = build_screen({})
-  tab["73"] = build_screen_forest_monkey()
+  tab["73"] = build_screen_jungle_monkey()
   return tab
 end
 
@@ -207,7 +207,7 @@ function build_screen_desert_fli_boss()
   return screen
 end
 
-function build_screen_forest_2()
+function build_screen_jungle_2()
   local path1 = {
     { x = 72, y = 48 },
     { x = 96, y = 48 },
@@ -224,7 +224,7 @@ function build_screen_forest_2()
   })
 end
 
-function build_screen_forest_lake_fuzzies()
+function build_screen_jungle_lake_fuzzies()
   local path1 = {
     { x = 48, y = 64 },
     { x = 72, y = 64 },
@@ -251,7 +251,7 @@ function build_screen_forest_lake_fuzzies()
   return screen
 end
 
-function build_screen_forest_jonathon()
+function build_screen_jungle_jonathon()
   local jonathon = build_jonathon(84, 72)
   local screen = build_screen({
     jonathon,
@@ -269,7 +269,7 @@ function build_screen_forest_jonathon()
   return screen
 end
 
-function build_screen_forest_monkey()
+function build_screen_jungle_monkey()
   local path = {
     { x = 24, y = 32 },
     { x = 88, y = 32 },

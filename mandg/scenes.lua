@@ -264,7 +264,6 @@ function build_scene_main()
       end
 
       if not map_collide(next_x, next_y) then
-        --screen wrap
         local change_screen = false
         if next_x == -5 then
           next_x = 116

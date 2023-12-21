@@ -1055,3 +1055,122 @@ function build_jonathon(x, y)
     end
   }
 end
+
+-- based on build_cactus
+function build_monkey(start_x, start_y, path, path_index)
+  local speed_x = 1.2
+  local speed_y = 1.2
+
+  return {
+    x = start_x, y = start_y,
+    path = path,
+    path_index = path_index,
+    cntr = 0,
+    update = function(ent, screen)
+      if (g_freeze) return
+      -- same a fuzzy
+      local next_x = ent.path[ent.path_index].x
+      local next_y = ent.path[ent.path_index].y
+      if ent.x < next_x then
+        ent.x += speed_x
+      elseif ent.x > next_x then
+        ent.x -= speed_x
+      end
+
+      if ent.y < next_y then
+        ent.y += speed_y
+      elseif ent.y > next_y then
+        ent.y -= speed_y
+      end
+
+      if abs(ent.x - next_x) < 1
+          and abs(ent.y - next_y) < 1 then
+        --clamp
+        ent.x = next_x
+        ent.y = next_y
+        ent.path_index += 1
+        if (ent.path_index > count(ent.path)) ent.path_index = 1
+      end
+
+      if ent.cntr == 30 then
+        local dir = rnd({ 2, 3 })
+        local dist = 112 - ent.x
+        if dir == 2 then
+          dist = ent.x - 8
+        end
+        screen:add_ent(build_banana(ent.x, ent.y + 4, dir, dist))
+        ent.cntr = 0
+      end
+      ent.cntr += 1
+    end,
+    draw = function(ent)
+      pal(12, 0)
+      local offset = abs(g_toggle2 - 1)
+      spr(103, ent.x, ent.y + offset)
+      spr(103, ent.x + 7, ent.y + offset, 1, 1, true)
+      spr(119, ent.x, ent.y + 8)
+      spr(120, ent.x + 8, ent.y + 8)
+      pal()
+    end,
+    box = { 2, 2, 13, 13 }
+  }
+end
+
+-- based on build_fireball
+function build_banana(start_x, start_y, dir, dist)
+  -- based on arrow
+  local speed = 2.5
+  return {
+    x = start_x, y = start_y,
+    dist = dist,
+    update = function(ent, screen)
+      if (g_freeze) return
+      if dir == 0 then
+        ent.y -= speed
+      elseif dir == 1 then
+        ent.y += speed
+      elseif dir == 2 then
+        ent.x -= speed
+      else
+        ent.x += speed
+      end
+      ent.dist -= speed
+      if (ent.dist <= -2) screen:del_ent(ent)
+    end,
+    draw = function(ent)
+      local s = 52
+      if (g_toggle2 == 0) s = 30
+      local cntr_m4 = time_toggle(12, 4)
+      spr(s, ent.x, ent.y, 1, 1, cntr_m4 == 0 or cntr_m4 == 1)
+    end,
+    box = { 1, 1, 6, 6 },
+    del_on_death = true
+  }
+end
+
+function build_bra(x, y)
+  return {
+    x = x, y = y,
+    update = function()
+    end,
+    draw = function()
+      pal(6, flr(rnd(16)))
+      spr(63, x, y)
+      spr(63, x + 8, y, 1, 1, true)
+      pal()
+    end,
+    box = { 0, 0, 15, 7 },
+    collided = false,
+    on_collide = function(ent, monty, screen)
+      if not ent.collided then
+        ent.collided = true
+        screen:add_ent(build_textbox2(
+          { "this must be the snake's bra!" }, function()
+            monty.has_bra = true
+            screen:del_ent(ent)
+          end
+        ))
+      end
+    end
+  }
+end

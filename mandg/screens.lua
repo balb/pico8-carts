@@ -42,8 +42,10 @@ function build_screens()
   --tab["33"] = build_screen({})
   --tab["43"] = build_screen({})
   --tab["53"] = build_screen({})
-  --tab["63"] = build_screen({})
-  --tab["73"] = build_screen({})
+
+  -- todo
+  tab["63"] = build_screen({})
+  tab["73"] = build_screen_forest_monkey()
   return tab
 end
 
@@ -265,4 +267,17 @@ function build_screen_forest_jonathon()
     )
   })
   return screen
+end
+
+function build_screen_forest_monkey()
+  local path = {
+    { x = 24, y = 32 },
+    { x = 88, y = 32 },
+    { x = 88, y = 96 },
+    { x = 24, y = 96 }
+  }
+  return build_screen({
+    build_monkey(88, 24, path, 2),
+    build_bra(96, 24)
+  })
 end

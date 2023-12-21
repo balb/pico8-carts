@@ -11,6 +11,7 @@ function build_monty()
     box = { 4, 0, 11, 15 },
     has_spade = false,
     has_machete = false,
+    has_bra = false,
     has_north_key = false,
     dying = 0,
     -- dead flag for del_on_death
@@ -212,15 +213,13 @@ function draw_monty(monty)
     spr(54, 120, -1)
   elseif monty.has_machete then
     spr(14, 120, 0)
+  elseif monty.has_bra then
+    spr(104, 120, -1)
   elseif monty.has_north_key then
     spr(13, 120, 0)
+    --elseif monty.has_simple_key then
+    --  spr(47,120,0)
   end
-  --[[
-
- elseif state.has_simple_key then
-  spr(47,120,0)
- elseif state.has_bra then
-  spr(104,120,-1)   ]]
 
   if monty.dig_sandwall or monty.fli_dig_shoot > 0 then
     -- draw spade

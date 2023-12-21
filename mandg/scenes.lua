@@ -303,8 +303,11 @@ function build_scene_main()
       self.screen:draw()
       self.monty:draw()
 
-      print("웃", 0, 0, 3)
-      print(self.monty.death_count, 8, 0, 7)
+      --print("웃", 0, 0, 3)
+
+      spr(79, 0, 0)
+      print(self.monty.death_count, 10, 1, iif(self.monty.dying == 0, 7, 8))
+      --color(7)
     end
   }
 end

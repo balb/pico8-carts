@@ -1118,7 +1118,7 @@ function build_monkey(start_x, start_y, path, path_index)
         if dir == 2 then
           dist = ent.x - 8
         end
-        screen:add_ent(build_banana(ent.x, ent.y + 4, dir, dist))
+        screen:add_ent(build_projectile(ent.x, ent.y + 4, dir, dist, "banana"))
         ent.cntr = 0
       end
       ent.cntr += 1
@@ -1136,9 +1136,7 @@ function build_monkey(start_x, start_y, path, path_index)
   }
 end
 
--- based on build_fireball
-function build_banana(start_x, start_y, dir, dist)
-  -- based on arrow
+function build_projectile(start_x, start_y, dir, dist, type)
   local speed = 2.5
   return {
     x = start_x, y = start_y,
@@ -1158,10 +1156,10 @@ function build_banana(start_x, start_y, dir, dist)
       if (ent.dist <= -2) screen:del_ent(ent)
     end,
     draw = function(ent)
-      local s = 52
-      if (g_toggle2 == 0) s = 30
-      local cntr_m4 = time_toggle(12, 4)
-      spr(s, ent.x, ent.y, 1, 1, cntr_m4 == 0 or cntr_m4 == 1)
+      if type == "banana" then
+        local s = iif(g_toggle2 == 0, 30, 52)
+        spr(s, ent.x, ent.y, 1, 1, g_toggle4 == 1 or g_toggle4 == 2)
+      end
     end,
     box = { 1, 1, 6, 6 },
     del_on_death = true

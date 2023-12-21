@@ -44,8 +44,14 @@ function build_monty()
         g_freeze = true
         self.move_to_pos = { x = 104, y = 72 }
       elseif screen_key == "62" then
-        -- jonathon
-        self.move_to_pos = { x = 24, y = 72 }
+        if self.jonathon_phase == 0 and not self.has_bra then
+          self.move_to_pos = { x = 24, y = 72 }
+          self.jonathon_phase += 1
+        elseif self.jonathon_phase == 1 and self.has_bra then
+          self.move_to_pos = { x = 24, y = 72 }
+          self.jonathon_phase += 1
+          g_event = "jonathon_with_bra"
+        end
       end
     end,
     -- sandwall props
@@ -71,6 +77,8 @@ function build_monty()
     fli_dig_sand_blob = function(self)
       if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
     end,
+    -- jonathon props
+    jonathon_phase = 0,
     --
     warp = 0,
     do_warp = function(self)

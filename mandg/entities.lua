@@ -1009,6 +1009,7 @@ function build_jonathon(x, y)
   return {
     x = x, y = y,
     phase = 0,
+    --show_bra = false,
     update = function(ent, screen)
       if ent.phase == 1 then
         screen:add_ent(build_snake(66, 32))
@@ -1032,6 +1033,23 @@ function build_jonathon(x, y)
         ))
         ent.phase = 2
       end
+
+      if g_event == "jonathon_with_bra" then
+        g_event = nil
+        screen:add_ent(build_textbox2(
+          {
+            "rejoice!!!",
+            "you have found the bar.",
+            "time to tame those boobies..."
+          }, function()
+            --ent.phase=1
+            --state.has_bra_on=true
+            --ent.show_bra = true
+            -- todo: show_bra
+          end
+        ))
+      end
+      --
     end,
     draw = function(ent)
       local ft_s = 18

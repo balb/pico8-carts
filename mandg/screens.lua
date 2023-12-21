@@ -3,14 +3,22 @@ function build_screens()
   tab["00"] = build_screen({ build_old_woman() })
   tab["10"] = build_screen_desert_top_firestones()
   tab["20"] = build_screen_desert_fuzzies()
-  --tab["30"] = build_screen({})
-  --tab["40"] = build_screen({})
+  tab["30"] = build_screen({
+    -- enter the north dungeon
+    build_firestone(24, 88, 3, 8, 32),
+    build_jazzer(72, 64, 48, 81),
+    build_jazzer(96, 56, 48, 81)
+  })
+  --tab["40"] = build_screen_north_dungeon_fuzzies()
   --tab["50"] = build_screen({})
   --tab["60"] = build_screen({})
   --tab["70"] = build_screen({})
   --tab["01"] = build_screen({})
   tab["11"] = build_screen_desert_5_idiots()
-  tab["21"] = build_screen({ build_idiot(88, 88, 80, 112), build_idiot(56, 56, 40, 64) })
+  tab["21"] = build_screen({
+    build_idiot(88, 88, 80, 112),
+    build_idiot(56, 56, 40, 64)
+  })
   tab["31"] = build_screen_town_square()
   tab["41"] = build_screen({
     -- jungle 1
@@ -287,3 +295,24 @@ function build_screen_jungle_monkey()
     build_bra(96, 24)
   })
 end
+
+--[[ function build_screen_north_dungeon_fuzzies()
+  local path1 = {
+    { x = 88, y = 72 },
+    { x = 32, y = 72 },
+    { x = 32, y = 104 },
+    { x = 88, y = 104 }
+  }
+  local path2 = {
+    { x = 88, y = 24 },
+    { x = 32, y = 24 },
+    { x = 32, y = 56 },
+    { x = 88, y = 56 }
+  }
+  return build_screen({
+    build_fuzzy(32, 72, path1, 3),
+    build_fuzzy(88, 104, path1, 1),
+    build_fuzzy(32, 24, path2, 3),
+    build_fuzzy(88, 56, path2, 1)
+  })
+end ]]

@@ -62,6 +62,10 @@ function build_monty()
           g_event = "jonathon_with_bra"
           music(4)
         end
+      elseif screen_key == "30" then
+        -- enter the north dungeon
+        --boss theme
+        music(5)
       end
     end,
     -- sandwall props

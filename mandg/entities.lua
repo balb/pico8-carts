@@ -194,6 +194,7 @@ function build_old_woman()
         g_freeze = false
         screen:del_ent(self)
         map_remove_desert_top_wall()
+        music(0)
         return
       end
 

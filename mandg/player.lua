@@ -41,10 +41,13 @@ function build_monty()
         -- old woman
         g_freeze = true
         self.move_to_pos = { x = 72, y = 56 }
+        music(4)
       elseif screen_key == "03" then
         -- fli boss
         g_freeze = true
         self.move_to_pos = { x = 104, y = 72 }
+        --boss theme
+        music(5)
       elseif screen_key == "62" then
         if self.jonathon_phase == 0 and not self.has_bra then
           self.move_to_pos = { x = 24, y = 72 }
@@ -192,6 +195,7 @@ function build_monty()
           self.dir = 1
           self.mov = false
           g_event = "teleport"
+          music(0)
         end
       end
     end,

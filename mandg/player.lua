@@ -26,6 +26,7 @@ function build_monty()
     end,
     move_to_pos = nil,
     move_to_pos_dir = nil,
+    old_woman_done = false,
     on_change_screen = function(self, screen_key)
       self.init_x = self.x
       self.init_y = self.y
@@ -37,11 +38,12 @@ function build_monty()
         elseif self.has_north_key then
           g_event = "has_north_key_message"
         end
-      elseif screen_key == "00" then
+      elseif screen_key == "00" and not self.old_woman_done then
         -- old woman
         g_freeze = true
         self.move_to_pos = { x = 72, y = 56 }
         music(4)
+        self.old_woman_done = true
       elseif screen_key == "03" then
         -- fli boss
         g_freeze = true

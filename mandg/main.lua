@@ -24,7 +24,8 @@ function _init()
   g_scenes = build_scenes()
   switch_scene("title")
   --switch_scene("main")
-  music(0)
+  --main theme drum and bass
+  music(4)
 end
 
 function switch_scene(s)

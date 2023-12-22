@@ -54,11 +54,13 @@ function build_monty()
         if self.jonathon_phase == 0 and not self.has_bra then
           self.move_to_pos = { x = 24, y = 72 }
           self.jonathon_phase += 1
+          music(4)
         elseif self.jonathon_phase == 1 and self.has_bra then
           self.move_to_pos = { x = 24, y = 72 }
           self.move_to_pos_dir = 3
           self.jonathon_phase += 1
           g_event = "jonathon_with_bra"
+          music(4)
         end
       end
     end,

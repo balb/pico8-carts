@@ -997,16 +997,20 @@ function build_jonathon(x, y)
     update = function(ent, screen)
       if ent.phase == 1 then
         screen:add_ent(build_snake(66, 32))
-        screen:add_ent(build_textbox2({
-          "his name is jon-a-thon...",
-          "he has large wobbly boobies!",
-          "he doesn't wear a bra...",
-          "he is the no-bra co-bra!",
-          "his lack of brassiere\nis embarrassing!",
-          "legend has it that a suitable\nbra is hidden in this jungle...",
-          "if you can find the bra i will\nhelp you on your journey...",
-          "good luck with your search!"
-        }))
+        screen:add_ent(build_textbox2(
+          {
+            "his name is jon-a-thon...",
+            "he has large wobbly boobies!",
+            "he doesn't wear a bra...",
+            "he is the no-bra co-bra!",
+            "his lack of brassiere\nis embarrassing!",
+            "legend has it that a suitable\nbra is hidden in this jungle...",
+            "if you can find the bra i will\nhelp you on your journey...",
+            "good luck with your search!"
+          }, function()
+            music(0)
+          end
+        ))
         ent.phase = 2
       end
 

@@ -578,16 +578,8 @@ function build_sand_blob(start_x, start_y)
     x = start_x, y = start_y,
     update = function(ent, screen)
       if (g_freeze) return
-      local ex0 = ent.x + ent.box[1]
-      local ey0 = ent.y + ent.box[2]
-      local ew = ent.box[3]
-      local eh = ent.box[4]
-
-      local mx0 = screen.boss_fli.x + screen.boss_fli.box[1]
-      local my0 = screen.boss_fli.y + screen.boss_fli.box[2]
-      local mw = screen.boss_fli.box[3]
-      local mh = screen.boss_fli.box[4]
-
+      local ex0, ey0, ew, eh = ent.x + ent.box[1], ent.y + ent.box[2], ent.box[3], ent.box[4]
+      local mx0, my0, mw, mh = screen.boss_fli.x + screen.boss_fli.box[1], screen.boss_fli.y + screen.boss_fli.box[2], screen.boss_fli.box[3], screen.boss_fli.box[4]
       if ex0 < mx0 + mw and ex0 + ew > mx0
           and ey0 < my0 + mh and eh + ey0 > my0 then
         screen.boss_fli:on_hit()

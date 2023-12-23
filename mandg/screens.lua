@@ -283,6 +283,7 @@ function build_screen_north_dungeon_skellington()
     { x = 24, y = 100 }
   }
   return build_screen({
-    build_thrower("skellington", 88, 32, path, 2)
+    build_thrower("skellington", 88, 32, path, 2),
+    build_simple_key()
   })
 end

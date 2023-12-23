@@ -250,8 +250,8 @@ function draw_monty(monty)
     spr(104, 120, -1)
   elseif monty.has_north_key then
     spr(13, 120, 0)
-    --elseif monty.has_simple_key then
-    --  spr(47,120,0)
+  elseif monty.has_simple_key then
+    spr(47, 120, 0)
   end
 
   if monty.dig_sandwall or monty.fli_dig_shoot > 0 then

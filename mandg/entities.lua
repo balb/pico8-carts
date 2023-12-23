@@ -1122,3 +1122,28 @@ function build_bra(x, y)
     end
   }
 end
+
+function build_simple_key()
+  return {
+    x = 64, y = 86,
+    update = function()
+    end,
+    draw = function(ent)
+      pal(10, flr(rnd(16)))
+      spr(47, ent.x, ent.y)
+      pal()
+    end,
+    colliding = false,
+    on_collide = function(ent, monty, screen)
+      if (ent.colliding) return
+      ent.colliding = true
+      screen:add_ent(build_textbox2(
+        { "huzzah! a key!" }, function()
+          monty.has_simple_key = true
+          screen:del_ent(ent)
+        end
+      ))
+    end,
+    box = { 0, 0, 7, 7 }
+  }
+end

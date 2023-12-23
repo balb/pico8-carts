@@ -78,7 +78,7 @@ function build_screen(ents)
 end
 
 function build_screen_town_square()
-  return build_screen({
+  return build_screen {
     build_gerts(56, 64),
     build_textbox2(
       {
@@ -88,24 +88,22 @@ function build_screen_town_square()
         "head west into the desert and\nsearch there for clues.",
         "good luck!"
       }, function()
-        -- main theme
         music(0)
       end
     ),
     build_door(56, 0, "north_key"),
     build_foliage()
-  })
+  }
 end
 
 function build_screen_desert_top_firestones()
-  local ents = {
+  return build_screen {
     build_firestone(8, 40, 3, 8, 32),
     build_firestone(8, 72, 3, 12, 40),
     build_firestone(8, 96, 3, 16, 24),
     build_firestone(48, 16, 1, 2, 64),
     build_firestone(72, 16, 1, 14, 64)
   }
-  return build_screen(ents)
 end
 
 function build_screen_desert_fuzzies()
@@ -181,39 +179,18 @@ function build_screen_desert_fli_boss()
 end
 
 function build_screen_jungle_2()
-  local path1 = {
-    { x = 72, y = 48 },
-    { x = 96, y = 48 },
-    { x = 96, y = 72 },
-    { x = 72, y = 72 }
-  }
-  return build_screen({
+  return build_screen {
     build_firestone(56, 40, 2, 14, 40),
     build_firestone(64, 80, 1, 2, 24),
     build_idiot(96, 40, 72, 104),
-    build_fuzzy(72, 48, path1, 1),
+    build_fuzzy(72, 48, split_path("72,48 96,48 96,72 72,72"), 1),
     build_idiot(32, 48, 8, 48),
     build_jazzer(56, 88, 88, 112)
-  })
+  }
 end
 
 function build_screen_jungle_lake_fuzzies()
-  local path1 = {
-    { x = 48, y = 64 },
-    { x = 72, y = 64 },
-    { x = 72, y = 80 },
-    { x = 80, y = 80 },
-    { x = 80, y = 104 },
-    { x = 40, y = 104 },
-    { x = 40, y = 96 },
-    { x = 32, y = 96 },
-    { x = 32, y = 80 },
-    { x = 40, y = 80 },
-    { x = 40, y = 72 },
-    { x = 48, y = 72 }
-  }
-
-  local screen = build_screen({})
+  local path1, screen = split_path("48,64 72,64 72,80 80,80 80,104 40,104 40,96 32,96 32,80 40,80 40,72 48,72"), build_screen {}
   foreach(
     { 3, 5, 7, 9, 11 },
     function(i)
@@ -226,7 +203,7 @@ end
 
 function build_screen_jungle_jonathon()
   local jonathon = build_jonathon(84, 72)
-  local screen = build_screen({
+  local screen = build_screen {
     jonathon,
     build_textbox2(
       {
@@ -238,53 +215,30 @@ function build_screen_jungle_jonathon()
         jonathon.phase = 1
       end
     )
-  })
+  }
   return screen
 end
 
 function build_screen_jungle_monkey()
-  local path = {
-    { x = 24, y = 32 },
-    { x = 88, y = 32 },
-    { x = 88, y = 96 },
-    { x = 24, y = 96 }
-  }
-  return build_screen({
-    build_thrower("monkey", 88, 24, path, 2),
+  return build_screen {
+    build_thrower("monkey", 88, 24, split_path("24,32 88,32 88,96 24,96"), 2),
     build_bra(96, 24)
-  })
+  }
 end
 
 function build_screen_north_dungeon_fuzzies()
-  local path1 = {
-    { x = 88, y = 72 },
-    { x = 32, y = 72 },
-    { x = 32, y = 104 },
-    { x = 88, y = 104 }
-  }
-  local path2 = {
-    { x = 88, y = 24 },
-    { x = 32, y = 24 },
-    { x = 32, y = 56 },
-    { x = 88, y = 56 }
-  }
-  return build_screen({
+  local path1, path2 = split_path("88,72 32,72 32,104 88,104"), split_path("88,24 32,24 32,56 88,56")
+  return build_screen {
     build_fuzzy(32, 72, path1, 3),
     build_fuzzy(88, 104, path1, 1),
     build_fuzzy(32, 24, path2, 3),
     build_fuzzy(88, 56, path2, 1)
-  })
+  }
 end
 
 function build_screen_north_dungeon_skellington()
-  local path = {
-    { x = 24, y = 32 },
-    { x = 88, y = 32 },
-    { x = 88, y = 100 },
-    { x = 24, y = 100 }
-  }
-  return build_screen({
-    build_thrower("skellington", 88, 32, path, 2),
+  return build_screen {
+    build_thrower("skellington", 88, 32, split_path("24,32 88,32 88,100 24,100"), 2),
     build_simple_key()
-  })
+  }
 end

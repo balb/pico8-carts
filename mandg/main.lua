@@ -22,7 +22,7 @@ g_toggle4 = 0
 
 function _init()
   g_scenes = build_scenes()
-  switch_scene("title")
+  switch_scene "title"
   --switch_scene("main")
   --main theme drum and bass
   music(4)

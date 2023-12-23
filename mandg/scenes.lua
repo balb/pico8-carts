@@ -6,33 +6,24 @@ function build_scenes()
 end
 
 function build_scene_title()
-  local monty_txt = [[
-8""8""8
+  local monty_txt, and_txt, gerts_txt, init_count, init_monty_y = [[8""8""8
 8  8  8 eeeee eeeee eeeee e    e
 8e 8  8 8  88 8   8   8   8    8
 88 8  8 8   8 8e  8   8e  8eeee8
 88 8  8 8   8 88  8   88    88
 88 8  8 8eee8 88  8   88    88
-  ]]
-  local and_txt = [[
-        eeeee eeeee eeeee
+  ]], [[        eeeee eeeee eeeee
         8   8 8   8 8   8
         8eee8 8e  8 8e  8
         88  8 88  8 88  8
         88  8 88  8 88ee8
-  ]]
-  local gerts_txt = [[
-  8""""8
+  ]], [[  8""""8
   8    " eeee eeeee eeeee eeeee
   8e     8    8   8   8   8   "
   88  ee 8eee 8eee8e  8e  8eeee
   88   8 88   88   8  88     88
   88eee8 88ee 88   8  88  8ee88
-  ]]
-
-  local init_count = 36
-  local init_monty_y = 54
-
+  ]], 36, 54
   return {
     count = init_count,
     init = function()
@@ -53,7 +44,7 @@ function build_scene_title()
         self.mode = 4
       end
       if self.mode == 4 and self.py.y > 128 then
-        switch_scene("main")
+        switch_scene "main"
       end
 
       if self.mode >= 3 then
@@ -137,11 +128,8 @@ function build_scene_title()
       end
       self.py:draw()
       if self.py.y > 64 then
-        local help_x = self.gerts.x - 30
-        local help_y = self.gerts.y - 10
-        local help_width = 32
-        local help_height = 16
         -- speach bubble
+        local help_x, help_y, help_width, help_height = self.gerts.x - 30, self.gerts.y - 10, 32, 16
         rectfill(help_x, help_y, help_x + help_width, help_y + help_height, 7)
         -- top left
         pset(help_x, help_y, 0)
@@ -204,9 +192,7 @@ function build_scene_main()
         return
       end
 
-      local next_x = self.monty.x
-      local next_y = self.monty.y
-
+      local next_x, next_y = self.monty.x, self.monty.y
       if g_freeze then
         self.monty.mov = false
       else
@@ -314,25 +300,14 @@ end
 
 function check_collision(monty, ent)
   if (ent.box == nil) return false
-  local ex0 = ent.x + ent.box[1]
-  local ey0 = ent.y + ent.box[2]
-  local ew = ent.box[3]
-  local eh = ent.box[4]
-
-  local mx0 = monty.x + monty.box[1]
-  local my0 = monty.y + monty.box[2]
-  local mw = monty.box[3]
-  local mh = monty.box[4]
-
+  local ex0, ey0, ew, eh = ent.x + ent.box[1], ent.y + ent.box[2], ent.box[3], ent.box[4]
+  local mx0, my0, mw, mh = monty.x + monty.box[1], monty.y + monty.box[2], monty.box[3], monty.box[4]
   return ex0 < mx0 + mw and ex0 + ew > mx0
       and ey0 < my0 + mh and eh + ey0 > my0
 end
 
 function map_collide(next_x, next_y)
-  local x = flr((next_x + 3) / 8)
-  local y = flr(next_y / 8)
-  local check_6 = next_y % 8 != 0
-
+  local x, y, check_6 = flr((next_x + 3) / 8), flr(next_y / 8), next_y % 8 ~= 0
   local result = tile_collide(x, y)
       or tile_collide(x + 1, y)
       or tile_collide(x, y + 1)

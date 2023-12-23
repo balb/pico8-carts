@@ -28,30 +28,9 @@ function build_fuzzy(start_x, start_y, path, path_index)
     x = start_x, y = start_y,
     path = path,
     path_index = path_index,
-    update = function(self, screen)
+    update = function(ent, screen)
       if (g_freeze) return
-      local next_x = self.path[self.path_index].x
-      local next_y = self.path[self.path_index].y
-      if self.x < next_x then
-        self.x += speed_x
-      elseif self.x > next_x then
-        self.x -= speed_x
-      end
-
-      if self.y < next_y then
-        self.y += speed_y
-      elseif self.y > next_y then
-        self.y -= speed_y
-      end
-
-      if abs(self.x - next_x) < 1
-          and abs(self.y - next_y) < 1 then
-        --clamp
-        self.x = next_x
-        self.y = next_y
-        self.path_index += 1
-        if (self.path_index > count(self.path)) self.path_index = 1
-      end
+      update_position(ent, speed_x, speed_y)
     end,
     draw = function(self)
       --if ((map_x == 4 or map_x == 6) and map_y == 0) pal(1, 5)
@@ -65,6 +44,31 @@ function build_fuzzy(start_x, start_y, path, path_index)
     end,
     box = { 1, 1, 6, 6 }
   }
+end
+
+function update_position(ent, speed_x, speed_y)
+  local next_x, next_y = ent.path[ent.path_index].x, ent.path[ent.path_index].y
+
+  if ent.x < next_x then
+    ent.x += speed_x
+  elseif ent.x > next_x then
+    ent.x -= speed_x
+  end
+
+  if ent.y < next_y then
+    ent.y += speed_y
+  elseif ent.y > next_y then
+    ent.y -= speed_y
+  end
+
+  if abs(ent.x - next_x) < 1
+      and abs(ent.y - next_y) < 1 then
+    --clamp
+    ent.x = next_x
+    ent.y = next_y
+    ent.path_index += 1
+    if (ent.path_index > count(ent.path)) ent.path_index = 1
+  end
 end
 
 function build_firestone(x, y, dir, t, dist)
@@ -399,30 +403,9 @@ function build_thrower(type, start_x, start_y, path, path_index)
     cntr = 0,
     update = function(ent, screen)
       if (g_freeze) return
-      -- same a fuzzy
-      local next_x = ent.path[ent.path_index].x
-      local next_y = ent.path[ent.path_index].y
-      if ent.x < next_x then
-        ent.x += speed_x
-      elseif ent.x > next_x then
-        ent.x -= speed_x
-      end
+      update_position(ent, speed_x, speed_y)
 
-      if ent.y < next_y then
-        ent.y += speed_y
-      elseif ent.y > next_y then
-        ent.y -= speed_y
-      end
-
-      if abs(ent.x - next_x) < 1
-          and abs(ent.y - next_y) < 1 then
-        --clamp
-        ent.x = next_x
-        ent.y = next_y
-        ent.path_index += 1
-        if (ent.path_index > count(ent.path)) ent.path_index = 1
-      end
-
+      -- throw
       if ent.cntr == 30 then
         local dir = rnd({ 2, 3 })
         local dist = 112 - ent.x
@@ -499,6 +482,7 @@ end
 function build_fli()
   return {
     x = 48, y = 52,
+    path = split_path("16,20 80,84 80,100 16,100 80,36 80,20"),
     path_index = 1,
     cntr = 0,
     help_cntr = 90,
@@ -566,31 +550,8 @@ end
 function fli_update(ent, screen)
   local speed_x = 1.2
   local speed_y = 1.2
-  local path = split_path("16,20 80,84 80,100 16,100 80,36 80,20")
 
-  -- if (state.frozen) return
-  local next_x = path[ent.path_index].x
-  local next_y = path[ent.path_index].y
-  if ent.x < next_x then
-    ent.x += speed_x
-  elseif ent.x > next_x then
-    ent.x -= speed_x
-  end
-
-  if ent.y < next_y then
-    ent.y += speed_y
-  elseif ent.y > next_y then
-    ent.y -= speed_y
-  end
-
-  if abs(ent.x - next_x) < 1
-      and abs(ent.y - next_y) < 1 then
-    --clamp
-    ent.x = next_x
-    ent.y = next_y
-    ent.path_index += 1
-    if (ent.path_index > count(path)) ent.path_index = 1
-  end
+  update_position(ent, speed_x, speed_y)
 
   if ent.cntr == 24 then
     local dir = 3

@@ -566,14 +566,7 @@ end
 function fli_update(ent, screen)
   local speed_x = 1.2
   local speed_y = 1.2
-  local path = {
-    { x = 16, y = 20 },
-    { x = 80, y = 84 },
-    { x = 80, y = 100 },
-    { x = 16, y = 100 },
-    { x = 80, y = 36 },
-    { x = 80, y = 20 }
-  }
+  local path = split_path("16,20 80,84 80,100 16,100 80,36 80,20")
 
   -- if (state.frozen) return
   local next_x = path[ent.path_index].x

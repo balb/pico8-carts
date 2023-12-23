@@ -17,9 +17,8 @@ function build_screens()
     build_firestone(64, 80, 3, 16, 32),
     build_idiot(24, 96, 8, 88)
   })
-  --tab["60"] = build_screen({})
-  --tab["70"] = build_screen({})
-  --tab["01"] = build_screen({})
+  -- final screen 60
+  tab["60"] = build_screen({})
   tab["11"] = build_screen_desert_5_idiots()
   tab["21"] = build_screen({
     build_idiot(88, 88, 80, 112),
@@ -33,30 +32,13 @@ function build_screens()
     build_idiot(96, 80, 72, 112)
   })
   tab["51"] = build_screen_north_dungeon_skellington()
-  --tab["61"] = build_screen({})
-  --[[ tab["71"] = build_screen({
-    -- jungle firestone walk
-    build_firestone(16, 32, 3, 0, 88),
-    build_firestone(8, 48, 3, 8, 96),
-    build_firestone(16, 64, 3, 0, 88),
-    build_firestone(8, 80, 3, 8, 96),
-    build_firestone(16, 96, 3, 0, 88)
-  }) ]]
-  --tab["02"] = build_screen({})
   tab["12"] = build_screen_desert_dead_end()
-  --tab["22"] = build_screen({})
-  --tab["32"] = build_screen({})
   tab["42"] = build_screen_jungle_2()
   tab["52"] = build_screen_jungle_lake_fuzzies()
   tab["62"] = build_screen_jungle_jonathon()
-  --tab["72"] = build_screen({})
   tab["03"] = build_screen_desert_fli_boss()
   tab["13"] = build_screen_desert_sand_wall()
   tab["23"] = build_screen_desert_cactus_and_spade()
-  --tab["33"] = build_screen({})
-  --tab["43"] = build_screen({})
-  --tab["53"] = build_screen({})
-
   tab["63"] = build_screen({
     -- jungle firestone walk
     build_firestone(102, 32, 2, 0, 88),

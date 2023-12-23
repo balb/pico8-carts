@@ -1,5 +1,5 @@
 function build_idiot(start_x, start_y, min_x, max_x)
-  local speed = 0.75
+  local speed = .75
   return {
     x = start_x, y = start_y,
     min_x = min_x, max_x = max_x,
@@ -21,9 +21,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
 end
 
 function build_fuzzy(start_x, start_y, path, path_index)
-  local speed_x = 0.75
-  local speed_y = 0.75
-
+  local speed_x, speed_y = .75, .75
   return {
     x = start_x, y = start_y,
     path = path,
@@ -72,9 +70,7 @@ function update_position(ent, speed_x, speed_y)
 end
 
 function build_firestone(x, y, dir, t, dist)
-  local s = 32
-  local flip_x = dir == 2
-  local flip_y = false
+  local s, flip_x, flip_y = 32, dir == 2, false
   if (dir < 2) s = 48
   return {
     x = x, y = y,
@@ -84,8 +80,7 @@ function build_firestone(x, y, dir, t, dist)
       self.timer = time_toggle(18, 18)
       if self.timer == t then
         if not self.arrow_added then
-          local x_offset = 0
-          local y_offset = 0
+          local x_offset, y_offset = 0, 0
           if dir == 1 then
             y_offset = 8
           elseif dir == 2 then
@@ -166,8 +161,7 @@ function build_old_woman()
   }
 
   local function draw_finger_spr(a, b, c, d)
-    local x = 18
-    local y = 58
+    local x, y = 18, 58
     spr(a, x, y)
     spr(b, x + 8, y)
     spr(c, x, y + 8)
@@ -220,7 +214,7 @@ function build_old_woman()
         else
           self.text_ticker = build_text_ticker(chats[self.chat].text)
           self.q_and_a = nil
-          self.add_q_and_a = chats[self.chat].answers != nil
+          self.add_q_and_a = chats[self.chat].answers ~= nil
         end
       end
 
@@ -255,9 +249,7 @@ function build_old_woman()
 end
 
 function build_q_and_a(a1, a2)
-  local x = 20
-  local y = 118
-  local w = 4
+  local x, y, w = 20, 118, 4
   return {
     answer = a1,
     update = function(self)
@@ -353,8 +345,7 @@ function build_text_ticker(text)
 end
 
 function build_sandwall()
-  local x = 0
-  local y = 22
+  local x, y = 0, 22
   return {
     x = x, y = y,
     box = { 0, 0, 10, 96 },
@@ -393,9 +384,7 @@ function build_sandwall()
 end
 
 function build_thrower(type, start_x, start_y, path, path_index)
-  local speed_x = 1.2
-  local speed_y = 1.2
-
+  local speed_x, speed_y = 1.2, 1.2
   return {
     x = start_x, y = start_y,
     path = path,
@@ -407,8 +396,7 @@ function build_thrower(type, start_x, start_y, path, path_index)
 
       -- throw
       if ent.cntr == 30 then
-        local dir = rnd({ 2, 3 })
-        local dist = 112 - ent.x
+        local dir, dist = rnd { 2, 3 }, 112 - ent.x
         if dir == 2 then
           dist = ent.x - 8
         end
@@ -482,7 +470,7 @@ end
 function build_fli()
   return {
     x = 48, y = 52,
-    path = split_path("16,20 80,84 80,100 16,100 80,36 80,20"),
+    path = split_path "16,20 80,84 80,100 16,100 80,36 80,20",
     path_index = 1,
     cntr = 0,
     help_cntr = 90,
@@ -506,11 +494,11 @@ function build_fli()
           self.y += 1
         end
       elseif self.mode == 3 then
-        screen:add_ent(build_textbox2({
+        screen:add_ent(build_textbox2 {
           "it will help you on\nyour quest.",
           "good luck!",
           "don't forget to pop back\nand say hi some time."
-        }))
+        })
         screen:add_ent(build_machete())
         self.mode = 0
       end
@@ -548,14 +536,11 @@ function build_fli()
 end
 
 function fli_update(ent, screen)
-  local speed_x = 1.2
-  local speed_y = 1.2
-
+  local speed_x, speed_y = 1.2, 1.2
   update_position(ent, speed_x, speed_y)
 
   if ent.cntr == 24 then
-    local dir = 3
-    local dist = 112 - ent.x
+    local dir, dist = 3, 112 - ent.x
     screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
     ent.cntr = 0
   end
@@ -683,8 +668,7 @@ function build_py(x, y)
       spr(93, ent.x + 8, ent.y + 8, 1, 1, true)
       spr(92, ent.x + 16, ent.y + 8, 1, 1, true)
       -- legs
-      local l_offset = 0
-      local r_offset = 0
+      local l_offset, r_offset = 0, 0
       if ent.mov then
         if g_toggle2 == 0 then
           l_offset = -2
@@ -717,11 +701,11 @@ function build_gerts(x, y)
       ent.cntr += ent.inc
       if (ent.cntr == 0 or ent.cntr == 3) ent.inc *= -1
       if g_event == "has_machete_message" and not ent.has_machete_message_added then
-        screen:add_ent(build_textbox2({ "monty! use the machete to\nhack your way into\nthe east jungle!" }))
+        screen:add_ent(build_textbox2 { "monty! use the machete to\nhack your way into\nthe east jungle!" })
         g_event = nil
         ent.has_machete_message_added = true
       elseif g_event == "has_north_key_message" and not ent.has_north_key_message_added then
-        screen:add_ent(build_textbox2({ "monty! you have the key\nto the north dungeon.\nget in there quick!" }))
+        screen:add_ent(build_textbox2 { "monty! you have the key\nto the north dungeon.\nget in there quick!" })
         g_event = nil
         ent.has_north_key_message_added = true
       end
@@ -773,8 +757,7 @@ function build_door(x, y, k)
       spr(86, x + 7, y + 8, 1, 1, true)
 
       -- key hole
-      local key_x = x + 8
-      local key_y = y + 13
+      local key_x, key_y = x + 8, y + 13
       rectfill(key_x + 1, key_y, key_x + 2, key_y + 3, 0)
       rectfill(key_x, key_y + 1, key_x + 3, key_y + 2, 0)
       rectfill(key_x, key_y + 4, key_x + 3, key_y + 4, 0)
@@ -818,8 +801,7 @@ function build_door(x, y, k)
 end
 
 function build_foliage()
-  local x = 119
-  local y = 13
+  local x, y = 119, 13
   return {
     x = x, y = y,
     box = { 0, 0, 6, 110 },
@@ -861,7 +843,7 @@ function build_jazzer(start_x, start_y, min_y, max_y)
   return {
     x = start_x, y = start_y,
     min_y = min_y, max_y = max_y,
-    speed = 0.75,
+    speed = .75,
     update = function(ent)
       ent.y += ent.speed
       if ent.y < ent.min_y or ent.y > ent.max_y then
@@ -897,8 +879,7 @@ function build_snake(x, y)
     end,
     draw = function(ent)
       pal(12, 0)
-      local xoset = 0
-      local cntr_m4 = time_toggle(12, 4)
+      local xoset, cntr_m4 = 0, time_toggle(12, 4)
       if (cntr_m4 > 2) xoset += 1
       spr(87, ent.x - 1 + xoset, y - 8)
       pal()
@@ -993,12 +974,9 @@ function build_jonathon(x, y)
       --
     end,
     draw = function(ent)
-      local ft_s = 18
-      local y_oset = 0
-      local cntr_m4 = time_toggle(12, 4)
+      local ft_s, y_oset, cntr_m4 = 18, 0, time_toggle(12, 4)
       if cntr_m4 >= 2 then
-        ft_s = 6
-        y_oset = 1
+        ft_s, y_oset = 6, 1
       end
 
       pal(12, 0)

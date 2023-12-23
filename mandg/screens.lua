@@ -126,63 +126,40 @@ function build_screen_desert_fuzzies()
 end
 
 function build_screen_desert_5_idiots()
-  return build_screen({
+  return build_screen {
     build_idiot(16, 72, 8, 48),
     build_idiot(40, 88, 8, 48),
     build_idiot(72, 64, 72, 112),
     build_idiot(88, 80, 72, 112),
     build_idiot(104, 96, 72, 112)
-  })
+  }
 end
 
 function build_screen_desert_dead_end()
-  local path = {
-    { x = 80, y = 40 },
-    { x = 104, y = 40 },
-    { x = 104, y = 64 },
-    { x = 80, y = 64 }
-  }
-  return build_screen({
+  local path = split_path("80,40 104,40 104,64 80,64")
+  return build_screen {
     build_fuzzy(80, 40, path, 1),
     build_fuzzy(104, 64, path, 3),
     build_firestone(56, 64, 1, 8, 24),
     build_firestone(64, 64, 1, 8, 24)
-  })
+  }
 end
 
 function build_screen_desert_sand_wall()
-  local path1 = {
-    { x = 24, y = 32 },
-    { x = 40, y = 32 },
-    { x = 40, y = 56 },
-    { x = 24, y = 56 }
-  }
-  local path2 = {
-    { x = 24, y = 80 },
-    { x = 40, y = 80 },
-    { x = 40, y = 104 },
-    { x = 24, y = 104 }
-  }
-  return build_screen({
+  return build_screen {
     build_idiot(112, 48, 72, 112),
     build_idiot(72, 80, 72, 112),
-    build_fuzzy(24, 32, path1, 1),
-    build_fuzzy(40, 104, path2, 3),
+    build_fuzzy(24, 32, split_path("24,32, 40,32 40,56 24,56"), 1),
+    build_fuzzy(40, 104, split_path("24,80, 40,80 40,104 24,104"), 3),
     build_sandwall()
-  })
+  }
 end
 
 function build_screen_desert_cactus_and_spade()
-  local path = {
-    { x = 24, y = 24 },
-    { x = 88, y = 24 },
-    { x = 88, y = 96 },
-    { x = 24, y = 96 }
-  }
-  return build_screen({
-    build_thrower("cactus", 88, 24, path, 2),
+  return build_screen {
+    build_thrower("cactus", 88, 24, split_path("24,24 88,24 88,96 24,96"), 2),
     build_spade(96, 24)
-  })
+  }
 end
 
 function build_screen_desert_fli_boss()

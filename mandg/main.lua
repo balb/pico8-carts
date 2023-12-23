@@ -54,6 +54,17 @@ function iif(condition, value_if_true, value_if_false)
   return value_if_false
 end
 
+function split_path(path)
+  local tbl = {}
+  foreach(
+    split(path, " ", false), function(point)
+      local chunks = split(point)
+      add(tbl, { x = chunks[1], y = chunks[2] })
+    end
+  )
+  return tbl
+end
+
 --function outline_ent(ent)
 --  rect(ent.x + ent.box[1], ent.y + ent.box[2], ent.x + ent.box[3], ent.y + ent.box[4])
 --end

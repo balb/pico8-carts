@@ -127,31 +127,20 @@ function build_screen_desert_top_firestones()
 end
 
 function build_screen_desert_fuzzies()
-  local ents = {}
-  local path = {
-    { x = 24, y = 24 },
-    { x = 88, y = 24 },
-    { x = 88, y = 56 },
-    { x = 24, y = 56 }
+  local path1, path2 = split_path("24,24 88,24 88,56 24,56"), split_path("80,72 24,72 24,96 80,96")
+  return build_screen {
+    build_fuzzy(24, 24, path1, 2),
+    build_fuzzy(56, 24, path1, 2),
+    build_fuzzy(88, 24, path1, 3),
+    build_fuzzy(88, 56, path1, 4),
+    build_fuzzy(56, 56, path1, 4),
+    build_fuzzy(24, 56, path1, 1),
+    build_fuzzy(24, 72, path2, 3),
+    build_fuzzy(32, 96, path2, 4),
+    build_fuzzy(64, 96, path2, 4),
+    build_fuzzy(80, 80, path2, 1),
+    build_fuzzy(56, 72, path2, 2)
   }
-  add(ents, build_fuzzy(24, 24, path, 2))
-  add(ents, build_fuzzy(56, 24, path, 2))
-  add(ents, build_fuzzy(88, 24, path, 3))
-  add(ents, build_fuzzy(88, 56, path, 4))
-  add(ents, build_fuzzy(56, 56, path, 4))
-  add(ents, build_fuzzy(24, 56, path, 1))
-  path = {
-    { x = 80, y = 72 },
-    { x = 24, y = 72 },
-    { x = 24, y = 96 },
-    { x = 80, y = 96 }
-  }
-  add(ents, build_fuzzy(24, 72, path, 3))
-  add(ents, build_fuzzy(32, 96, path, 4))
-  add(ents, build_fuzzy(64, 96, path, 4))
-  add(ents, build_fuzzy(80, 80, path, 1))
-  add(ents, build_fuzzy(56, 72, path, 2))
-  return build_screen(ents)
 end
 
 function build_screen_desert_5_idiots()

@@ -33,7 +33,7 @@ function build_fuzzy(start_x, start_y, path, path_index, mask)
     draw = function(self)
       --if ((map_x == 4 or map_x == 6) and map_y == 0) pal(1, 5)
       if (mask) pal(1, 5)
-      local tog_4 = time_toggle(12, 4)
+      local tog_4 = g_toggle4
       spr(
         16, self.x, self.y, 1, 1,
         tog_4 > 1,
@@ -1013,7 +1013,7 @@ function build_snake(x, y)
     end,
     draw = function(ent)
       pal(12, 0)
-      local xoset, cntr_m4 = 0, time_toggle(12, 4)
+      local xoset, cntr_m4 = 0, g_toggle4
       if (cntr_m4 > 2) xoset += 1
       spr(87, ent.x - 1 + xoset, y - 8)
       pal()
@@ -1108,7 +1108,7 @@ function build_jonathon(x, y)
       --
     end,
     draw = function(ent)
-      local ft_s, y_oset, cntr_m4 = 18, 0, time_toggle(12, 4)
+      local ft_s, y_oset, cntr_m4 = 18, 0, g_toggle4
       if cntr_m4 >= 2 then
         ft_s, y_oset = 6, 1
       end

@@ -220,7 +220,7 @@ function build_monty()
       -- warp
       if self.warp > 0 then
         self.warp -= 1
-        self.dir = time_toggle(12, 4)
+        self.dir = g_toggle4
         if self.warp == 0 then
           self.x = start_monty_x
           self.y = start_monty_y

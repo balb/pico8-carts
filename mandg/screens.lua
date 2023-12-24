@@ -178,7 +178,7 @@ function build_screen_desert_fli_boss()
     end
   ))
 
-  screen.sand_blob_choke = 0
+  screen.fire_button_choke = 0
   return screen
 end
 
@@ -265,5 +265,6 @@ function build_screen_final_boss()
     )
   }
   screen.boss_py = py
+  screen.fire_button_choke = 0
   return screen
 end

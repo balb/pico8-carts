@@ -96,7 +96,7 @@ function build_scene_title()
         print(gerts_txt, 0, 88, col)
       end
 
-      for x = 0, 127 do
+      --[[ for x = 0, 127 do
         for y = 0, 127 do
           local p = pget(x, y)
           if p == 0 then
@@ -109,7 +109,7 @@ function build_scene_title()
             end
           end
         end
-      end
+      end ]]
 
       if self.mode == 0 or self.mode >= 3 then
         -- monty
@@ -222,15 +222,22 @@ function build_scene_main()
           self.monty.dir = 2
           next_x = self.monty.x
           -- fire!
-          if (btnp(❎) or btnp(🅾️)) and self.screen.sand_blob_choke == 0 then
+          if (btnp(❎) or btnp(🅾️)) and self.screen.fire_button_choke == 0 then
             self.monty:fli_dig_sand_blob()
             self.screen:add_ent(build_sand_blob(self.monty.x - 4, self.monty.y + 6))
-            self.screen.sand_blob_choke = 12
+            self.screen.fire_button_choke = 12
           end
-          if (self.screen.sand_blob_choke > 0) self.screen.sand_blob_choke -= 1
+          if (self.screen.fire_button_choke > 0) self.screen.fire_button_choke -= 1
+        elseif self.screen.boss_py then
+          -- punch!
+          if (btnp(❎) or btnp(🅾️)) and self.screen.fire_button_choke == 0 then
+            self.monty:py_punch(self.screen)
+            self.screen.fire_button_choke = 20
+          end
+          if (self.screen.fire_button_choke > 0) self.screen.fire_button_choke -= 1
         end
 
-        -- end freeze
+        -- end freeze check
       end
 
       local collision = false

@@ -1,8 +1,6 @@
--- todo: empty func?
--- todo: build ent func?
--- todo: delete dead ents func
--- todo: purple fuzzies in dungeon
--- todo: plain purple and orange tiles
+-- todo: improve boss music
+-- todo: sfx
+-- todo: boxing py
 
 -- consts
 start_map_x = 3
@@ -23,7 +21,7 @@ g_toggle4 = 0
 function _init()
   g_scenes = build_scenes()
   switch_scene "title"
-  --switch_scene("main")
+  --switch_scene "main"
   --main theme drum and bass
   music(4)
 end
@@ -42,6 +40,9 @@ end
 function _draw()
   cls()
   g_scene:draw()
+
+  -- Debug FPS
+  print(stat(7), 24, 1)
 end
 
 function time_toggle(t, mod)

@@ -579,10 +579,7 @@ function build_sand_blob(start_x, start_y)
     x = start_x, y = start_y,
     update = function(ent, screen)
       if (g_freeze) return
-      local ex0, ey0, ew, eh = ent.x + ent.box[1], ent.y + ent.box[2], ent.box[3], ent.box[4]
-      local mx0, my0, mw, mh = screen.boss_fli.x + screen.boss_fli.box[1], screen.boss_fli.y + screen.boss_fli.box[2], screen.boss_fli.box[3], screen.boss_fli.box[4]
-      if ex0 < mx0 + mw and ex0 + ew > mx0
-          and ey0 < my0 + mh and eh + ey0 > my0 then
+      if check_boss_collision(ent, screen.boss_fli) then
         screen.boss_fli:on_hit()
         screen:del_ent(ent)
       else
@@ -597,6 +594,35 @@ function build_sand_blob(start_x, start_y)
     box = { 1, 1, 6, 6 },
     del_on_death = true
   }
+end
+
+function build_monty_fist(start_x, start_y)
+  local speed = 3
+  return {
+    x = start_x, y = start_y,
+    update = function(ent, screen)
+      if (g_freeze) return
+      if check_boss_collision(ent, screen.boss_py) then
+        screen.boss_py:on_hit()
+        screen:del_ent(ent)
+      else
+        --move
+        ent.x -= speed
+        if (ent.x <= 0) screen:del_ent(ent)
+      end
+    end,
+    draw = function(ent)
+      spr(94, ent.x, ent.y)
+    end,
+    box = { 1, 1, 6, 6 },
+    del_on_death = true
+  }
+end
+
+function check_boss_collision(ent, boss)
+  local ex0, ey0, ew, eh = ent.x + ent.box[1], ent.y + ent.box[2], ent.box[3], ent.box[4]
+  local mx0, my0, mw, mh = boss.x + boss.box[1], boss.y + boss.box[2], boss.box[3], boss.box[4]
+  return ex0 < mx0 + mw and ex0 + ew > mx0 and ey0 < my0 + mh and eh + ey0 > my0
 end
 
 function build_machete()
@@ -723,7 +749,7 @@ function build_py(x, y)
       end
 
       if ent.mode == 1 and ent.help_cntr > 0 then
-        print("hit ❎ or 🅾️", 32, 112, flr(rnd(16)))
+        print("hit ❎ or 🅾️", 40, 112, flr(rnd(16)))
       end
 
       color(7)

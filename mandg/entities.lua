@@ -644,9 +644,41 @@ function build_py(x, y)
   return {
     x = x, y = y,
     mov = true,
-    update = function()
+    path = split_path "16,20 80,84 80,100 16,100 80,36 80,20",
+    path_index = 1,
+    cntr = 0,
+    help_cntr = 90,
+    mode = 0,
+    hit_flash = 0,
+    start_fight = function(self)
+      self.mode = 1
+    end,
+    update = function(self, screen)
+      if self.mode == 1 then
+        py_update(self, screen)
+      elseif self.mode == 2 then
+        if self.x > 46 then
+          self.x -= 1
+        elseif self.x < 42 then
+          self.x += 1
+        end
+        if self.y > 66 then
+          self.y -= 1
+        elseif self.y < 62 then
+          self.y += 1
+        end
+      elseif self.mode == 3 then
+        screen:add_ent(build_textbox2 {
+          "it will help you on\nyour quest.",
+          "good luck!",
+          "don't forget to pop back\nand say hi some time."
+        })
+        screen:add_ent(build_machete())
+        self.mode = 0
+      end
     end,
     draw = function(ent)
+      if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
       -- eyes
       -- pset for bit of eye
       pset(ent.x - 1, ent.y + 5, 12)
@@ -678,8 +710,66 @@ function build_py(x, y)
       spr(109, ent.x, ent.y + 16)
       spr(109, ent.x + 8, ent.y + 16, 1, 1, true)
       spr(108, ent.x + 16, ent.y + 16, 1, 1, true)
+
+      if (ent.hit_flash) pal()
+      if (ent.mode == 0) return
+      -- health
+      for i = 0, 10 do
+        if i < ent.health then
+          print("●", 32 + i * 6, 0, 8)
+        end
+      end
+
+      if ent.mode == 1 and ent.help_cntr > 0 then
+        print("hit ❎ or 🅾️", 32, 112, flr(rnd(16)))
+      end
+
+      color(7)
+    end,
+    box = { 0, 0, 7, 15 },
+    health = 10,
+    on_hit = function(ent)
+      ent.hit_flash = 10
+      ent.health -= 1
     end
   }
+end
+
+function py_update(ent, screen)
+  local speed_x, speed_y = 1.2, 1.2
+  update_position(ent, speed_x, speed_y)
+
+  if ent.cntr == 24 then
+    local dir, dist = 3, 112 - ent.x
+    screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
+    ent.cntr = 0
+  end
+  ent.cntr += 1
+
+  if (ent.hit_flash > 0) ent.hit_flash -= 1
+  if ent.health <= 0 then
+    ent.hit_flash = 0
+    ent.mode = 2
+    g_event = "py_dead"
+    screen:add_ent(build_textbox2(
+      {
+        "arrrrgh! defeated by a simple\nhuman. the shame!",
+        "oh well, i can't complain.\nat least i had some company.",
+        "it does get lonely here.\nperhaps we could be friends?",
+        "as a kindly gesture please\naccept this machete..."
+      }, function()
+        ent.mode = 3
+      end
+    ))
+
+    foreach(
+      screen.ents, function(ent)
+        if (ent.del_on_death) screen:del_ent(ent)
+      end
+    )
+  end
+
+  if (ent.help_cntr > 0) ent.help_cntr -= 1
 end
 
 function build_gerts(x, y)

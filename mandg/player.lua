@@ -70,7 +70,7 @@ function build_monty()
         -- final boss
         g_freeze = true
         map_add_py_wall()
-        self.move_to_pos = { x = 24, y = 64 }
+        self.move_to_pos = { x = 16, y = 64 }
       end
     end,
     -- sandwall props

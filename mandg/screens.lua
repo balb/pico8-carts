@@ -248,8 +248,13 @@ function build_screen_north_dungeon_skellington()
 end
 
 function build_screen_final_boss()
+  local py = build_py(80, 56)
   return build_screen {
-    build_textbox2({ "py py py blah blah" }),
-    build_py(72, 56)
+    py,
+    build_textbox2(
+      { "py py py blah blah" }, function()
+        py:start_fight()
+      end
+    )
   }
 end

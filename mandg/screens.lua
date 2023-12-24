@@ -19,8 +19,8 @@ function build_screens()
       build_firestone(64, 80, 3, 16, 32),
       build_idiot(24, 96, 8, 88)
     }
-  -- final screen 60
-  tab["60"] = build_screen {}
+
+  tab["60"] = build_screen_final_boss()
   tab["11"] = build_screen_desert_5_idiots()
   tab["21"] = build_screen {
     build_idiot(88, 88, 80, 112),
@@ -244,5 +244,12 @@ function build_screen_north_dungeon_skellington()
   return build_screen {
     build_thrower("skellington", 88, 32, split_path "24,32 88,32 88,100 24,100", 2),
     build_simple_key()
+  }
+end
+
+function build_screen_final_boss()
+  return build_screen {
+    build_textbox2({ "py py py blah blah" }),
+    build_py(72, 56)
   }
 end

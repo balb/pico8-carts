@@ -64,8 +64,13 @@ function build_monty()
         end
       elseif screen_key == "30" then
         -- enter the north dungeon
-        --boss theme
+        -- boss theme
         music(5)
+      elseif screen_key == "60" then
+        -- final boss
+        g_freeze = true
+        map_add_py_wall()
+        self.move_to_pos = { x = 24, y = 64 }
       end
     end,
     -- sandwall props

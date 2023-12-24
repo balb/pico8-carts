@@ -12,14 +12,19 @@ function map_remove_desert_top_wall()
 end
 
 function map_add_desert_town_square_wall()
-    mset(48, 22, 65)
-    mset(48, 23, 65)
-    mset(48, 24, 65)
-    mset(48, 25, 65)
+    map_add_wall_y(48, 22, 25, 65)
 end
 
 function map_add_jungle_town_square_wall()
-    for cely = 18, 30 do
-        mset(63, cely, 100)
+    map_add_wall_y(63, 18, 30, 100)
+end
+
+function map_add_py_wall()
+    map_add_wall_y(96, 7, 9, 114)
+end
+
+function map_add_wall_y(celx, cely_from, cely_to, snum)
+    for cely = cely_from, cely_to do
+        mset(celx, cely, snum)
     end
 end

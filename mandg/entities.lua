@@ -20,7 +20,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
   }
 end
 
-function build_fuzzy(start_x, start_y, path, path_index)
+function build_fuzzy(start_x, start_y, path, path_index, mask)
   local speed_x, speed_y = .75, .75
   return {
     x = start_x, y = start_y,
@@ -32,13 +32,14 @@ function build_fuzzy(start_x, start_y, path, path_index)
     end,
     draw = function(self)
       --if ((map_x == 4 or map_x == 6) and map_y == 0) pal(1, 5)
+      if (mask) pal(1, 5)
       local tog_4 = time_toggle(12, 4)
       spr(
         16, self.x, self.y, 1, 1,
         tog_4 > 1,
         tog_4 == 1 or tog_4 == 2
       )
-      --pal()
+      if (mask) pal()
     end,
     box = { 1, 1, 6, 6 }
   }

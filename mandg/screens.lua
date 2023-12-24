@@ -233,10 +233,10 @@ end
 function build_screen_north_dungeon_fuzzies()
   local path1, path2 = split_path "88,72 32,72 32,104 88,104", split_path "88,24 32,24 32,56 88,56"
   return build_screen {
-    build_fuzzy(32, 72, path1, 3),
-    build_fuzzy(88, 104, path1, 1),
-    build_fuzzy(32, 24, path2, 3),
-    build_fuzzy(88, 56, path2, 1)
+    build_fuzzy(32, 72, path1, 3, true),
+    build_fuzzy(88, 104, path1, 1, true),
+    build_fuzzy(32, 24, path2, 3, true),
+    build_fuzzy(88, 56, path2, 1, true)
   }
 end
 

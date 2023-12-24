@@ -645,6 +645,7 @@ function build_py(x, y)
     x = x, y = y,
     mov = true,
     path = split_path "40,56 40,80 16,80 40,80 40,56 96,56 40,56 40,24 16,24 96,24 96,56",
+    --path = split_path "40,20 40,80",
     path_index = 1,
     cntr = 0,
     help_cntr = 90,
@@ -653,6 +654,7 @@ function build_py(x, y)
     start_fight = function(self)
       self.mode = 1
     end,
+    fist_ent = nil,
     update = function(self, screen)
       if self.mode == 1 then
         py_update(self, screen)
@@ -726,7 +728,7 @@ function build_py(x, y)
 
       color(7)
 
-      outline_ent(ent)
+      --outline_ent(ent)
     end,
     box = { -2, 4, 17, 28 },
     health = 10,
@@ -742,11 +744,20 @@ function py_update(ent, screen)
   update_position(ent, speed_x, speed_y)
 
   if ent.cntr == 24 then
-    local dir, dist = 3, 112 - ent.x
-    screen:add_ent(build_projectile("fireball", ent.x, ent.y + 4, dir, dist))
+    ent.fist_ent = build_py_fist(ent.x - 20, ent.y + 8)
+    screen:add_ent(ent.fist_ent)
     ent.cntr = 0
+  elseif ent.cntr == 12 and ent.fist_ent then
+    screen:del_ent(ent.fist_ent)
+    ent.fist_ent = nil
   end
   ent.cntr += 1
+
+  -- move the fist with py
+  if ent.fist_ent then
+    ent.fist_ent.x = ent.x - 20
+    ent.fist_ent.y = ent.y + 8
+  end
 
   if (ent.hit_flash > 0) ent.hit_flash -= 1
   if ent.health <= 0 then
@@ -772,6 +783,26 @@ function py_update(ent, screen)
   end
 
   if (ent.help_cntr > 0) ent.help_cntr -= 1
+end
+
+function build_py_fist(x, y)
+  return {
+    x = x, y = y,
+    update = function(ent, screen)
+    end,
+    draw = function(ent)
+      pal(10, 9)
+      pal(12, 4)
+      spr(9, ent.x, ent.y)
+      spr(10, ent.x + 8, ent.y)
+      spr(25, ent.x, ent.y + 8)
+      spr(26, ent.x + 8, ent.y + 8)
+      --outline_ent(ent)
+      pal()
+    end,
+    box = { 4, 2, 15, 13 },
+    del_on_death = true
+  }
 end
 
 function build_gerts(x, y)

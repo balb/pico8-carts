@@ -182,6 +182,12 @@ function build_monty()
       elseif g_event == "remove_bra_icon" then
         self.has_bra = false
         g_event = "add_bra_to_snake"
+      elseif g_event == "py_dead" then
+        self.move_to_pos = { x = 16, y = 64 }
+        g_event = nil
+      elseif g_event == "final_warp" then
+        self:do_warp()
+        g_event = "py_defeated"
       end
 
       -- move_to_pos

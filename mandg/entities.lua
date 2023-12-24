@@ -607,8 +607,8 @@ function build_monty_fist(start_x, start_y)
         screen:del_ent(ent)
       else
         --move
-        ent.x -= speed
-        if (ent.x <= 0) screen:del_ent(ent)
+        ent.x += speed
+        if (ent.x >= 119) screen:del_ent(ent)
       end
     end,
     draw = function(ent)
@@ -685,9 +685,9 @@ function build_py(x, y)
       if self.mode == 1 then
         py_update(self, screen)
       elseif self.mode == 2 then
-        if self.x > 46 then
+        if self.x > 86 then
           self.x -= 1
-        elseif self.x < 42 then
+        elseif self.x < 82 then
           self.x += 1
         end
         if self.y > 66 then
@@ -695,14 +695,6 @@ function build_py(x, y)
         elseif self.y < 62 then
           self.y += 1
         end
-      elseif self.mode == 3 then
-        screen:add_ent(build_textbox2 {
-          "it will help you on\nyour quest.",
-          "good luck!",
-          "don't forget to pop back\nand say hi some time."
-        })
-        screen:add_ent(build_machete())
-        self.mode = 0
       end
     end,
     draw = function(ent)
@@ -792,12 +784,12 @@ function py_update(ent, screen)
     g_event = "py_dead"
     screen:add_ent(build_textbox2(
       {
-        "arrrrgh! defeated by a simple\nhuman. the shame!",
-        "oh well, i can't complain.\nat least i had some company.",
-        "it does get lonely here.\nperhaps we could be friends?",
-        "as a kindly gesture please\naccept this machete..."
+        "monty, you have fought well.\ni admit defeat!",
+        "as promised i have freed\nyour friend gerts.",
+        "until we meet again..."
       }, function()
-        ent.mode = 3
+        screen:del_ent(ent)
+        g_event = "final_warp"
       end
     ))
 

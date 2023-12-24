@@ -16,7 +16,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
       local s = 38 + time_toggle(10, 2)
       spr(s, self.x, self.y)
     end,
-    box = { 1, 1, 6, 6 }
+    box = split("1,1,6,6")
   }
 end
 
@@ -41,7 +41,7 @@ function build_fuzzy(start_x, start_y, path, path_index, mask)
       )
       if (mask) pal()
     end,
-    box = { 1, 1, 6, 6 }
+    box = split("1,1,6,6")
   }
 end
 
@@ -106,7 +106,7 @@ function build_firestone(x, y, dir, t, dist)
       spr(s2, x, y, 1, 1, flip_x, flip_y)
       -- print(self.timer, 96, 0)
     end,
-    box = { 1, 1, 6, 6 }
+    box = split("1,1,6,6")
   }
 end
 
@@ -591,7 +591,7 @@ function build_sand_blob(start_x, start_y)
     draw = function(ent)
       spr(53, ent.x, ent.y, 1, 1, false, g_toggle2 == 0)
     end,
-    box = { 1, 1, 6, 6 },
+    box = split("1,1,6,6"),
     del_on_death = true
   }
 end
@@ -614,7 +614,7 @@ function build_monty_fist(start_x, start_y)
     draw = function(ent)
       spr(94, ent.x, ent.y)
     end,
-    box = { 1, 1, 6, 6 },
+    box = split("1,1,6,6"),
     del_on_death = true
   }
 end
@@ -642,7 +642,7 @@ function build_machete()
       screen:del_ent(ent)
       map_add_desert_town_square_wall()
     end,
-    box = { 0, 0, 7, 7 }
+    box = split("0,0,7,7")
   }
 end
 
@@ -662,7 +662,7 @@ function build_north_key()
       screen:del_ent(ent)
       map_add_jungle_town_square_wall()
     end,
-    box = { 0, 0, 7, 7 }
+    box = split("0,0,7,7")
   }
 end
 
@@ -998,7 +998,7 @@ function build_jazzer(start_x, start_y, min_y, max_y)
       if (g_toggle2 == 0) s = 37
       spr(s, ent.x, ent.y)
     end,
-    box = { 1, 1, 6, 6 }
+    box = split("1,1,6,6")
   }
 end
 
@@ -1165,7 +1165,7 @@ function build_projectile(type, start_x, start_y, dir, dist)
         spr(s, ent.x, ent.y, 1, 1, g_toggle4 == 1 or g_toggle4 == 2)
       end
     end,
-    box = { 1, 1, 6, 6 },
+    box = split("1,1,6,6"),
     del_on_death = true
   }
 end
@@ -1218,6 +1218,6 @@ function build_simple_key()
         end
       ))
     end,
-    box = { 0, 0, 7, 7 }
+    box = split("0,0,7,7")
   }
 end

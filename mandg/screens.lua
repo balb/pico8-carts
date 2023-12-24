@@ -249,7 +249,7 @@ end
 
 function build_screen_final_boss()
   local py = build_py(80, 56)
-  return build_screen {
+  local screen = build_screen {
     py,
     build_textbox2(
       {
@@ -264,4 +264,6 @@ function build_screen_final_boss()
       end
     )
   }
+  screen.boss_py = py
+  return screen
 end

@@ -252,7 +252,14 @@ function build_screen_final_boss()
   return build_screen {
     py,
     build_textbox2(
-      { "py py py blah blah" }, function()
+      {
+        "ha ha ha, hee hee hee...",
+        "i am the mighty py!\nyou have done well monty.",
+        "your chum gerts was kidnapped\nas part of an elaborate\nruse by me to lure you here!",
+        "i wanted to test your mettle.\nand you have proven yourself\nworthy.",
+        "i will free gerts if you can\ncomplete one more challenge...",
+        "to defeat me in a bout of\nfisticuffs!!!"
+      }, function()
         py:start_fight()
       end
     )

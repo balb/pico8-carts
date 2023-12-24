@@ -644,7 +644,7 @@ function build_py(x, y)
   return {
     x = x, y = y,
     mov = true,
-    path = split_path "16,20 80,84 80,100 16,100 80,36 80,20",
+    path = split_path "40,56 40,80 16,80 40,80 40,56 96,56 40,56 40,24 16,24 96,24 96,56",
     path_index = 1,
     cntr = 0,
     help_cntr = 90,
@@ -725,8 +725,10 @@ function build_py(x, y)
       end
 
       color(7)
+
+      outline_ent(ent)
     end,
-    box = { 0, 0, 7, 15 },
+    box = { -2, 4, 17, 28 },
     health = 10,
     on_hit = function(ent)
       ent.hit_flash = 10

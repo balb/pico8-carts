@@ -70,6 +70,8 @@ function build_monty()
         -- final boss
         g_freeze = true
         map_add_py_wall()
+        self.init_x = 16
+        self.init_y = 64
         self.move_to_pos = { x = 16, y = 64 }
       end
     end,

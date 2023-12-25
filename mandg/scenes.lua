@@ -6,30 +6,12 @@ function build_scenes()
 end
 
 function build_scene_title()
-  local monty_txt, and_txt, gerts_txt, init_count, init_monty_y = [[8""8""8
-8  8  8 eeeee eeeee eeeee e    e
-8e 8  8 8  88 8   8   8   8    8
-88 8  8 8   8 8e  8   8e  8eeee8
-88 8  8 8   8 88  8   88    88
-88 8  8 8eee8 88  8   88    88
-  ]], [[        eeeee eeeee eeeee
-        8   8 8   8 8   8
-        8eee8 8e  8 8e  8
-        88  8 88  8 88  8
-        88  8 88  8 88ee8
-  ]], [[  8""""8
-  8    " eeee eeeee eeeee eeeee
-  8e     8    8   8   8   8   "
-  88  ee 8eee 8eee8e  8e  8eeee
-  88   8 88   88   8  88     88
-  88eee8 88ee 88   8  88  8ee88
-  ]], 36, 54
+  local init_count, init_monty_y = 36, 54
   return {
     count = init_count,
     init = function()
     end,
     start_text_x = 27,
-    start_text_y = 42,
     -- modes
     -- 0: show monty
     -- 1: show 'and'
@@ -51,11 +33,6 @@ function build_scene_title()
         self.start_text_x += 1
         if self.start_text_x > 127 then
           self.start_text_x = -80
-          if self.start_text_y == 81 then
-            self.start_text_y = 42
-          else
-            self.start_text_y = 81
-          end
         end
       end
 
@@ -68,10 +45,7 @@ function build_scene_title()
         end
       end
 
-      if self.mode == 4 then
-        self.py.y += 2
-      end
-
+      if (self.mode == 4) self.py.y += 2
       if self.py.y < 64 then
         self.gerts.y = init_monty_y + g_toggle2
       else
@@ -82,35 +56,14 @@ function build_scene_title()
       self.py:update()
     end,
     draw = function(self)
-      local col = 11
+      map(0, 16, 0, 0)
 
-      if self.mode == 0 or self.mode >= 3 then
-        print(monty_txt, 0, 4, col)
+      if (self.mode == 0) rectfill(0, 40, 120, 120, 0)
+      if self.mode == 1 then
+        rectfill(0, 8, 120, 40, 0)
+        rectfill(0, 80, 120, 120, 0)
       end
-
-      if self.mode == 1 or self.mode >= 3 then
-        print(and_txt, 0, 50, col)
-      end
-
-      if self.mode == 2 or self.mode >= 3 then
-        print(gerts_txt, 0, 88, col)
-      end
-
-      --[[ for x = 0, 127 do
-        for y = 0, 127 do
-          local p = pget(x, y)
-          if p == 0 then
-            if pget(x - 1, y) == col
-                and pget(x + 1, y) == col then
-              pset(x, y, col)
-            elseif pget(x, y - 1) == col
-                and pget(x, y + 1) == col then
-              pset(x, y, col)
-            end
-          end
-        end
-      end ]]
-
+      if (self.mode == 2) rectfill(0, 8, 120, 80, 0)
       if self.mode == 0 or self.mode >= 3 then
         -- monty
         spr(2, 2, init_monty_y + g_toggle2)
@@ -119,10 +72,7 @@ function build_scene_title()
         spr(18, 10, init_monty_y + 8 + g_toggle2, 1, 1, true)
       end
 
-      if self.mode == 3 then
-        print("hit ❎ or 🅾️ to start", self.start_text_x, self.start_text_y, flr(rnd(16)))
-      end
-
+      if (self.mode == 3) print("hit ❎ or 🅾️ to start", self.start_text_x, 116, flr(rnd(16)))
       if self.mode == 2 or self.mode >= 3 then
         self.gerts:draw()
       end

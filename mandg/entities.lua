@@ -831,6 +831,7 @@ function build_gerts(x, y)
     inc = 1,
     has_machete_message_added = false,
     has_north_key_message_added = false,
+    the_end_message_added = false,
     update = function(ent, screen)
       ent.cntr += ent.inc
       if (ent.cntr == 0 or ent.cntr == 3) ent.inc *= -1
@@ -842,6 +843,16 @@ function build_gerts(x, y)
         screen:add_ent(build_textbox2 { "monty! you have the key\nto the north dungeon.\nget in there quick!" })
         g_event = nil
         ent.has_north_key_message_added = true
+      elseif g_the_end and not ent.the_end_message_added then
+        ent.the_end_message_added = true
+        -- todo: block up north dungeon (or just freeze game)
+        -- todo: make monty and gerts jump?
+        -- todo: remove cage
+        -- todo: credits
+        screen:add_ent(build_textbox2(
+          { "the end!!!" }, function()
+          end
+        ))
       end
     end,
     draw = function(ent)

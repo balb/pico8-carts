@@ -18,6 +18,8 @@ g_event = nil
 g_toggle2 = 0
 g_toggle4 = 0
 
+g_the_end = false
+
 function _init()
   g_scenes = build_scenes()
   switch_scene "title"

@@ -1,6 +1,9 @@
 -- todo: improve boss music
 -- todo: sfx
 -- todo: boxing py
+-- todo: make monty and gerts jump at the end
+-- todo: gerts final text
+-- todo: credits text
 
 -- consts
 start_map_x = 3
@@ -71,3 +74,6 @@ end
 --function outline_ent(ent)
 --  rect(ent.x + ent.box[1], ent.y + ent.box[2], ent.x + ent.box[3], ent.y + ent.box[4])
 --end
+
+function empty_func()
+end

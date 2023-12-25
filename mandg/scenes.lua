@@ -2,6 +2,15 @@ function build_scenes()
   local tab = {}
   tab["title"] = build_scene_title()
   tab["main"] = build_scene_main()
+  tab["credits"] = {
+    init = empty_func,
+    update = empty_func,
+    draw = function()
+      print [[
+these are the end credits
+      ]]
+    end
+  }
   return tab
 end
 
@@ -9,8 +18,7 @@ function build_scene_title()
   local init_count, init_monty_y = 36, 54
   return {
     count = init_count,
-    init = function()
-    end,
+    init = empty_func,
     start_text_x = 27,
     -- modes
     -- 0: show monty

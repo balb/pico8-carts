@@ -300,8 +300,7 @@ function build_textbox2(texts, on_done)
       else
       end
     end,
-    draw = function(self)
-    end
+    draw = empty_func
   }
 end
 
@@ -350,11 +349,8 @@ function build_sandwall()
   return {
     x = x, y = y,
     box = { 0, 0, 10, 96 },
-    update = function()
-    end,
-    draw = function(ent)
-      --outline_ent(ent)
-    end,
+    update = empty_func,
+    draw = empty_func,
     on_collide = function(self, monty, screen)
       if monty.dir == 2 and monty.mov then
         monty.mov = false
@@ -445,8 +441,7 @@ end
 function build_spade(x, y)
   return {
     x = x, y = y,
-    update = function()
-    end,
+    update = empty_func,
     draw = function(ent)
       pal(7, flr(rnd(16)))
       spr(54, x, y)
@@ -628,8 +623,7 @@ end
 function build_machete()
   return {
     x = 108, y = 24,
-    update = function()
-    end,
+    update = empty_func,
     draw = function(ent)
       pal(7, flr(rnd(16)))
       spr(14, ent.x, ent.y)
@@ -649,8 +643,7 @@ end
 function build_north_key()
   return {
     x = 64, y = 72,
-    update = function()
-    end,
+    update = empty_func,
     draw = function(ent)
       pal(7, flr(rnd(16)))
       spr(13, ent.x, ent.y)
@@ -806,8 +799,7 @@ end
 function build_py_fist(x, y)
   return {
     x = x, y = y,
-    update = function(ent, screen)
-    end,
+    update = empty_func,
     draw = function(ent)
       pal(10, 9)
       pal(12, 4)
@@ -845,12 +837,11 @@ function build_gerts(x, y)
         ent.has_north_key_message_added = true
       elseif g_the_end and not ent.the_end_message_added then
         ent.the_end_message_added = true
-        -- todo: block up north dungeon (or just freeze game)
-        -- todo: make monty and gerts jump?
-        -- todo: remove cage
-        -- todo: credits
+        map_add_wall_y(55, 23, 26, 67)
+        map_add_wall_y(56, 23, 26, 67)
         screen:add_ent(build_textbox2(
           { "the end!!!" }, function()
+            switch_scene "credits"
           end
         ))
       end
@@ -884,8 +875,7 @@ function build_door(x, y, k)
   return {
     x = x, y = y,
     open = false,
-    update = function()
-    end,
+    update = empty_func,
     draw = function(ent)
       if (ent.open) return
       pal(12, 0)
@@ -950,11 +940,8 @@ function build_foliage()
   return {
     x = x, y = y,
     box = { 0, 0, 6, 110 },
-    update = function()
-    end,
-    draw = function(ent)
-      --outline_ent(ent)
-    end,
+    update = empty_func,
+    draw = empty_func,
     on_collide = function(self, monty, screen)
       if monty.dir == 3 and monty.mov then
         monty.mov = false
@@ -1061,11 +1048,7 @@ function snake_segment(sx, sy, w, h, sc, idx)
 end
 
 function snake_boob(x, y, yoset, show_bra)
-  if show_bra then
-    circfill(x, y + yoset, 4, 15)
-  else
-    circfill(x, y + yoset, 5, 15)
-  end
+  circfill(x, y + yoset, iif(show_bra, 4, 5), 15)
   circfill(x, y + 1 + yoset, 1, 4)
 end
 
@@ -1176,8 +1159,7 @@ end
 function build_bra(x, y)
   return {
     x = x, y = y,
-    update = function()
-    end,
+    update = empty_func,
     draw = function()
       pal(6, flr(rnd(16)))
       spr(63, x, y)
@@ -1203,8 +1185,7 @@ end
 function build_simple_key()
   return {
     x = 64, y = 86,
-    update = function()
-    end,
+    update = empty_func,
     draw = function(ent)
       pal(10, flr(rnd(16)))
       spr(47, ent.x, ent.y)

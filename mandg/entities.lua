@@ -839,7 +839,7 @@ function build_gerts(x, y)
         screen:add_ent(build_textbox2(
           {
             "monty! you've done it!\ni knew you would come to my\nrescue.",
-            "as for that dastardly py,\nhopefully we've seen the back\nof him...",
+            "as for that dastardly py,\nhopefully we've seen the last\nof him...",
             "\n           the end"
           }, function()
             switch_scene "credits"

@@ -124,8 +124,9 @@ end
 
 function build_scene_main()
   return {
-    map_x = start_map_x,
-    map_y = start_map_y,
+    -- start here
+    map_x = 3,
+    map_y = 1,
     screens = build_screens(),
     screen = nil,
     monty = build_monty(),
@@ -140,8 +141,8 @@ function build_scene_main()
       -- teleport back to town sq
       if g_event == "teleport" then
         g_event = nil
-        self.map_x = start_map_x
-        self.map_y = start_map_y
+        self.map_x = 3
+        self.map_y = 1
         self.monty:on_change_screen(self.map_x .. self.map_y)
         self:set_screen()
         g_freeze = false

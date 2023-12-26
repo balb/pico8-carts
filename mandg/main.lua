@@ -4,8 +4,6 @@
 -- todo: make monty and gerts jump at the end
 
 -- consts
-start_map_x = 3
-start_map_y = 1
 start_monty_x = 16
 start_monty_y = 60
 
@@ -24,7 +22,6 @@ g_the_end = false
 function _init()
   g_scenes = build_scenes()
   switch_scene "title"
-  --switch_scene "main"
   --main theme drum and bass
   music(4)
 end

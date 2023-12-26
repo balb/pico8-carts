@@ -99,10 +99,8 @@ function build_monty()
       if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
     end,
     -- py props
-    py_punching = 0,
     py_punch = function(self, screen)
-      if (self.py_punching == 0) self.py_punching = 8
-      screen:add_ent(build_monty_fist(self.x + 20, self.y))
+      screen:add_ent(build_monty_fist(self))
     end,
     -- jonathon props
     jonathon_phase = 0,
@@ -167,11 +165,6 @@ function build_monty()
       -- fli
       if self.fli_dig_shoot > 0 then
         self.fli_dig_shoot -= 1
-      end
-
-      -- py
-      if self.py_punching > 0 then
-        self.py_punching -= 1
       end
 
       -- events

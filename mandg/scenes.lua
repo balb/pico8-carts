@@ -196,10 +196,12 @@ function build_scene_main()
           end
           if (self.screen.fire_button_choke > 0) self.screen.fire_button_choke -= 1
         elseif self.screen.boss_py then
+          -- face py
+          self.monty.dir = 3
           -- punch!
           if (btnp(❎) or btnp(🅾️)) and self.screen.fire_button_choke == 0 then
             self.monty:py_punch(self.screen)
-            self.screen.fire_button_choke = 20
+            self.screen.fire_button_choke = 12
           end
           if (self.screen.fire_button_choke > 0) self.screen.fire_button_choke -= 1
         end

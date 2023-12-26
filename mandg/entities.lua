@@ -587,25 +587,30 @@ function build_sand_blob(start_x, start_y)
   }
 end
 
-function build_monty_fist(start_x, start_y)
-  local speed = 3
+function build_monty_fist(monty)
   return {
-    x = start_x, y = start_y,
+    x = monty.x + 10, y = monty.y + 8,
+    cntr = 10,
+    hit = false,
     update = function(ent, screen)
       if (g_freeze) return
-      if check_boss_collision(ent, screen.boss_py) then
+      if not ent.hit and check_boss_collision(ent, screen.boss_py) then
         screen.boss_py:on_hit()
-        screen:del_ent(ent)
+        ent.hit = true
+        ent.cntr = 5
       else
-        --move
-        ent.x += speed
-        if (ent.x >= 119) screen:del_ent(ent)
+        ent.cntr -= 1
+        if (ent.cntr == 0) screen:del_ent(ent)
       end
+
+      ent.x = monty.x + 10
+      ent.y = monty.y + 8
     end,
     draw = function(ent)
-      spr(94, ent.x, ent.y)
+      line(ent.x, ent.y + 4, ent.x + 16, ent.y + 4, 10)
+      spr(94, ent.x + 16, ent.y)
     end,
-    box = split("1,1,6,6"),
+    box = split("16,1,24,6"),
     del_on_death = true
   }
 end

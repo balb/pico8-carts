@@ -841,7 +841,7 @@ function build_gerts(x, y)
         map_add_wall_y(56, 23, 26, 67)
         screen:add_ent(build_textbox2(
           {
-            "monty! you've done it!\ni knew you would.",
+            "monty! you've done it!\ni knew you would come to my\nrescue.",
             "as for that dastardly py,\nhopefully we've seen the back\nof him...",
             "\n           the end"
           }, function()
@@ -851,6 +851,8 @@ function build_gerts(x, y)
       end
     end,
     draw = function(ent)
+      -- clear background pixel at the end
+      pset(61, 65, 6)
       -- hat propeller
       if ent.cntr > 0 then
         pset(ent.x + 6, ent.y + 1, 12)

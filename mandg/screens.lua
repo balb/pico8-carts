@@ -196,7 +196,7 @@ end
 function build_screen_jungle_lake_fuzzies()
   local path1, screen = split_path "48,64 72,64 72,80 80,80 80,104 40,104 40,96 32,96 32,80 40,80 40,72 48,72", build_screen {}
   foreach(
-    { 3, 5, 7, 9, 11 },
+    split("3,5,7,9,11"),
     function(i)
       screen:add_ent(build_fuzzy(path1[i].x, path1[i].y, path1, i))
     end

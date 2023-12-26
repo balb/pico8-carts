@@ -112,7 +112,7 @@ function build_monty()
       g_freeze = true
       self.warp = 100
     end,
-    update = function(self, screen)
+    update = function(self)
       -- handle death
       if self.dying > 0 then
         self.dying -= 1

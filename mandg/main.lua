@@ -49,8 +49,7 @@ function _draw()
 end
 
 function time_toggle(t, mod)
-  local time = flr(time() * 100)
-  return flr(time / t) % mod
+  return flr(flr(time() * 100) / t) % mod
 end
 
 function iif(condition, value_if_true, value_if_false)

@@ -4,7 +4,7 @@ function build_idiot(start_x, start_y, min_x, max_x)
     x = start_x, y = start_y,
     min_x = min_x, max_x = max_x,
 
-    update = function(self, screen)
+    update = function(self)
       if (g_freeze) return
       self.x += speed
       if self.x < self.min_x or self.x > self.max_x then
@@ -26,7 +26,7 @@ function build_fuzzy(start_x, start_y, path, path_index, mask)
     x = start_x, y = start_y,
     path = path,
     path_index = path_index,
-    update = function(ent, screen)
+    update = function(ent)
       if (g_freeze) return
       update_position(ent, speed_x, speed_y)
     end,
@@ -442,7 +442,7 @@ function build_spade(x, y)
   return {
     x = x, y = y,
     update = empty_func,
-    draw = function(ent)
+    draw = function()
       pal(7, flr(rnd(16)))
       spr(54, x, y)
       pal()
@@ -741,7 +741,7 @@ function build_py(x, y)
 
       --outline_ent(ent)
     end,
-    box = { -2, 4, 17, 28 },
+    box = split("-2,4,17,28"),
     health = 10,
     on_hit = function(ent)
       ent.hit_flash = 10
@@ -1044,9 +1044,8 @@ function build_snake(x, y)
         snake_boob(ent.x + 8, ent.y + 6, abs(g_toggle2 - 1))
       end
     end,
-    box = { 0, 0, 7, 15 },
-    on_collide = function(ent)
-    end
+    box = split("0,0,7,15"),
+    on_collide = empty_func
   }
 end
 

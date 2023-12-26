@@ -9,9 +9,9 @@ function build_scenes()
       print [[
 
 
-thanks for playing 
+thanks for playing
 
-monty and gerts 
+monty and gerts
 by the walteezers, 2023
 
 staff
@@ -153,12 +153,7 @@ function build_scene_main()
         -- need to update monty to do death etc.
         self.monty:update()
         if self.monty.dead then
-          foreach(
-            self.screen.ents, function(ent)
-              if (ent.del_on_death) self.screen:del_ent(ent)
-            end
-          )
-
+          self.screen:del_the_dead()
           self.monty.dead = false
         end
         return

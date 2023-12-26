@@ -77,6 +77,13 @@ function build_screen(ents)
           ent:draw()
         end
       )
+    end,
+    del_the_dead = function(self)
+      foreach(
+        self.ents, function(ent)
+          if (ent.del_on_death) self:del_ent(ent)
+        end
+      )
     end
   }
 end

@@ -558,11 +558,7 @@ function fli_update(ent, screen)
       end
     ))
 
-    foreach(
-      screen.ents, function(ent)
-        if (ent.del_on_death) screen:del_ent(ent)
-      end
-    )
+    screen:del_the_dead()
   end
 
   if (ent.help_cntr > 0) ent.help_cntr -= 1
@@ -786,11 +782,7 @@ function py_update(ent, screen)
       end
     ))
 
-    foreach(
-      screen.ents, function(ent)
-        if (ent.del_on_death) screen:del_ent(ent)
-      end
-    )
+    screen:del_the_dead()
   end
 
   if (ent.help_cntr > 0) ent.help_cntr -= 1
@@ -857,7 +849,7 @@ function build_gerts(x, y)
     end,
     draw = function(ent)
       -- clear background pixel at the end
-      pset(61, 65, 6)
+      if (g_the_end) pset(61, 65, 6)
       -- hat propeller
       if ent.cntr > 0 then
         pset(ent.x + 6, ent.y + 1, 12)

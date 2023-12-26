@@ -840,7 +840,11 @@ function build_gerts(x, y)
         map_add_wall_y(55, 23, 26, 67)
         map_add_wall_y(56, 23, 26, 67)
         screen:add_ent(build_textbox2(
-          { "the end!!!" }, function()
+          {
+            "monty! you've done it!\ni knew you would.",
+            "as for that dastardly py,\nhopefully we've seen the back\nof him...",
+            "\n           the end"
+          }, function()
             switch_scene "credits"
           end
         ))

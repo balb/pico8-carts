@@ -7,7 +7,21 @@ function build_scenes()
     update = empty_func,
     draw = function()
       print [[
-these are the end credits
+
+
+thanks for playing 
+
+monty and gerts 
+by the walteezers, 2023
+
+staff
+-----
+
+bertie: production and design
+isaac:  direction and vibes
+nikki:  tea and biscuits
+mark:   programming
+
       ]]
     end
   }

@@ -849,6 +849,11 @@ function build_gerts(x, y)
           end
         ))
       end
+
+      -- the end
+      if g_the_end then
+        ent.y = 64 + g_toggle2
+      end
     end,
     draw = function(ent)
       -- clear background pixel at the end

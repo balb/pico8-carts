@@ -232,6 +232,11 @@ function build_monty()
           music(0)
         end
       end
+
+      -- the end
+      if g_the_end then
+        self.y = self.init_y + g_toggle2
+      end
     end,
     draw = function(self)
       draw_monty(self)

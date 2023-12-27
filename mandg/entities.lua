@@ -598,6 +598,7 @@ function build_monty_fist(monty)
         screen.boss_py:on_hit()
         ent.hit = true
         ent.cntr = 5
+        sfx(13)
       else
         ent.cntr -= 1
         if ent.cntr == 0 then

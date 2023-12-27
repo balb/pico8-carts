@@ -20,6 +20,7 @@ function build_monty()
     death_count = 0,
     die = function(self)
       if self.dying == 0 then
+        sfx(12)
         self.death_count += 1
         self.dying = 20
       end
@@ -111,6 +112,7 @@ function build_monty()
     do_warp = function(self)
       g_freeze = true
       self.warp = 100
+      sfx(14)
     end,
     update = function(self)
       -- handle death

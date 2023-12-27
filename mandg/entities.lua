@@ -451,6 +451,7 @@ function build_spade(x, y)
     colliding = false,
     on_collide = function(spade, monty, screen)
       if (spade.colliding) return
+      sfx(15)
       spade.colliding = true
       monty.mov = false
       screen:add_ent(build_textbox2(
@@ -635,6 +636,7 @@ function build_machete()
       pal()
     end,
     on_collide = function(ent, monty, screen)
+      sfx(15)
       monty.has_spade = false
       monty.has_machete = true
       monty:do_warp()
@@ -655,6 +657,7 @@ function build_north_key()
       pal()
     end,
     on_collide = function(ent, monty, screen)
+      sfx(15)
       monty.has_north_key = true
       monty:do_warp()
       screen:del_ent(ent)
@@ -1177,15 +1180,15 @@ function build_bra(x, y)
     box = { 0, 0, 15, 7 },
     collided = false,
     on_collide = function(ent, monty, screen)
-      if not ent.collided then
-        ent.collided = true
-        screen:add_ent(build_textbox2(
-          { "this must be the snake's bra!" }, function()
-            monty.has_bra = true
-            screen:del_ent(ent)
-          end
-        ))
-      end
+      if (ent.collided) return
+      ent.collided = true
+      sfx(15)
+      screen:add_ent(build_textbox2(
+        { "this must be the snake's bra!" }, function()
+          monty.has_bra = true
+          screen:del_ent(ent)
+        end
+      ))
     end
   }
 end
@@ -1203,6 +1206,7 @@ function build_simple_key()
     on_collide = function(ent, monty, screen)
       if (ent.colliding) return
       ent.colliding = true
+      sfx(15)
       screen:add_ent(build_textbox2(
         { "huzzah! a key!" }, function()
           monty.has_simple_key = true

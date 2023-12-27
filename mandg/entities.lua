@@ -697,13 +697,10 @@ function build_py(x, y)
     draw = function(ent)
       if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
       -- eyes
-      -- pset for bit of eye
-      pset(ent.x - 1, ent.y + 5, 12)
-      pset(ent.x - 1, ent.y + 6, 12)
+      spr(76, ent.x - 8, ent.y)
       spr(77, ent.x, ent.y)
-      pset(ent.x + 16, ent.y + 5, 12)
-      pset(ent.x + 16, ent.y + 6, 12)
       spr(77, ent.x + 8, ent.y, 1, 1, true)
+      spr(76, ent.x + 16, ent.y, 1, 1, true)
       -- py top
       spr(92, ent.x - 8, ent.y + 8)
       spr(93, ent.x, ent.y + 8)

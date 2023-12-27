@@ -108,7 +108,7 @@ function build_scene_title()
         spr(111, help_x + 24, help_y)
         spr(126, help_x, help_y + 8)
         spr(127, help_x + 24, help_y + 8)
-        print("help!!!", help_x + 3, help_y + 6, 0)
+        print("help!!!", help_x + 3, help_y + 5, 0)
       end
     end
   }

@@ -600,7 +600,10 @@ function build_monty_fist(monty)
         ent.cntr = 5
       else
         ent.cntr -= 1
-        if (ent.cntr == 0) screen:del_ent(ent)
+        if ent.cntr == 0 then
+          screen:del_ent(ent)
+          monty.py_punching = false
+        end
       end
 
       ent.x = monty.x + 10

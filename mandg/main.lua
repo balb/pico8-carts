@@ -1,7 +1,5 @@
 -- todo: improve boss music
 -- todo: sfx
--- todo: boxing py
--- todo: make monty and gerts jump at the end
 
 -- consts
 start_monty_x = 16
@@ -42,7 +40,7 @@ function _draw()
   g_scene:draw()
 
   -- Debug FPS
-  print(stat(7), 24, 1)
+  -- print(stat(7), 24, 1)
 end
 
 function time_toggle(t, mod)

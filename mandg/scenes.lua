@@ -101,22 +101,14 @@ function build_scene_title()
       self.py:draw()
       if self.py.y > 64 then
         -- speach bubble
-        local help_x, help_y, help_width, help_height = self.gerts.x - 30, self.gerts.y - 10, 32, 16
-        rectfill(help_x, help_y, help_x + help_width, help_y + help_height, 7)
+        local help_x, help_y = self.gerts.x - 30, self.gerts.y - 10
+        rectfill(help_x + 8, help_y, help_x + 24, help_y + 14, 7)
         -- top left
-        pset(help_x, help_y, 0)
-        pset(help_x, help_y + 1, 0)
-        pset(help_x + 1, help_y, 0)
-        -- top right
-        pset(help_x + help_width, help_y, 0)
-        pset(help_x + help_width, help_y + 1, 0)
-        pset(help_x + help_width - 1, help_y, 0)
-        -- bottom left
-        pset(help_x, help_y + help_height, 0)
-        pset(help_x + 1, help_y + help_height, 0)
-        pset(help_x, help_y + help_height - 1, 0)
-
-        print("help!!!", help_x + 3, help_y + 6)
+        spr(110, help_x, help_y)
+        spr(111, help_x + 24, help_y)
+        spr(126, help_x, help_y + 8)
+        spr(127, help_x + 24, help_y + 8)
+        print("help!!!", help_x + 3, help_y + 6, 0)
       end
     end
   }

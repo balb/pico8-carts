@@ -99,7 +99,9 @@ function build_monty()
       if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
     end,
     -- py props
+    -- py_punching = false,
     py_punch = function(self, screen)
+      self.py_punching = true
       screen:add_ent(build_monty_fist(self))
     end,
     -- jonathon props
@@ -263,6 +265,9 @@ function draw_monty(monty)
     draw_monty_row(monty, 17, 8)
   end
 
+  if monty.py_punching then
+    spr(8, monty.x + 8, monty.y + 8)
+  end
   pal()
 
   -- top right icon

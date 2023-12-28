@@ -1,21 +1,17 @@
 -- todo: improve boss music
--- todo: sfx
 
 -- consts
 start_monty_x = 16
 start_monty_y = 60
 
 -- globals
-g_scenes = nil
-g_scene = nil
-
-g_freeze = false
-g_event = nil
-
-g_toggle2 = 0
-g_toggle4 = 0
-
-g_the_end = false
+--g_scenes = nil
+--g_scene = nil
+--g_freeze = false
+--g_event = nil
+--g_toggle2 = 0
+--g_toggle4 = 0
+--g_the_end = false
 
 function _init()
   g_scenes = build_scenes()

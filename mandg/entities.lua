@@ -213,7 +213,9 @@ function build_old_woman()
           -- answer not ready
           self.chat = origChat
         else
-          self.text_ticker = build_text_ticker(chats[self.chat].text)
+          local txt = chats[self.chat].text
+          if (sub(txt, 1, 5) == "wrong") sfx(12) 
+          self.text_ticker = build_text_ticker(txt)
           self.q_and_a = nil
           self.add_q_and_a = chats[self.chat].answers ~= nil
         end

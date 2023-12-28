@@ -97,6 +97,7 @@ function build_monty()
     -- fli props
     fli_dig_shoot = 0,
     fli_dig_sand_blob = function(self)
+      sfx(16)
       if (self.fli_dig_shoot == 0) self.fli_dig_shoot = 8
     end,
     -- py props
@@ -139,6 +140,10 @@ function build_monty()
 
         -- clear the sand wall map tile
         mset(16, flr((self.y + 2) / 8) + 49, 64)
+
+        if self.sandwall_countdown % 5 == 0 then
+          sfx(16)
+        end
 
         if self.sandwall_countdown == 0 then
           self.dig_sandwall = false

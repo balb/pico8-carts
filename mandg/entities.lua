@@ -572,6 +572,7 @@ function build_sand_blob(start_x, start_y)
     update = function(ent, screen)
       if (g_freeze) return
       if check_boss_collision(ent, screen.boss_fli) then
+        sfx(13)
         screen.boss_fli:on_hit()
         screen:del_ent(ent)
       else

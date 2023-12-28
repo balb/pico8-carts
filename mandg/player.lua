@@ -65,10 +65,10 @@ function build_monty()
         end
       elseif screen_key == "30" then
         -- enter the north dungeon
-        -- boss theme
-        music(5)
+        music(7)
       elseif screen_key == "60" then
         -- final boss
+        music(5)
         g_freeze = true
         map_add_py_wall()
         self.init_x = 16

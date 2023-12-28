@@ -164,6 +164,10 @@ function build_monty()
         -- clear the foliage map tile
         mset(63, flr((self.y + 2) / 8) + 17, 66)
 
+        if self.foliage_countdown % 5 == 0 then
+          sfx(16)
+        end
+
         if self.foliage_countdown == 0 then
           self.slash_foliage = false
           self.has_machete = false

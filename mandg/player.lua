@@ -253,7 +253,7 @@ end
 function draw_monty(monty)
   if monty.dying > 0 or monty.warp > 0 then
     pal(3, flr(rnd(16)))
-    pal(11, flr(rnd(16)))
+    pal(11, g_rndcol)
   end
 
   --head

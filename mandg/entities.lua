@@ -267,9 +267,9 @@ function build_q_and_a(a1, a2)
       print(a1, x + w, y, 10)
       print(a2, a2_x, y, 10)
       if self.answer == a1 then
-        print(">", x, y, flr(rnd(16)))
+        print(">", x, y, g_rndcol)
       elseif self.answer == a2 then
-        print(">", a2_x - w, y, flr(rnd(16)))
+        print(">", a2_x - w, y, g_rndcol)
       end
       -- reset print color
       color(7)
@@ -445,7 +445,7 @@ function build_spade(x, y)
     x = x, y = y,
     update = empty_func,
     draw = function()
-      pal(7, flr(rnd(16)))
+      pal(7, g_rndcol)
       spr(54, x, y)
       pal()
     end,
@@ -503,7 +503,7 @@ function build_fli()
       end
     end,
     draw = function(ent)
-      if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
+      if (ent.hit_flash > 0) pal(12, g_rndcol)
       --head
       spr(46, ent.x, ent.y)
       -- wings
@@ -520,7 +520,7 @@ function build_fli()
       end
 
       if ent.mode == 1 and ent.help_cntr > 0 then
-        print("hit ❎ or 🅾️", 32, 112, flr(rnd(16)))
+        print("hit ❎ or 🅾️", 32, 112, g_rndcol)
       end
 
       color(7)
@@ -634,7 +634,7 @@ function build_machete()
     x = 108, y = 24,
     update = empty_func,
     draw = function(ent)
-      pal(7, flr(rnd(16)))
+      pal(7, g_rndcol)
       spr(14, ent.x, ent.y)
       pal()
     end,
@@ -655,7 +655,7 @@ function build_north_key()
     x = 64, y = 72,
     update = empty_func,
     draw = function(ent)
-      pal(7, flr(rnd(16)))
+      pal(7, g_rndcol)
       spr(13, ent.x, ent.y)
       pal()
     end,
@@ -702,7 +702,7 @@ function build_py(x, y)
       end
     end,
     draw = function(ent)
-      if (ent.hit_flash > 0) pal(12, flr(rnd(16)))
+      if (ent.hit_flash > 0) pal(12, g_rndcol)
       -- eyes
       spr(76, ent.x - 8, ent.y)
       spr(77, ent.x, ent.y)
@@ -742,7 +742,7 @@ function build_py(x, y)
       end
 
       if ent.mode == 1 and ent.help_cntr > 0 then
-        print("hit ❎ or 🅾️", 40, 112, flr(rnd(16)))
+        print("hit ❎ or 🅾️", 40, 112, g_rndcol)
       end
 
       color(7)
@@ -1175,7 +1175,7 @@ function build_bra(x, y)
     x = x, y = y,
     update = empty_func,
     draw = function()
-      pal(6, flr(rnd(16)))
+      pal(6, g_rndcol)
       spr(63, x, y)
       spr(63, x + 8, y, 1, 1, true)
       pal()
@@ -1201,7 +1201,7 @@ function build_simple_key()
     x = 64, y = 86,
     update = empty_func,
     draw = function(ent)
-      pal(10, flr(rnd(16)))
+      pal(10, g_rndcol)
       spr(47, ent.x, ent.y)
       pal()
     end,

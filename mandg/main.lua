@@ -5,13 +5,14 @@ start_monty_x = 16
 start_monty_y = 60
 
 -- globals
---g_scenes = nil
---g_scene = nil
---g_freeze = false
---g_event = nil
---g_toggle2 = 0
---g_toggle4 = 0
---g_the_end = false
+g_scenes = nil
+g_scene = nil
+g_freeze = false
+g_event = nil
+g_toggle2 = 0
+g_toggle4 = 0
+g_the_end = false
+g_rndcol = 0
 
 function _init()
   g_scenes = build_scenes()
@@ -28,6 +29,7 @@ end
 function _update()
   g_toggle2 = time_toggle(12, 2)
   g_toggle4 = time_toggle(12, 4)
+  g_rndcol = flr(rnd(16))
   g_scene:update()
 end
 

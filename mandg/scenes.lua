@@ -94,7 +94,7 @@ function build_scene_title()
         spr(18, 10, init_monty_y + 8 + g_toggle2, 1, 1, true)
       end
 
-      if (self.mode == 3) print("hit ❎ or 🅾️ to start", self.start_text_x, 116, flr(rnd(16)))
+      if (self.mode == 3) print("hit ❎ or 🅾️ to start", self.start_text_x, 116, g_rndcol)
       if self.mode == 2 or self.mode >= 3 then
         self.gerts:draw()
       end

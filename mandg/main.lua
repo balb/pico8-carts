@@ -1,5 +1,3 @@
--- todo: improve boss music
-
 -- consts
 start_monty_x = 16
 start_monty_y = 60

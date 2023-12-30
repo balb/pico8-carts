@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+-- monty and gerts
+-- by balb / the walteezers
 #include main.lua
 #include scenes.lua
 #include screens.lua

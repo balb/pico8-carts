@@ -12,7 +12,7 @@ function build_scenes()
 thanks for playing
 
 monty and gerts
-by the walteezers, 2023
+by balb / the walteezers, 2023
 
 staff
 -----
